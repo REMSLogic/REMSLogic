@@ -679,6 +679,7 @@ div.main-content-header
     margin: 0;
     padding: 8%;
     width: auto;
+    white-space: normal;
 }
 
 .container_12 .grid_6
