@@ -1006,10 +1006,6 @@
       <Project>{B57584E0-14D2-48E1-B7D4-1FB8A8DBF27D}</Project>
       <Name>Lib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Utilities\Utilities.csproj">
-      <Project>{34AC8D64-8E20-42DC-B28E-B9AD13C5ADAA}</Project>
-      <Name>Utilities</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
