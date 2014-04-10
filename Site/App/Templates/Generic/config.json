@@ -1,0 +1,9 @@
+﻿{
+    "name": "REMS Logic Notification",
+    "file": "template.html",
+    "subject": "REMS Logic Notification",
+    "from": {
+        "email": "system@remslogic.com",
+        "name": "REMS Logic"
+    }
+}

@@ -1,0 +1,9 @@
+﻿{
+    "name": "News And Updates",
+    "file": "template.html",
+    "subject": "News and Updates from REMS Logic",
+    "from": {
+        "email": "system@remslogic.com",
+        "name": "REMS Logic"
+    }
+}

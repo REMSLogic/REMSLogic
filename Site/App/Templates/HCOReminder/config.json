@@ -1,0 +1,9 @@
+﻿{
+    "name": "HCO Reminder",
+    "file": "template.html",
+    "subject": "Reminder from REMS Logic",
+    "from": {
+        "email": "system@remslogic.com",
+        "name": "REMS Logic"
+    }
+}

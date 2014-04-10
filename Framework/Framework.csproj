@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{38E1871B-F401-4DFA-9259-C07698DFF704}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Framework</RootNamespace>
+    <AssemblyName>Framework</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="API\Base.cs" />
+    <Compile Include="API\Manager.cs" />
+    <Compile Include="API\MethodAttribute.cs" />
+    <Compile Include="API\MethodInfo.cs" />
+    <Compile Include="API\OAuthSecurityAttribute.cs" />
+    <Compile Include="API\ReflectionHelper.cs" />
+    <Compile Include="API\RequireSessionAttribute.cs" />
+    <Compile Include="API\ReturnObject.cs" />
+    <Compile Include="API\SecurityRoleAttribute.cs" />
+    <Compile Include="API\TypeConversion.cs" />
+    <Compile Include="CodeGen\Accessor.cs" />
+    <Compile Include="CodeGen\Attribute.cs" />
+    <Compile Include="CodeGen\Class.cs" />
+    <Compile Include="CodeGen\Field.cs" />
+    <Compile Include="CodeGen\File.cs" />
+    <Compile Include="CodeGen\Method.cs" />
+    <Compile Include="CodeGen\Namespace.cs" />
+    <Compile Include="CodeGen\Parameter.cs" />
+    <Compile Include="CodeGen\Property.cs" />
+    <Compile Include="CodeGen\Writer.cs" />
+    <Compile Include="Config\FrameworkSectionGroup.cs" />
+    <Compile Include="Config\Framework\HashSection.cs" />
+    <Compile Include="Config\Framework\EmailSection.cs" />
+    <Compile Include="Config\Framework\Email\TemplateElement.cs" />
+    <Compile Include="Config\Framework\LogSection.cs" />
+    <Compile Include="Config\Framework\DataSection.cs" />
+    <Compile Include="Config\Framework\Data\ConnectionElement.cs" />
+    <Compile Include="Config\Framework\Data\ConnectionElementCollection.cs" />
+    <Compile Include="Config\Framework\EncryptionSection.cs" />
+    <Compile Include="Config\Framework\Log\ErrorsElement.cs" />
+    <Compile Include="Config\Framework\NetSection.cs" />
+    <Compile Include="Config\Framework\Net\SiteElement.cs" />
+    <Compile Include="Config\Framework\Net\SiteElementCollection.cs" />
+    <Compile Include="Config\Framework\SecuritySectionGroup.cs" />
+    <Compile Include="Config\Framework\Security\AuthenticationSection.cs" />
+    <Compile Include="Config\Framework\Security\Authentication\GroupElement.cs" />
+    <Compile Include="Config\Framework\Security\Authentication\UserElement.cs" />
+    <Compile Include="Config\Framework\Security\AuthorizationSection.cs" />
+    <Compile Include="Config\Framework\Security\Authorization\RoleElement.cs" />
+    <Compile Include="Config\Manager.cs" />
+    <Compile Include="Data\Access\Database.cs" />
+    <Compile Include="Data\ActiveRecord.cs" />
+    <Compile Include="Data\CodeGen\ActiveRecord.cs" />
+    <Compile Include="Data\CodeGen\Manager.cs" />
+    <Compile Include="Data\ColumnAttribute.cs" />
+    <Compile Include="Data\Command.cs" />
+    <Compile Include="Data\ConcreteActiveRecord.cs" />
+    <Compile Include="Data\Database.cs" />
+    <Compile Include="Data\LiteralValue.cs" />
+    <Compile Include="Data\RowView.cs" />
+    <Compile Include="Data\SpecialValue.cs" />
+    <Compile Include="Data\TableAttribute.cs" />
+    <Compile Include="Data\Manager.cs" />
+    <Compile Include="Data\Parameter.cs" />
+    <Compile Include="Data\SqlServer\Database.cs" />
+    <Compile Include="Data\Table.cs" />
+    <Compile Include="Email.cs" />
+    <Compile Include="LoadTimeInitializer.cs" />
+    <Compile Include="Manager.cs" />
+    <Compile Include="OAuth\Consumer.cs" />
+    <Compile Include="OAuth\Token.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Encryption.cs" />
+    <Compile Include="Security\Group.cs" />
+    <Compile Include="Security\Hash.cs" />
+    <Compile Include="Security\Manager.cs" />
+    <Compile Include="Security\Role.cs" />
+    <Compile Include="Security\User.cs" />
+    <Compile Include="Web\BasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Web\BaseControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Web\Manager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BasicAuth\" />
+    <Folder Include="Data\Linq\" />
+    <Folder Include="Linq\" />
+    <Folder Include="OAuth\Server\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

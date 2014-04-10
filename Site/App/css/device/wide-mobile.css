@@ -1,0 +1,12 @@
+/**
+ *		Wide Mobile Layout: 480px.
+ */
+
+#wrapper > section > aside {
+}
+#wrapper > section > aside > nav
+{
+	overflow-y: none;
+}
+#wrapper > section > section {
+}

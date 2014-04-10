@@ -1,0 +1,227 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="list.ascx.cs" Inherits="Site.App.Views.common.drugs.list" %>
+
+<%--<!-- DATATABLES CSS -->
+<link rel="stylesheet" media="screen" href="/App/js/lib/datatables/css/vpad.css" />
+<script type="text/javascript" src="/App/js/lib/datatables/js/jquery.dataTables.js"></script> 
+<script type="text/javascript">
+	$(window).bind('content-loaded', function ()
+	{
+		$('#drugs-table').dataTable({
+			"sPaginationType": "full_numbers",
+			"bStateSave": true,
+			"iCookieDuration": (60 * 60 * 24 * 30)
+		});
+	});
+</script> 
+<!-- DATATABLES CSS END -->
+<h1 class="page-title">Drugs</h1>
+<div class="container_12 clearfix leading">
+    <div class="grid_12 manage-drug-list">
+     <a class="button back-button" href="#" style="margin-bottom: 10px;">Back</a>
+        <a href="#prescriber/drugs/select" style="display: none" class="grey-btn"><i class="fa fa-plus-circle pad-right"></i>Add Drugs</a>
+        <div id="demo" class="clearfix"> 
+            <table class="display" id="drugs-table"> 
+                <thead> 
+                    <tr> 
+                        <th></th> 
+                        <th>Drug Name</th>
+						<th>Last Updated</th>
+                    </tr> 
+                </thead> 
+                <tbody>
+				<% foreach( var drug in this.Drugs ) { %>
+                    <tr data-id="<%=drug.ID%>"> 
+						<td><a href="#common/drugs/detail?id=<%=drug.ID%>" class="button">View</a></td>
+						<td><%=drug.GenericName%></td>
+                        <td><%=drug.Updated.ToShortDateString() %></td>
+                    </tr>
+				<% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>--%>
+
+<!-- DATATABLES CSS -->
+<link rel="stylesheet" media="screen" href="/App/js/lib/datatables/css/vpad.css" />
+<script type="text/javascript" src="/App/js/lib/datatables/js/jquery.dataTables.js"></script>
+<script type="text/javascript">
+    $(window).bind('content-loaded', function () {
+
+        $(".remove-icon").click(function () {
+            $doc = $(this);
+            var id = parseInt($doc.attr('id').toString().substring(3));
+            $listItem = $(eval('drug' + id.toString()));
+
+            if (id) {
+                //$.ajax({
+                //    url: "/api/Prescriber/Drug/Remove",
+                //    type: 'POST',
+                //    dataType: 'json',
+                //    data: { 'id': id },
+                //    success: function (response) {
+                        $listItem.remove();
+                //    }
+                //});
+            }
+        });
+
+        $(".star-icon").click(function () {
+            $doc = $(this);
+            var id = parseInt($doc.attr('id').toString().substring(3));
+            $listItem = $(eval('fav' + id.toString()));
+            $listItem.toggleClass("fa-star-o fa-star");
+            //            if (id) {
+            //                $.ajax({
+            //                    url: "/api/Prescriber/Drug/Remove",
+            //                    type: 'POST',
+            //                    dataType: 'json',
+            //                    data: { 'id': id },
+            //                    success: function (response) {
+            //                        $listItem.remove();
+            //                    }
+            //                });
+            //            }
+        });
+
+        $('#drugs-filter').keyup(function () {
+            UpdateFilter();
+        });
+
+        $('.eoc-filter img').click(function () {
+            $(this).toggleClass('off');
+            UpdateFilter();
+        }).each(function () {
+            $(this).addClass('off');
+        });
+
+        $("#eoc-menu-toggle").click(function () {
+            $btn = $(".eoc-menu-clear");
+            //getting the next element
+            $content = $("#divEoc-filter");
+            //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+            $content.slideToggle(500, function () {
+                if ($(this).css('display') == 'block') {
+                    $(this).css('display', 'inline-block');
+                }
+            });
+        });
+    });
+
+    function UpdateFilter() {
+        var v = $('#drugs-filter').val().toLowerCase();
+
+        $('#man-drugs li.man-drug').show().each(function () {
+            var $this = $(this);
+
+            var drug = $('span.drugName', $this);
+
+            if (drug.html().toLowerCase().indexOf(v) == -1)
+                $this.hide();
+        });
+
+        $('.eoc-filter img:not(.off)').each(function () {
+            $('#man-drugs li.man-drug:not([data-' + $(this).attr('data-eoc') + '])').hide();
+        });
+    }
+
+    function ClearDrugListFilter() {
+        $('.eoc-filter img').each(function () { $(this).addClass('off'); });
+        $('#drugs-filter').val('');
+        UpdateFilter();
+    }
+
+</script>
+
+<h1 class="page-title">
+    My Drug List</h1>
+<div class="container_12 clearfix">
+    <div class="grid_12 portlet manage-drug-list leading">
+        <header>
+			<h2 class="title-header">Facility Drug List</h2>
+            <div class="drug-list-options">
+                <span class="add-drugs-btn-2" id="eoc-menu-toggle"><i class="fa fa-th"></i></span>
+                <span class="add-drugs-btn">
+                        <%--<a href="#prescriber/drugs/select" class="grey-btn"><i class="fa fa-plus-circle pad-right"></i>Add Drugs</a>--%>
+                        <a href="#" class="grey-btn"><i class="fa fa-plus-circle pad-right"></i>Add Drugs</a>
+                </span>
+            </div>
+		</header>
+       <%-- <a class="prev-btn back-button" href="#" style="margin-bottom: 10px;"><i class="fa fa-caret-left pad-right"></i>Previous</a>
+        <a class="next-btn" href="#" style="margin-bottom: 10px;">More<i class="fa fa-caret-right pad-left"></i></a>--%>
+        <div id="divEoc-filter" class="eoc-filter">
+            <div class="filter-input mydruglist-inputwrap">
+                    <input id="drugs-filter" type="text" value="" size="50" placeholder="Filter Drugs" />
+                    <a class="eoc-menu-clear clear-btn" onclick="ClearDrugListFilter();" >Clear Filter</a>
+            </div>
+            <div class="eoc-filter-item">
+                <img src="/App/images/icons/ETASU.png" alt="ETASU" data-eoc="etasu" />
+                <p class="label">ETASU</p>
+                <p class="label">&nbsp;</p>
+            </div>
+			<div class="eoc-filter-item">
+                <img src="/App/images/icons/FP EN.png" alt="Facility/Pharmacy Enrollment" data-eoc="facility-pharmacy-enrollment" />
+                <p class="label">FACILITY</p>
+                <p class="label">ENROLLMENT</p>
+            </div>
+			<div class="eoc-filter-item">
+                <img src="/App/images/icons/PAEN.png" alt="Patient Enrollment" data-eoc="patient-enrollment" />
+                <p class="label">PATIENT</p>
+                <p class="label">ENROLLMENT</p>
+            </div>
+			<div class="eoc-filter-item">
+                <img src="/App/images/icons/PREN.png" alt="Prescriber Enrollment" data-eoc="prescriber-enrollment" />
+                <p class="label">PRESCRIBER</p>
+                <p class="label">ENROLLMENT</p>
+            </div>
+			<div class="eoc-filter-item">
+                <img src="/App/images/icons/EDUCRT.png" alt="Education/Certification" data-eoc="education-training" />
+                <p class="label">EDUCATION &amp;</p>
+                <p class="label">CERTIFICATION</p>
+            </div>
+			<div class="eoc-filter-item">
+                <img src="/App/images/icons/MON.png" alt="Monitoring" data-eoc="monitoring-management" />
+                <p class="label">MONITORING</p>
+                <p class="label">&nbsp;</p>
+            </div>
+			<div class="eoc-filter-item">
+                <img src="/App/images/icons/MG.png" alt="Medication Guide" data-eoc="medication-guide" />
+                <p class="label">MEDICATION</p>
+                <p class="label">GUIDE</p>
+            </div>
+			<div class="eoc-filter-item">
+                <img src="/App/images/icons/IC.png" alt="Informed Consent" data-eoc="informed-consent" />
+                <p class="label">INFORMED</p>
+                <p class="label">CONSENT</p>
+            </div>
+			<div class="eoc-filter-item">
+                <img src="/App/images/icons/FD.png" alt="Forms and Documents" data-eoc="forms-documents" />
+                <p class="label">FORMS &amp;</p>
+                <p class="label">DOCUMENTS</p>
+            </div>
+			<div class="eoc-filter-item">
+                <img src="/App/images/icons/PR.png" alt="Pharmacy Requirements" data-eoc="pharmacy-requirements" />
+                <p class="label">PHARMACY</p>
+                <p class="label">REQUIREMENTS</p>
+            </div>
+		</div>
+
+        <div id="demo" class="clearfix">
+            <%--<div class="drug-content-wrap">--%>
+            <ul id="man-drugs" class="drug-content-wrap">
+            <% foreach (var drug in this.Drugs) { %>
+                <li class="man-drug" id="drug<%=drug.ID %>" data-drug-id="<%=drug.ID %>"<%=GetEOCData(drug) %>>
+                    <span class="drugName" style="display: none"><%=drug.GenericName %></span>
+                    <ul class="clearfix" data-id="<%=drug.ID%>">
+                        <li class="one"><a href="#common/drugs/detail?id=<%=drug.ID%>"><%=drug.GenericName%></a></li>
+                        <li class="two"><strong>Last Update:</strong> <%=drug.Updated.ToShortDateString() %></li>
+                        <li class="three star-icon" id="str<%=drug.ID%>"><i id="fav<%=drug.ID%>" class="fa fa-star-o"></i></li>
+                        <li class="four remove-icon" id="rmv<%=drug.ID%>"><i class="fa fa-times-circle"></i></li>
+                    </ul>
+                </li>
+            <% } %>
+            </ul>
+            <%--</div>--%>
+        </div>
+    </div>
+</div>

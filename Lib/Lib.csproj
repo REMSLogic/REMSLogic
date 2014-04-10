@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B57584E0-14D2-48E1-B7D4-1FB8A8DBF27D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lib</RootNamespace>
+    <AssemblyName>Lib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CsvHelper.2.5.0\lib\net40-client\CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="API\Admin\Drugs\Company.cs" />
+    <Compile Include="API\Admin\Drugs\DrugFormulation.cs" />
+    <Compile Include="API\Admin\Drugs\Formulation.cs" />
+    <Compile Include="API\Admin\Language.cs" />
+    <Compile Include="API\Admin\Security\DrugCompanyUser.cs" />
+    <Compile Include="API\Admin\Security\ProviderUser.cs" />
+    <Compile Include="API\Admin\Security\Speciality.cs" />
+    <Compile Include="API\Admin\Security\UserType.cs" />
+    <Compile Include="API\Admin\Tasks.cs" />
+    <Compile Include="API\App\Lists.cs" />
+    <Compile Include="API\App\List\FormsAndDocuments.cs" />
+    <Compile Include="API\App\Reports.cs" />
+    <Compile Include="API\App\Stats.cs" />
+    <Compile Include="API\App\Users.cs" />
+    <Compile Include="API\Common\Account.cs" />
+    <Compile Include="API\Admin\Security\DrugCompany.cs" />
+    <Compile Include="API\Admin\Drugs\Drug.cs" />
+    <Compile Include="API\Admin\Drugs\Link.cs" />
+    <Compile Include="API\Admin\Drugs\System.cs" />
+    <Compile Include="API\Admin\Files.cs" />
+    <Compile Include="API\Admin\Security\Prescriber.cs" />
+    <Compile Include="API\Admin\Security\Provider.cs" />
+    <Compile Include="API\Admin\Security\Role.cs" />
+    <Compile Include="API\Admin\Security\Group.cs" />
+    <Compile Include="API\Admin\Security\User.cs" />
+    <Compile Include="API\Common\Address.cs" />
+    <Compile Include="API\Common\Contact.cs" />
+    <Compile Include="API\Dev\DSQ\Link.cs" />
+    <Compile Include="API\Dev\DSQ\Drug.cs" />
+    <Compile Include="API\Dev\DSQ\Question.cs" />
+    <Compile Include="API\Dev\DSQ\Section.cs" />
+    <Compile Include="API\Dev\Eoc.cs" />
+    <Compile Include="API\Dev\ReportFilters.cs" />
+    <Compile Include="API\Dev\ReportOutputs.cs" />
+    <Compile Include="API\Dev\Reports.cs" />
+    <Compile Include="API\Dev\Test\Monk.cs" />
+    <Compile Include="API\HCOs\Facility.cs" />
+    <Compile Include="API\Notifications.cs" />
+    <Compile Include="API\Prescriber\Drug.cs" />
+    <Compile Include="API\Prescriber\Prescribers.cs" />
+    <Compile Include="API\Prescriber\Profile.cs" />
+    <Compile Include="API\Prescriber\Selections.cs" />
+    <Compile Include="API\Prescriber\Wizards.cs" />
+    <Compile Include="API\Provider\Prescribers.cs" />
+    <Compile Include="API\Search.cs" />
+    <Compile Include="API\Site\ContactUs.cs" />
+    <Compile Include="API\Site\Signup.cs" />
+    <Compile Include="Data\ActivityLogEntry.cs" />
+    <Compile Include="Data\Address.cs" />
+    <Compile Include="Data\DistributionList.cs" />
+    <Compile Include="Data\DrugSelection.cs" />
+    <Compile Include="Data\Eoc.cs" />
+    <Compile Include="Data\FacilityEoc.cs" />
+    <Compile Include="Data\NotificationRecipient.cs" />
+    <Compile Include="Data\Report.cs" />
+    <Compile Include="Data\ReportFilter.cs" />
+    <Compile Include="Data\ReportOutput.cs" />
+    <Compile Include="Data\State.cs" />
+    <Compile Include="Data\Task.cs" />
+    <Compile Include="Data\PrescriberType.cs" />
+    <Compile Include="Data\UserEoc.cs" />
+    <Compile Include="Data\UserList.cs" />
+    <Compile Include="Data\UserListItem.cs" />
+    <Compile Include="Data\UserPreferences.cs" />
+    <Compile Include="Queries\NonCompliantEducation.cs" />
+    <Compile Include="Queries\NonCompliantPatientEnrollment.cs" />
+    <Compile Include="Queries\NonCompliantPrescriberEnrollment.cs" />
+    <Compile Include="Systems\Activity\ActivityService.cs" />
+    <Compile Include="Systems\Drugs.cs" />
+    <Compile Include="Systems\EOC.cs" />
+    <Compile Include="Systems\Lists.cs" />
+    <Compile Include="Systems\Notifications\AllPrescribers.cs" />
+    <Compile Include="Systems\Notifications\AllProviders.cs" />
+    <Compile Include="Systems\Notifications\AllUsers.cs" />
+    <Compile Include="Systems\Notifications\IDistributionListGenerator.cs" />
+    <Compile Include="Systems\Notifications\NotificationService.cs" />
+    <Compile Include="Systems\Notifications\DistributionListGeneratorFactory.cs" />
+    <Compile Include="Systems\Notifications\UserListOfPrescribers.cs" />
+    <Compile Include="Systems\Reports.cs" />
+    <Compile Include="Systems\Security.cs" />
+    <Compile Include="Data\Contact.cs" />
+    <Compile Include="Data\DrugFormulation.cs" />
+    <Compile Include="Data\DSQ\Answer.cs" />
+    <Compile Include="Data\DSQ\AnswerVersion.cs" />
+    <Compile Include="Data\DSQ\Link.cs" />
+    <Compile Include="Data\Formulation.cs" />
+    <Compile Include="Data\DSQ\Question.cs" />
+    <Compile Include="Data\DSQ\Section.cs" />
+    <Compile Include="Data\Language.cs" />
+    <Compile Include="Data\Drug.cs" />
+    <Compile Include="Data\DrugCompany.cs" />
+    <Compile Include="Data\DrugCompanyUser.cs" />
+    <Compile Include="Data\DrugLink.cs" />
+    <Compile Include="Data\DrugSystem.cs" />
+    <Compile Include="Data\DrugVersion.cs" />
+    <Compile Include="Data\FDAUser.cs" />
+    <Compile Include="Data\File.cs" />
+    <Compile Include="Data\Notification.cs" />
+    <Compile Include="Data\NotificationInstance.cs" />
+    <Compile Include="Data\Order.cs" />
+    <Compile Include="Data\Prescriber.cs" />
+    <Compile Include="Data\PrescriberProfile.cs" />
+    <Compile Include="Data\PrescriberUpdate.cs" />
+    <Compile Include="Data\ProviderFacility.cs" />
+    <Compile Include="Data\Speciality.cs" />
+    <Compile Include="Data\Provider.cs" />
+    <Compile Include="Data\ProviderUser.cs" />
+    <Compile Include="Systems\Tasks\BaseTaskRunner.cs" />
+    <Compile Include="Systems\Tasks\CertificationReminder.cs" />
+    <Compile Include="Systems\Tasks\ITaskRunner.cs" />
+    <Compile Include="Systems\Tasks\TaskService.cs" />
+    <Compile Include="Data\UserProfile.cs" />
+    <Compile Include="Data\UserType.cs" />
+    <Compile Include="Manager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\Config\LuceneSection.cs" />
+    <Compile Include="Search\Manager.cs" />
+    <Compile Include="Systems\Links.cs" />
+    <Compile Include="Systems\PrescriberUpdate.cs" />
+    <Compile Include="Systems\UserInfo.cs" />
+    <Compile Include="Web\AdminControlPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Web\AdminPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Web\AppControlPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Web\AppPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Web\Controls\DSQView.cs" />
+    <Compile Include="Web\Controls\DSQ.cs" />
+    <Compile Include="Web\SecurePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="API\App\Admin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Framework\Framework.csproj">
+      <Project>{38E1871B-F401-4DFA-9259-C07698DFF704}</Project>
+      <Name>Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{34AC8D64-8E20-42DC-B28E-B9AD13C5ADAA}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

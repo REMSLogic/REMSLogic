@@ -1,0 +1,9 @@
+﻿{
+    "name": "REMS Logic Invite",
+    "file": "template.html",
+    "subject": "REMS Logic Invite",
+    "from": {
+        "email": "system@remslogic.com",
+        "name": "REMS Logic"
+    }
+}

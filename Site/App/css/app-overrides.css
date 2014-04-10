@@ -1,0 +1,696 @@
+﻿body
+{
+    background: #fff;
+    font-family: 'Open Sans' , sans-serif;
+}
+.hover
+{
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+#calhead, .fc-widget-header, table.display thead tr, table.display tfoot tr, .tabs > ul > li > a, .accordion > header, .portlet > header
+{
+    background: #404041;
+    color: #fff;
+    text-transform: uppercase;
+    position: relative;
+}
+.app-wrap .portlet > header h2
+{
+    color: #fff !important;
+    text-shadow: none;
+    line-height: 24px;
+    font-size: 14px;
+    font-weight: normal;
+}
+/* ---------- UI BUTTONS / ELEMENTS ---------- */
+
+/*.back-button
+{
+    font-size: 14px;
+    display: inline-block;
+    margin: 0px 0 10px 0;
+    color: #2d2d2d;
+}*/
+.accordion > header h2
+{
+    color: #fff;
+    text-shadow: none;
+    font-weight:normal;
+}
+.accordion > header:hover
+{
+    background: #2d2d2d;
+}
+.dsq-form .form .form-input .form-info
+{
+    min-height: 27px;
+}
+.form > div.contains-children div.contains-children label.form-label
+{
+    width: 39%;
+}
+/* ---------- MAIN RIGHT NAV ---------- */
+#wrapper > header > h1
+{
+    float: right;
+    background-color: #bbbdc0;
+    margin-top: 65px;
+}
+
+.pad-right
+{
+    padding-right: 5px;
+}
+.pad-left
+{
+    padding-left: 5px;
+}
+#wrapper > section > aside
+{
+    background: #00adef;
+    margin-top: 65px;
+}
+.east-app
+{
+    background: #00adef; /*  border:1px solid #00adef; */
+}
+
+#wrapper > section > aside > nav > ul li > a > span
+{
+    color: #fff;
+    text-shadow: none;
+}
+
+#wrapper > section > aside > nav > ul li.current > a > span
+{
+    background: #fff;
+    color: #231f20 !important;
+}
+/* ---------- ICONS ---------- */
+#wrapper > section > aside > nav > ul li > a > .app-icon-nav
+{
+    position: absolute;
+    left: 10px;
+    top: -1px;
+    font-size: 28px;
+    line-height: 46px;
+    color: #fff;
+}
+#wrapper > section > aside > nav > ul li.current > a > .app-icon-nav
+{
+    color: #231f20;
+}
+/* ---------- DASHBOARD ---------- */
+#wrapper > section > section > section, #wrapper > section > section > footer
+{
+    border: none;
+}
+.add-drugs-icon
+{
+    color: #fff;
+    font-size: 24px;
+    line-height: 37px;
+}
+.bottom-marg
+{
+    margin-bottom: 20px;
+}
+
+.drug-list-dc .forms-icon
+{
+    width: 32px;
+    height: 32px;
+    margin: 5px;
+    vertical-align: middle;
+    font-size: 28px;
+    line-height: 32px;
+    color: #d1d2d4;
+}
+.drug-list-dc .forms-icon:hover
+{
+    cursor: pointer;
+    color: #231f20;
+}
+.drug-list-dc .forms-text .forms-drugName
+{
+    /*font-weight: bold;*/
+    font-size: 12px;
+}
+/*Drug list css */
+.portlet > section, .portlet
+{
+    padding: 0px;
+    border: none;
+    box-shadow: 0 0 0 rgba(0,0,0,0.0);
+    -o-box-shadow: 0 0 0 rgba(0,0,0,0.0);
+    -ms-box-shadow: 0 0 0 rgba(0,0,0,0.0);
+    -moz-box-shadow: 0 0 0 rgba(0,0,0,0.0);
+    -webkit-box-shadow: 0 0 0 rgba(0,0,0,0);
+}
+.border-wrap
+{
+    border: 1px solid #DBDBDB !important;
+    margin: 5px 0;
+}
+.drug-list-dc .forms-list, .dashboard-drugs li
+{
+    margin: 5px 0;
+}
+.drug-list-dc .forms-list:hover
+{
+    -webkit-box-shadow: 0px 0px 1px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow: 0px 0px 1px 0px rgba(50, 50, 50, 0.75);
+    box-shadow: 0px 0px 1px 0px rgba(50, 50, 50, 0.75);
+}
+.dashboard-drugs li
+{
+    background: #fff;
+    color: #3F3F3F;
+    border: 1px solid #DBDBDB;
+    position: relative;
+    -webkit-transition: all .5s ease-in-out;
+    -moz-transition: all .5s ease-in-out;
+    -ms-transition: all .5s ease-in-out;
+    -o-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+}
+.dashboard-drugs .drugName
+{
+    border: none;
+    background: #fff;
+    color: #3F3F3F;
+    position: relative;
+}
+.dashboard-drugs .drugName:hover
+{
+    -webkit-box-shadow: 0px 0px 1px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow: 0px 0px 1px 0px rgba(50, 50, 50, 0.75);
+    box-shadow: 0px 0px 1px 0px rgba(50, 50, 50, 0.75);
+}
+.dashboard-drugs .drugName .name
+{
+    font-size: 12px;
+    color: #231f20;
+    padding: 10px;
+    width: 95%;
+    max-width: 440px;
+    font-weight:normal;
+}
+.fac-drug-list .drugName:hover .name, .dashboard-drugs .drugName:hover .name
+{
+    color: #00adef;
+}
+/*.dashboard-drugs .drugName:hover .name
+{
+    color:#00adef;
+}*/
+.mydrug-list .compliance-holder
+{
+    display: none;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    background: #f6f6f6;
+    border-right: 1px solid #b6c0cd;
+    width: 70px;
+    min-height: 41px;
+    height: 100%;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+    text-align: center;
+    z-index: 2;
+}
+.mydrug-list li:hover .compliance-holder, .mydrug-list li:active .compliance-holder, .mydrug-list li.hover_effect .compliance-holder
+{
+    display: block;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+.mydrug-list li:hover .drugName .name, .mydrug-list li:active .drugName .name, .mydrug-list li.hover_effect .drugName .name
+{
+    padding-left: 75px;
+    width: 350px;
+    -webkit-transition: all .5s ease-in-out;
+    -moz-transition: all .5s ease-in-out;
+    -ms-transition: all .5s ease-in-out;
+    -o-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+}
+.mydrug-list .compliance-holder .number-alert
+{
+    font-size: 20px; /*top: 13px;     left: 0px;*/
+}
+.mydrug-list .compliance-holder .green-number
+{
+    left: 18px;
+    top: 5px;
+    position: absolute;
+}
+.mydrug-list .compliance-holder .red-number
+{
+    left: 28px;
+    top: 5px;
+    position: absolute;
+}
+.mydrug-list .compliance-holder .yellow-number
+{
+    left: 24px;
+    top: 5px;
+    position: absolute;
+}
+.mydrug-list .compliance-holder .task-alert
+{
+    font-size: 9px;
+    line-height: 10px;
+    position: absolute;
+    width: 48px;
+    text-align: left; /* top: 11px;     right: -2px;*/
+    bottom: 2px;
+    left: 9px;
+}
+
+.green-alert .number-alert
+{
+    color: Green;
+}
+.yellow-alert .number-alert
+{
+    color: #FAA61A;
+}
+.red-alert .number-alert
+{
+    color: Red;
+}
+.mydruglist-inputwrap
+{
+    position: relative;
+}
+.mydruglist-inputwrap #drugs-filter
+{
+    width: 100%;
+    margin-bottom:10px;
+}
+.mydruglist-inputwrap .clear-btn
+{
+    position: absolute;
+    top: 4px;
+    right: 18px;
+}
+.remove-icon .fa-times-circle:hover
+{
+    color:Red;}
+ .man-drug .fa-star{color:#edde38;}
+/*
+.dashboard-drugs .compliance-red, .dashboard-drugs .compliance-yellow, .dashboard-drugs .compliance-green
+{
+    position: absolute;
+    left: 0px;
+    width: 10px;
+    height: 100%;
+    z-index: 2;
+    border-top: 0px;
+}*/
+/* ---------- DRUG SELECTION PAGE ---------- */
+.title-header
+{
+    color: #fff !important;
+    text-shadow: none;
+    line-height: 24px;
+    font-size: 14px;
+    font-weight: normal;
+}
+.sortable-drugs li
+{
+    background: #fff;
+    color: #3F3F3F;
+    border: 1px solid #DBDBDB;
+    position: relative;
+    margin: 5px 0;
+    padding: 6px 10px;
+}
+.sortable-drugs li:hover
+{
+    cursor: pointer;
+    -webkit-box-shadow: 0px 0px 1px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow: 0px 0px 1px 0px rgba(50, 50, 50, 0.75);
+    box-shadow: 0px 0px 1px 0px rgba(50, 50, 50, 0.75);
+}
+.drug-select .eoc-menu
+{
+    width: 38px;
+    background-color: transparent;
+    display: inline-block;
+    color: #fff;
+    position: absolute;
+    right: 0px;
+    top: 3px;
+    font-size: 24px;
+    line-height: 37px;
+}
+.drug-select .filter
+{
+    height: 100%;
+    padding-left: 0px;
+    text-align: center;
+}
+.drug-select .filter .filter-input
+{
+    width: 100%;
+    clear: both;
+    margin: 5px 0;
+    position: relative;
+}
+.drug-select .filter .filter-input input
+{
+    width: 88%;
+}
+.drug-select .filter .filter-input .clear-btn
+{
+    position: absolute;
+    right: 34px;
+    top: 4px;
+    color: #00adef;
+}
+.drug-select .filter .filter-input .clear-btn:hover
+{
+    cursor: pointer;
+    color: #0283aa;
+    text-decoration: underline;
+}
+.drug-select .eoc-filter
+{
+    background: #fff;
+}
+
+.drug-select .eoc-filter .eoc-filter-item p
+{
+    font-size: 9px;
+}
+.drug-select .selected-drugs li
+{
+    position: relative;
+}
+.drug-select #available-drugs li .selectdrug-icon, .drug-select #selected-drugs li .selectdrug-icon
+{
+    position: absolute;
+    left: 5px;
+    top: 10px;
+    font-size: 24px;
+    color: #d1d2d4;
+}
+.drug-select #available-drugs li .selectdrug-icon:hover, .drug-select #selected-drugs li .selectdrug-icon:hover
+{
+    cursor: pointer;
+    color: #000;
+}
+.drug-select #available-drugs li .drugName, .drug-select #selected-drugs li .drugName
+{
+    padding-left: 30px;
+}
+/* ---------- MANAGE DRUG LISTS ---------- */
+
+.manage-drug-list header
+{
+    position: relative;
+    cursor: default;
+}
+.manage-drug-list .eoc-filter
+{
+    background: #fff;
+    width:100%;
+}
+.manage-drug-list header .add-drugs-btn
+{
+    position: absolute;
+    right: 0;
+    top: 0px;
+    width: 98px;
+    background: #bbbdc0;
+    color: #404041;
+    height: 44px;
+    line-height: 44px;
+    font-size: 14px;
+    padding: 0 10px;
+    text-shadow: none;
+}
+.manage-drug-list header .search-input-drugs
+{
+    position: absolute;
+    right: 175px;
+    top: 9px;
+}
+.manage-drug-list header .add-drugs-btn-2
+{
+    position: absolute;
+    right: 134px;
+    top: 11px;
+    font-size: 24px;
+    cursor: pointer;
+}
+.manage-drug-list .prev-btn
+{
+    color: #bbbdc0;
+    line-height: 36px;
+    font-size: 14px;
+}
+.manage-drug-list .next-btn
+{
+    color: #231f20;
+    line-height: 36px;
+    font-size: 14px;
+    float: right;
+}
+.manage-drug-list header .add-drugs-btn .grey-btn
+{
+    color: #404041;
+}
+.manage-drug-list .clear-btn
+{
+    /*position: absolute;     right: 34px;     top: 4px;*/
+    color: #00adef;
+}
+.manage-drug-list .clear-btn:hover
+{
+    cursor: pointer;
+    color: #0283aa;
+    text-decoration: underline;
+}
+.drug-content-wrap
+{
+    list-style: none;
+}
+.drug-content-wrap li ul
+{
+    width: 97%;
+    list-style: none;
+    background: #fff;
+    color: #3F3F3F;
+    border: 1px solid #DBDBDB;
+    position: relative;
+    margin: 5px 0;
+    min-height: 40px;
+}
+.drug-content-wrap li ul li
+{
+    float: left;
+    list-style: none;
+    color: #231f20;
+    font-size: 12px;
+    line-height: 40px;
+}
+.drug-content-wrap li ul:hover
+{
+    -webkit-box-shadow: 0px 0px 1px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow: 0px 0px 1px 0px rgba(50, 50, 50, 0.75);
+    box-shadow: 0px 0px 1px 0px rgba(50, 50, 50, 0.75);
+}
+.drug-content-wrap li ul:hover .one a
+{
+    color: #00adef;
+}
+.one
+{
+    width: 60%;
+}
+.one a
+{
+    color: #3F3F3F;
+}
+.two
+{
+    width: 30%;
+}
+.three
+{
+    width: 5%;
+}
+.four
+{
+    width: 5%;
+}
+.drug-content-wrap li ul li.star-icon
+{
+    font-size: 22px;
+    cursor: pointer;
+}
+.drug-content-wrap li ul li.remove-icon
+{
+    font-size: 22px;
+    cursor: pointer;
+}
+/*Forms */
+.dsq-form .form .form-label, .dsq-form .form .form-info
+{
+    font-size: 12px;
+}
+
+/** ADDED BY MIKE ****************************/
+
+body
+{
+    overflow-y: scroll;
+    max-width: none;
+}
+
+.dsq-form .form .form-input .form-info
+{
+    text-align: left;
+}
+
+#wrapper > section > section
+{
+    margin-right: 280px;
+}
+
+#wrapper > section > aside
+{
+    position: fixed;
+    margin: 0;
+    top: 0;
+    right: 0;
+    width: 280px;
+}
+
+#wrapper > section > aside > nav.profile > ul li
+{
+    background-color: #404041;
+}
+
+#wrapper > section > aside > nav.profile > ul li:hover
+{
+    background-color: #606062;
+}
+
+#wrapper > section > aside > nav.profile > ul li.current
+{
+    background-color: #606062;
+}
+
+#wrapper > section > aside > nav > ul
+{
+    border-style: none;
+}
+
+#wrapper > section > aside > nav > ul li:hover
+{
+    background-color: #35cbff;
+}
+
+#wrapper > section > aside > nav > ul li > a
+{
+    border-style: none;
+}
+
+#wrapper > section > aside > nav > ul li > a:hover
+{
+    box-shadow: none;
+}
+
+#wrapper > section > aside nav.profile a.logout
+{
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+div.main-content-header
+{
+    height: 44px;
+    background-color: #BBBBBB;
+}
+
+#dashboard
+{
+    white-space: nowrap;
+}
+
+.portlet
+{
+}
+
+.portlet-header
+{
+    cursor: move;
+}
+
+.portlet > section
+{
+    padding: 8px;
+}
+
+.portlet-placeholder
+{
+    background-color: #EEEEEE;
+    height: 100px;
+    margin-bottom: 8%;
+}
+
+.widget-container-wrapper
+{
+    vertical-align: top;
+    display: inline-block;
+    width: 50%;
+    padding: 0;
+    margin: 0;
+}
+
+.widget-container-wrapper .left
+{
+    padding-right: 4%;
+}
+
+.widget-container-wrapper .right
+{
+    padding-left: 4%;
+}
+
+.widget-container
+{
+    vertical-align: top;
+    min-height: 300px;
+    margin: 0;
+    padding: 8%;
+    width: auto;
+}
+
+.container_12 .grid_6
+{
+    width: auto;
+    float: none;
+    display: block;
+    margin: 0;
+    margin-bottom: 8%;
+}
+
+.ui-widget-content
+{
+    background-image: none;
+}
