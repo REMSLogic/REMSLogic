@@ -41,6 +41,7 @@ namespace RemsLogic.Repositories
                         {
                             yield return new Widget
                             {
+                                Id = (long)reader["Id"],
                                 Name = reader["Name"].ToString(),
                                 Location = reader["Location"].ToString()
                             };

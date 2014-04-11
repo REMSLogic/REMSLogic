@@ -50,16 +50,17 @@ namespace Site.App.Views
                 Control control = LoadControl(widget.Location);
                 Control container = ((i+1)%2 == 0)? pnlColumn1 : pnlColumn2;
 
-                container.Controls.Add(WrapWidget(control));
+                container.Controls.Add(WrapWidget(control, "widget_"+widget.Id));
             }
         }
 
-        private Control WrapWidget(Control widget)
+        private Control WrapWidget(Control control, string id)
         {
             HtmlGenericControl wrapper = new HtmlGenericControl("section");
 
             wrapper.Attributes["class"] = "portlet grid_6 bottom-marg";
-            wrapper.Controls.Add(widget);
+            wrapper.Attributes["id"] = id;
+            wrapper.Controls.Add(control);
             return wrapper;
         }
     }

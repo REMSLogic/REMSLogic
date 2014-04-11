@@ -97,6 +97,7 @@
     <Compile Include="API\Admin\Security\User.cs" />
     <Compile Include="API\Common\Address.cs" />
     <Compile Include="API\Common\Contact.cs" />
+    <Compile Include="API\Common\Widgets.cs" />
     <Compile Include="API\Dev\DSQ\Link.cs" />
     <Compile Include="API\Dev\DSQ\Drug.cs" />
     <Compile Include="API\Dev\DSQ\Question.cs" />
