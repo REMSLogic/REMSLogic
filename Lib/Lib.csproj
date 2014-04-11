@@ -220,6 +220,14 @@
       <Project>{38E1871B-F401-4DFA-9259-C07698DFF704}</Project>
       <Name>Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RemsLogic.Model\RemsLogic.Model.csproj">
+      <Project>{40e89cf0-7a46-4049-bfa2-61cac8e3d7a2}</Project>
+      <Name>RemsLogic.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RemsLogic.Repositories\RemsLogic.Repositories.csproj">
+      <Project>{b1a22e2f-f0dd-44cb-b74a-c8119b409d16}</Project>
+      <Name>RemsLogic.Repositories</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RemsLogic.Utilities\RemsLogic.Utilities.csproj">
       <Project>{34ac8d64-8e20-42dc-b28e-b9ad13c5adaa}</Project>
       <Name>RemsLogic.Utilities</Name>

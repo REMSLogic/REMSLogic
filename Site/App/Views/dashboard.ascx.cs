@@ -30,6 +30,7 @@ namespace Site.App.Views
             if(settings == null)
             {
                 InitializeWidgetSettings(widgets, ref settings);
+                _widgetRepo.Save(settings);
             }
 
             DisplayWidgets(widgets, settings);
@@ -56,7 +57,7 @@ namespace Site.App.Views
         {
             settings = new WidgetSettings()
             {
-                Userid = Manager.GetUser().ID ?? 0,
+                UserId = Manager.GetUser().ID ?? 0,
                 Column1 = String.Empty,
                 Column2 = String.Empty
             };

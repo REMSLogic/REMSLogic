@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using RemsLogic.Model;
 
 namespace RemsLogic.Repositories
@@ -18,7 +19,29 @@ namespace RemsLogic.Repositories
         #region IWidgetRepository Implementation
         public void Save(WidgetSettings settings)
         {
+            StringBuilder sql = new StringBuilder();
 
+            if(settings.Id == 0)
+            {
+                sql.Append("INSERT INTO UserWidgetSettings (UserId, Column1, Column2) ");
+                sql.Append("VALUES ("+settings.UserId+",'"+settings.Column1+"','"+settings.Column2+"');");
+            }
+            else
+            {
+                sql.Append("UPDATE UserWidgetSettings ");
+                sql.Append("SET Column1='"+settings.Column1+"', Column2='"+settings.Column2+"' ");
+                sql.Append("WHERE UserId="+settings.UserId);
+            }
+
+            using(SqlConnection connection = new SqlConnection(ConnectinString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql.ToString(), connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
         public WidgetSettings FindSettingsByUserId(long userId)
@@ -41,7 +64,7 @@ namespace RemsLogic.Repositories
                             return new WidgetSettings
                             {
                                 Id = (long)reader["Id"],
-                                Userid = (long)reader["UserId"],
+                                UserId = (long)reader["UserId"],
                                 Column1 = (string)reader["Column1"],
                                 Column2 = (string)reader["Column2"]
                             };
