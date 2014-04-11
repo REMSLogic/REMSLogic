@@ -36,7 +36,7 @@ namespace RemsLogic.Migrations.Sprint07
 
         public override void Down()
         {
-            Delete.Table("Widgets");
+            Delete.Table("Widgets");    
         }
     }
 }

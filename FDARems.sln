@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemsLogic.Model", "RemsLogi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemsLogic.Migrations", "RemsLogic.Migrations\RemsLogic.Migrations.csproj", "{BA4F3854-6C4E-42F0-97C0-06AE3DDF704F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemsLogic.Respositories.Tests", "RemsLogic.Respositories.Tests\RemsLogic.Respositories.Tests.csproj", "{A79511B0-3728-484B-8AC5-E06F8295D2CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,14 @@ Global
 		{BA4F3854-6C4E-42F0-97C0-06AE3DDF704F}.Production|Any CPU.Build.0 = Release|Any CPU
 		{BA4F3854-6C4E-42F0-97C0-06AE3DDF704F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA4F3854-6C4E-42F0-97C0-06AE3DDF704F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A79511B0-3728-484B-8AC5-E06F8295D2CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A79511B0-3728-484B-8AC5-E06F8295D2CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A79511B0-3728-484B-8AC5-E06F8295D2CE}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{A79511B0-3728-484B-8AC5-E06F8295D2CE}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{A79511B0-3728-484B-8AC5-E06F8295D2CE}.Production|Any CPU.ActiveCfg = Release|Any CPU
+		{A79511B0-3728-484B-8AC5-E06F8295D2CE}.Production|Any CPU.Build.0 = Release|Any CPU
+		{A79511B0-3728-484B-8AC5-E06F8295D2CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A79511B0-3728-484B-8AC5-E06F8295D2CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
