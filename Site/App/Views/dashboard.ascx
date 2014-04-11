@@ -135,17 +135,27 @@ using two columns.  When the browser shrinks to a small enough window the two
 panels should stack ontop of each other instead of being side by side.
 -->
 <div class="widget-container-wrapper">
-    <asp:Panel ID="pnlColumn1" runat="server" CssClass="container_12 clearfix widget-container left" />
+    <asp:Panel ID="pnlColumn1" runat="server" CssClass="container_12 clearfix widget-container left" data-id="1" />
 </div>
 <div class="widget-container-wrapper">
-    <asp:Panel ID="pnlColumn2" runat="server" CssClass="container_12 clearfix widget-container right" />
+    <asp:Panel ID="pnlColumn2" runat="server" CssClass="container_12 clearfix widget-container right" data-id="2" />
 </div>
 <script type="text/javascript">
     $(window).bind('content-loaded', function () {
         $(".widget-container").sortable({
             connectWith: ".widget-container",
             handle: ".portlet-header",
-            placeholder: "portlet-placeholder"
+            placeholder: "portlet-placeholder",
+            update: function (event, ui) {
+                var container = $(event.target);
+                var containerId = container.data().id;
+
+                $.ajax({
+                    url: '/api/Common/Widgets/UpdateLayout',
+                    type: 'GET',
+                    data: $(event.target).sortable('serialize')+'&containerId='+containerId
+                })
+            }
         });
 
         <% if (Framework.Security.Manager.HasRole("view_prescriber", true)){ %>

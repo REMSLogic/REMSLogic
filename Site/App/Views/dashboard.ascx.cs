@@ -4,6 +4,8 @@ using System.Configuration;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using Framework.Security;
+using Lib.Systems;
 using RemsLogic.Model;
 using RemsLogic.Repositories;
 
@@ -20,46 +22,89 @@ namespace Site.App.Views
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            // This logic is pretty ugly.  The HasRole method does some stuff behind
-            // the scenes that makes calling something like:
-            //    LoadWidget(_widgetRepo.FindByRoles(CurrentUser.Roles)
-            //
-            // more involved than it should be.
+            User user = Manager.GetUser();
 
-            if(Framework.Security.Manager.HasRole("view_admin"))
-                LoadWidgets(_widgetRepo.FindByRoles(new[]{"view_admin"}));
+            IEnumerable<Widget> widgets = LoadWidgetsByRole().ToList();
+            WidgetSettings settings = _widgetRepo.FindSettingsByUserId(user.ID ?? 0);
+            
+            if(settings == null)
+            {
+                InitializeWidgetSettings(widgets, ref settings);
+                _widgetRepo.Save(settings);
+            }
 
-            else if(Framework.Security.Manager.HasRole("dashboard_drugcompany_view"))
-                LoadWidgets(_widgetRepo.FindByRoles(new[]{"dashboard_drugcompany_view"}));
-
-            else if(Framework.Security.Manager.HasRole("view_provider"))
-                LoadWidgets(_widgetRepo.FindByRoles(new[]{"view_provider"}));
-
-            else if(Framework.Security.Manager.HasRole("view_prescriber"))
-                LoadWidgets(_widgetRepo.FindByRoles(new[]{"view_prescriber"}));
+            DisplayWidgets(widgets, settings);
         }
 
-        private void LoadWidgets(IEnumerable<Widget> widgets)
+        private IEnumerable<Widget> LoadWidgetsByRole()
         {
+            if(Manager.HasRole("view_admin"))
+                return _widgetRepo.FindByRoles(new[]{"view_admin"});
+
+            if(Manager.HasRole("dashboard_drugcompany_view"))
+                return _widgetRepo.FindByRoles(new[]{"dashboard_drugcompany_view"});
+
+            if(Manager.HasRole("view_provider"))
+                return _widgetRepo.FindByRoles(new[]{"view_provider"});
+
+            if(Manager.HasRole("view_prescriber"))
+                return _widgetRepo.FindByRoles(new[]{"view_prescriber"});
+
+            return new List<Widget>();
+        }
+
+        private void InitializeWidgetSettings(IEnumerable<Widget> widgets, ref WidgetSettings settings)
+        {
+            settings = new WidgetSettings()
+            {
+                UserId = Manager.GetUser().ID ?? 0,
+                Column1 = String.Empty,
+                Column2 = String.Empty
+            };
+
             List<Widget> widgetList = widgets.ToList();
 
             for(int i = 0; i < widgetList.Count(); i++)
             {
                 Widget widget = widgetList[i];
 
-                Control control = LoadControl(widget.Location);
-                Control container = ((i+1)%2 == 0)? pnlColumn1 : pnlColumn2;
-
-                container.Controls.Add(WrapWidget(control));
+                if((i+1)%2 != 0)
+                    settings.Column1 += widget.Id+"|";
+                else
+                    settings.Column2 += widget.Id+"|";
             }
         }
 
-        private Control WrapWidget(Control widget)
+        private void DisplayWidgets(IEnumerable<Widget> widgets, WidgetSettings settings)
+        {
+            List<int> column1 = settings.Column1
+                .Split(new []{'|'}, StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse).ToList();
+
+            List<int> column2 = settings.Column2
+                .Split(new []{'|'}, StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse).ToList();
+
+            foreach(int id in column1)
+            {
+                var widget = (from w in widgets where w.Id == id select w).Single();
+                pnlColumn1.Controls.Add(WrapWidget(LoadControl(widget.Location), "widget_"+widget.Id));
+            }
+
+            foreach(int id in column2)
+            {
+                var widget = (from w in widgets where w.Id == id select w).Single();
+                pnlColumn2.Controls.Add(WrapWidget(LoadControl(widget.Location), "widget_"+widget.Id));
+            }
+        }
+
+        private Control WrapWidget(Control control, string id)
         {
             HtmlGenericControl wrapper = new HtmlGenericControl("section");
 
             wrapper.Attributes["class"] = "portlet grid_6 bottom-marg";
-            wrapper.Controls.Add(widget);
+            wrapper.Attributes["id"] = id;
+            wrapper.Controls.Add(control);
             return wrapper;
         }
     }
