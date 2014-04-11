@@ -16,6 +16,43 @@ namespace RemsLogic.Repositories
         #endregion
 
         #region IWidgetRepository Implementation
+        public void Save(WidgetSettings settings)
+        {
+
+        }
+
+        public WidgetSettings FindSettingsByUserId(long userId)
+        {
+            string sql = @"
+                SELECT *
+                FROM UserWidgetSettings
+                WHERE UserId = "+userId;
+
+            using(SqlConnection connection = new SqlConnection(ConnectinString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if(reader.Read())
+                        {
+                            return new WidgetSettings
+                            {
+                                Id = (long)reader["Id"],
+                                Userid = (long)reader["UserId"],
+                                Column1 = (string)reader["Column1"],
+                                Column2 = (string)reader["Column2"]
+                            };
+                        }
+                        
+                        return null;
+                    }
+                }
+            }
+        }
+
         public IEnumerable<Widget> FindByRoles(IEnumerable<string> roles)
         {
             string sql = @"

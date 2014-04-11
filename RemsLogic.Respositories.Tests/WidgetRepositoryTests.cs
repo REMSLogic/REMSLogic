@@ -50,5 +50,19 @@ namespace RemsLogic.Respositories.Tests
             results.Should().NotBeNull();
             results.Count.Should().Be(9);
         }
+
+        [Test]
+        public void should_load_widget_settings_for_user_1()
+        {
+            // arrange
+            WidgetSettings settings = null;
+            long userId = 1;
+
+            // act
+            settings = _widgetRepo.FindSettingsByUserId(userId);
+
+            // assert
+            settings.Should().NotBeNull();
+        }
     }
 }

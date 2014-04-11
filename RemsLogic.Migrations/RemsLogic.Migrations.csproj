@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sprint07\Migration001AddWidgetSupport.cs" />
+    <Compile Include="Sprint07\Migration002AddWidgetSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
