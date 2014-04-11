@@ -7,6 +7,15 @@ using RemsLogic.Model;
 
 namespace RemsLogic.Repositories
 {
+    // Note, this class is pretty terrible right now.  There are a lot of things
+    // that neeed improved:
+    //   - No unit of work support
+    //   - Potential SQL inject (I didn't use parameterized queries
+    //   - The code to initialize SQL repeats in every function
+    //   - on.. and on..
+    //  
+    // I'll get it cleaned up soon.
+
     public class WidgetRepository : Repository<Widget>, IWidgetRepository
     {
         #region Constructor
