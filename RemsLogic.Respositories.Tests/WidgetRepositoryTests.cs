@@ -50,32 +50,5 @@ namespace RemsLogic.Respositories.Tests
             results.Should().NotBeNull();
             results.Count.Should().Be(9);
         }
-
-        [Test]
-        public void should_load_widget_settings_for_user_1()
-        {
-            // arrange
-            
-            WidgetSettings settings = null;
-            const long userId = 1;
-
-            // we need to make sure the record exists.  This is very pport test design.
-            // It could be the save that fails.  I really just want to make sure that
-            // the communication with the actual database is working.  This is more of
-            // an integration test than anything else.
-            if(_widgetRepo.FindSettingsByUserId(userId) == null)
-                _widgetRepo.Save(new WidgetSettings
-                {
-                    UserId = 1,
-                    Column1 = "3|2",
-                    Column2 = "4|4|3"
-                });
-
-            // act
-            settings = _widgetRepo.FindSettingsByUserId(userId);
-
-            // assert
-            settings.Should().NotBeNull();
-        }
     }
 }
