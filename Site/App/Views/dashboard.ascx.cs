@@ -1,88 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using RemsLogic.Model;
+using RemsLogic.Repositories;
 
 namespace Site.App.Views
 {
     public partial class dashboard : Lib.Web.AppControlPage
     {
-        private const string WIDGET_PATH = "~/App/Controls/Widgets/";
-        private const string WIDGET_EXT = ".ascx";
+        private readonly IWidgetRepository _widgetRepo;
+
+        public dashboard()
+        {
+            _widgetRepo = new WidgetRepository(ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString);
+        }
 
         protected void Page_Init(object sender, EventArgs e)
         {
+            // This logic is pretty ugly.  The HasRole method does some stuff behind
+            // the scenes that makes calling something like:
+            //    LoadWidget(_widgetRepo.FindByRoles(CurrentUser.Roles)
+            //
+            // more involved than it should be.
+
             if(Framework.Security.Manager.HasRole("view_admin"))
-                LoadAdminDashboard();
+                LoadWidgets(_widgetRepo.FindByRoles(new[]{"view_admin"}));
 
             else if(Framework.Security.Manager.HasRole("dashboard_drugcompany_view"))
-                LoadDrugCompanyDashboard();
+                LoadWidgets(_widgetRepo.FindByRoles(new[]{"dashboard_drugcompany_view"}));
 
             else if(Framework.Security.Manager.HasRole("view_provider"))
-                LoadProviderDashboard();
+                LoadWidgets(_widgetRepo.FindByRoles(new[]{"view_provider"}));
 
             else if(Framework.Security.Manager.HasRole("view_prescriber"))
-                LoadPrescriberDashboard();
-
-            Control reports = LoadControl("~/App/Controls/Widgets/Reports.ascx");
-            pnlColumn1.Controls.Add(WrapWidget(reports));
+                LoadWidgets(_widgetRepo.FindByRoles(new[]{"view_prescriber"}));
         }
 
-        private void LoadAdminDashboard()
+        private void LoadWidgets(IEnumerable<Widget> widgets)
         {
-            LoadWidgets(new List<string>
+            List<Widget> widgetList = widgets.ToList();
+
+            for(int i = 0; i < widgetList.Count(); i++)
             {
-                "AccountStatistics",
-                "UserActivityGraph",
-                "PendingDrugChanges"
-            });
-        }
+                Widget widget = widgetList[i];
 
-        private void LoadDrugCompanyDashboard()
-        {
-            LoadWidgets(new List<string>
-            {
-                "MyDrugs"
-            });
-        }
-
-        private void LoadProviderDashboard()
-        {
-            List<string> widgets = new List<string>
-            {
-                "FacilityDrugList",
-                "PrescriberUpdates",
-                "OrganizationSummary",
-                "UserActivityGraph"
-            };
-
-            // this one is kind of a speicial case.  apparently it is possible
-            // to have both view_admin and the provider roles.  in that case
-            // we don't want that admin to see the graph.
-            if(!Framework.Security.Manager.HasRole("view_admin"))
-                widgets.Insert(0, "ComplianceGraph");
-
-            LoadWidgets(widgets);
-        }
-
-        private void LoadPrescriberDashboard()
-        {
-            LoadWidgets(new List<string>
-            {
-                "MyDrugList",
-                "QuickLinks",
-                "ComplianceStatus"
-            });
-        }
-
-        private void LoadWidgets(List<string> widgets)
-        {
-            for(int i = 0; i < widgets.Count(); i++)
-            {
-                string widget = widgets[i];
-
-                Control control = LoadControl(String.Format("{0}{1}{2}", WIDGET_PATH, widget, WIDGET_EXT));
+                Control control = LoadControl(widget.Location);
                 Control container = ((i+1)%2 == 0)? pnlColumn1 : pnlColumn2;
 
                 container.Controls.Add(WrapWidget(control));

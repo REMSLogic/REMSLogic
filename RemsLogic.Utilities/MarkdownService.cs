@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using ColorCode;
 using MarkdownSharp;
 
-namespace Utilities
+namespace RemsLogic.Utilities
 {
     // Most of this code was lifted from other places around the Internet.  I just
     // combined a few things and simplified some other things.

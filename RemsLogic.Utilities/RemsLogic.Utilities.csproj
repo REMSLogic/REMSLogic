@@ -8,8 +8,8 @@
     <ProjectGuid>{34AC8D64-8E20-42DC-B28E-B9AD13C5ADAA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Utilities</RootNamespace>
-    <AssemblyName>Utilities</AssemblyName>
+    <RootNamespace>RemsLogic.Utilities</RootNamespace>
+    <AssemblyName>RemsLogic.Utilities</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

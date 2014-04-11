@@ -219,9 +219,9 @@
       <Project>{38E1871B-F401-4DFA-9259-C07698DFF704}</Project>
       <Name>Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Utilities\Utilities.csproj">
-      <Project>{34AC8D64-8E20-42DC-B28E-B9AD13C5ADAA}</Project>
-      <Name>Utilities</Name>
+    <ProjectReference Include="..\RemsLogic.Utilities\RemsLogic.Utilities.csproj">
+      <Project>{34ac8d64-8e20-42dc-b28e-b9ad13c5adaa}</Project>
+      <Name>RemsLogic.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
