@@ -5,6 +5,6 @@ namespace RemsLogic.Repositories
 {
     public interface IWidgetRepository : IRepository<Widget>
     {
-        IEnumerable<Widget> FindByRoles(List<string> roles);
+        IEnumerable<Widget> FindByRoles(IEnumerable<string> roles);
     }
 }

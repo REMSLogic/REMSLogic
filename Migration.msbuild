@@ -6,9 +6,12 @@
         <MigratorTasksDirectory>
             $(MSBuildProjectDirectory)\packages\FluentMigrator.1.1.2.1\tools\
         </MigratorTasksDirectory>
-        <ConnectionString>
+        <DevConnectionString>
             Data Source=localhost;Initial Catalog=devfdarems;User Id=devfdarems;Password=FD423m5!@#;
-        </ConnectionString>
+        </DevConnectionString>
+        <ProdConnectionString>
+            Data Source=localhost;Initial Catalog=devfdarems;User Id=devfdarems;Password=FD423m5!@#;
+        </ProdConnectionString>        
     </PropertyGroup>
 
     <UsingTask
@@ -20,7 +23,16 @@
 
         <!-- Important: Target must be your Migrations assembly name, not your dll file name -->
         <Migrate Database="SqlServer2008"
-                 Connection="$(ConnectionString)"
+                 Connection="$(DevConnectionString)"
                  Target="RemsLogic.Migrations" />
     </Target>
+
+    <Target Name="MigrateProd">
+        <Message Text="Starting FluentMigrator migration" />
+
+        <!-- Important: Target must be your Migrations assembly name, not your dll file name -->
+        <Migrate Database="SqlServer2008"
+                 Connection="$(ProdConnectionString)"
+                 Target="RemsLogic.Migrations" />
+    </Target>    
 </Project>

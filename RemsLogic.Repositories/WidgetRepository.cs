@@ -16,7 +16,7 @@ namespace RemsLogic.Repositories
         #endregion
 
         #region IWidgetRepository Implementation
-        public IEnumerable<Widget> FindByRoles(List<string> roles)
+        public IEnumerable<Widget> FindByRoles(IEnumerable<string> roles)
         {
             string sql = @"
                 SELECT *
