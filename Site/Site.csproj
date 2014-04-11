@@ -2200,10 +2200,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\css\svg.ashx" />
-    <None Include="App\css\Fonts\fontawesome-webfont.eot" />
-    <None Include="App\css\Fonts\fontawesome-webfont.ttf" />
-    <None Include="App\css\Fonts\fontawesome-webfont.woff" />
-    <None Include="App\css\Fonts\FontAwesome.otf" />
+    <Content Include="App\css\Fonts\fontawesome-webfont.eot" />
+    <Content Include="App\css\Fonts\fontawesome-webfont.ttf" />
+    <Content Include="App\css\Fonts\fontawesome-webfont.woff" />
+    <Content Include="App\css\Fonts\FontAwesome.otf" />
     <None Include="App\js\lib\datatables\images\Sorting icons.psd" />
     <None Include="App\js\lib\datatables\js\jquery.dataTables.min.js.gz" />
     <Content Include="Master\Front.Master" />
