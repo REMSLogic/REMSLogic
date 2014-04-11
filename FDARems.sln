@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemsLogic.Repositories", "R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemsLogic.Model", "RemsLogic.Model\RemsLogic.Model.csproj", "{40E89CF0-7A46-4049-BFA2-61CAC8E3D7A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemsLogic.Migrations", "RemsLogic.Migrations\RemsLogic.Migrations.csproj", "{BA4F3854-6C4E-42F0-97C0-06AE3DDF704F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,14 @@ Global
 		{40E89CF0-7A46-4049-BFA2-61CAC8E3D7A2}.Production|Any CPU.Build.0 = Release|Any CPU
 		{40E89CF0-7A46-4049-BFA2-61CAC8E3D7A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40E89CF0-7A46-4049-BFA2-61CAC8E3D7A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA4F3854-6C4E-42F0-97C0-06AE3DDF704F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA4F3854-6C4E-42F0-97C0-06AE3DDF704F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA4F3854-6C4E-42F0-97C0-06AE3DDF704F}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA4F3854-6C4E-42F0-97C0-06AE3DDF704F}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{BA4F3854-6C4E-42F0-97C0-06AE3DDF704F}.Production|Any CPU.ActiveCfg = Release|Any CPU
+		{BA4F3854-6C4E-42F0-97C0-06AE3DDF704F}.Production|Any CPU.Build.0 = Release|Any CPU
+		{BA4F3854-6C4E-42F0-97C0-06AE3DDF704F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA4F3854-6C4E-42F0-97C0-06AE3DDF704F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
