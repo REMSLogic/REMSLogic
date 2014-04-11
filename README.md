@@ -5,6 +5,8 @@ To work on this solution, you will need the follwoing items:
 * Visual Studio 2013 (2012 may work)
 * NuGet Package Manager
 * The Git client of your choice
+* NUnit for unit testing
+* ReSharper or some sort of integrated test runner is recommended.
 
 The following environments are setup:
 * **Development** `http://dev.remslogic.com`
