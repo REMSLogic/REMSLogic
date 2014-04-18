@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
@@ -31,8 +32,7 @@ namespace Framework.Data
 			if (instances.ContainsKey(name))
 				return instances[name];
 
-			var c = Config.Manager.Framework.Data.Connections[name];
-            var inst = Manager.Create(c.Type, c.ConnectionString);
+            var inst = Manager.Create("SqlServer", ConfigurationManager.ConnectionStrings[name].ConnectionString);
 			instances.Add(name, inst);
 
 			return inst;

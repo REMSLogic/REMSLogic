@@ -108,5 +108,4 @@ Backup*/
 UpgradeLog*.XML
 
 # Exclude Debug and Release web.config transforms
-Web.Debug.config
-Web.Release.config
+ConnectionStrings.config
