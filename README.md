@@ -17,9 +17,10 @@ Database Configuration
 
 1. Find the file named `Site/ConnectionStrings.config.example`
 2. Create a copy of it
-2. Remove the `.example` extension from the copy
-3. Open the copy in Visual Studio or your favorite text editor
-4. Update the connection string to match your database setup
+3. Rename the copy to `ConnectionStrings.config`
+4. Remove the `.example` extension from the copy
+5. Open the copy in Visual Studio or your favorite text editor
+6. Update the connection string to match your database setup
 
 This file is not managed by the VCS.  This will let you setup a connection string for your setup without messing up settings for other developers on the project.  The web.config transforms take care of setting up everything for deployments.
 
