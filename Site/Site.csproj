@@ -2215,6 +2215,7 @@
     <None Include="App\Templates\HCOReminder\config.json" />
     <None Include="App\Templates\NewsAndUpdates\config.json" />
     <None Include="App\Templates\PrescriberInvite\config.json" />
+    <Content Include="ConnectionStrings.config" />
     <None Include="downloads\8715dft.pdf" />
     <Content Include="PayPal\IPN.ashx" />
     <Content Include="packages.config" />
