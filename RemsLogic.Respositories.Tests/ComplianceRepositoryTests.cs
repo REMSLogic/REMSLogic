@@ -25,11 +25,27 @@ namespace RemsLogic.Respositories.Tests
         public void should_read_eoc_for_drug_19()
         {
             // arrange
-            long drugId = 19;
+            const long drugId = 19;
             List<Eoc> eocs = null;
 
             // act
-            eocs = _complianceRepo.GetByDrugId(drugId).ToList();
+            eocs = _complianceRepo.GetByDrug(drugId).ToList();
+
+            // assert
+            eocs.Should().NotBeNull();
+            eocs.Count.Should().NotBe(0);
+        }
+
+        [Test]
+        public void should_read_eoc_by_drug_and_role()
+        {
+            // arrange
+            const long drugId = 19;
+            const string role = "view_prescriber";
+            List<Eoc> eocs = null;
+
+            // act
+            eocs = _complianceRepo.GetByDrugAndRole(drugId, role).ToList();
 
             // assert
             eocs.Should().NotBeNull();

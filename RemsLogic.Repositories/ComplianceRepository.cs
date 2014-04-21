@@ -98,7 +98,7 @@ namespace RemsLogic.Repositories
             return null;
         }
 
-        public IEnumerable<Eoc> GetByDrugId(long drugId)
+        public IEnumerable<Eoc> GetByDrug(long drugId)
         {
             const string sql = @"
                 SELECT *
@@ -114,6 +114,36 @@ namespace RemsLogic.Repositories
                 using(SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("DrugId", drugId);
+
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while(reader.Read())
+                        {
+                            yield return ReadEoc(reader);
+                        }
+                    }
+                }
+            }
+        }
+
+        public IEnumerable<Eoc> GetByDrugAndRole(long drugId, string role)
+        {
+            const string sql = @"
+                SELECT *
+                FROM Eocs
+                    INNER JOIN DrugEocs ON DrugEocs.EocID = Eocs.ID
+                WHERE
+                    DrugEocs.DrugID = @DrugId AND
+                    Eocs.Roles LIKE @Role;";
+
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("DrugId", drugId);
+                    command.Parameters.AddWithValue("Role", String.Format("%{0}%", role));
 
                     using(SqlDataReader reader = command.ExecuteReader())
                     {
