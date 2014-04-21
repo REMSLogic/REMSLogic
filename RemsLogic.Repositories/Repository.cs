@@ -10,38 +10,38 @@ namespace RemsLogic.Repositories
         where TModel : IEntity
     {
         #region Properties
-        protected string ConnectinString {get; private set;}
+        protected string ConnectionString {get; private set;}
         #endregion
 
         #region Constructor
         public Repository(string connectionString)
         {
-            ConnectinString = connectionString;
+            ConnectionString = connectionString;
         }
         #endregion
 
         #region IRespository Implementation
-        public TModel Get(int id)
+        public virtual TModel Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Save(TModel model)
+        public virtual void Save(TModel model)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(TModel model)
+        public virtual void Delete(TModel model)
         {
             throw new NotImplementedException();
         }
 
-        public System.Collections.Generic.IEnumerable<TModel> GetAll()
+        public virtual System.Collections.Generic.IEnumerable<TModel> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<TModel> Get(
+        public virtual IQueryable<TModel> Get(
             Expression<Func<TModel, bool>> filter = null, 
             Func<IQueryable<TModel>, 
                 IOrderedQueryable<TModel>> orderby = null, string includeProperties = "")
