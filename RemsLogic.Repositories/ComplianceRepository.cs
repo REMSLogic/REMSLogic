@@ -58,9 +58,42 @@ namespace RemsLogic.Repositories
         #endregion
 
         #region IComplianceRepository Implementaion
+        public PrescriberEoc Find(long profileId, long drugId, long eocId)
+        {
+            const string sql = @"
+                SELECT *
+                FROM UserEocs
+                WHERE
+                    DrugID = @DrugId AND
+                    EocID = @EocId AND
+                    ProfileId = @ProfileId;";
+
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("DrugId", drugId);
+                    command.Parameters.AddWithValue("EocId", eocId);
+                    command.Parameters.AddWithValue("ProfileId", profileId);
+
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if(reader.Read())
+                        {
+                            return ReadPrescriberEoc(reader);
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public IEnumerable<Eoc> GetByDrugId(long drugId)
         {
-            string sql = @"
+            const string sql = @"
                 SELECT *
                 FROM Eocs
                     INNER JOIN DrugEocs ON DrugEocs.EocID = Eocs.ID
@@ -88,7 +121,7 @@ namespace RemsLogic.Repositories
 
         public IEnumerable<PrescriberEoc> GetByPrescriberProfile(long profileId)
         {
-            string sql = @"
+            const string sql = @"
                 SELECT *
                 FROM UserEocs
                 WHERE

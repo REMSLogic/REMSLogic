@@ -35,5 +35,31 @@ namespace RemsLogic.Respositories.Tests
             eocs.Should().NotBeNull();
             eocs.Count.Should().NotBe(0);
         }
+
+        [Test]
+        public void should_save_and_read_prescriber_eoc()
+        {
+            // arrange
+            PrescriberEoc savedEoc = new PrescriberEoc
+            {
+                PrescriberProfileId =  -1,
+                DrugId = -1,
+                EocId = -1,
+                Deleted = false,
+                CompletedAt = null
+            };
+
+            PrescriberEoc loadedEoc = null;
+
+            // act
+            _complianceRepo.Save(savedEoc);
+            loadedEoc = _complianceRepo.Find(-1, -1, -1);
+
+            // assert
+            loadedEoc.Should().NotBeNull();
+            loadedEoc.Id.Should().NotBe(0);
+            loadedEoc.DrugId.Should().Be(-1);
+            loadedEoc.CompletedAt.Should().Be(null);
+        }
     }
 }

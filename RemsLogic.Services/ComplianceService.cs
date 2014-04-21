@@ -18,9 +18,31 @@ namespace RemsLogic.Services
             _complianceRepo = complianceRepo;
         }
 
-        public void AddEocRequirmentsForPrescriber(long prescriberid, long drugId)
+        public void AddEocRequirmentsForPrescriberProfile(long profileId, long drugId)
         {
+            // first, load all of the EOCs for the given drug
+            List<Eoc> eocs = _complianceRepo.GetByDrugId(drugId).ToList();
 
+            // now make sure that the presriber has the requirment setup correctly
+            foreach(Eoc eoc in eocs)
+            {
+                // try and load an existing eoc.  if one isn't found, create a new one
+                PrescriberEoc prescriberEoc = _complianceRepo.Find(profileId, drugId, eoc.Id) 
+                    ?? new PrescriberEoc
+                    {
+                        PrescriberProfileId = profileId,
+                        EocId = eoc.Id,
+                        DrugId = drugId,
+                        CompletedAt = null
+                    };
+
+                // set deleted to false (there may have been one that previously
+                // existed but was deleted
+                prescriberEoc.Deleted = false;
+
+                // save the prescriber eoc
+                _complianceRepo.Save(prescriberEoc);
+            }
         }
 
         public Dictionary<Drug, List<PrescriberEoc>> GetEocRequirementsByPrescriberProfile(int profileId)

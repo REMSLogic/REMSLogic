@@ -5,7 +5,7 @@ namespace RemsLogic.Services
 {
     public interface IComplianceService
     {
-        void AddEocRequirmentsForPrescriber(long prescriberid, long drugId);
+        void AddEocRequirmentsForPrescriberProfile(long profileId, long drugId);
         Dictionary<Drug, List<PrescriberEoc>> GetEocRequirementsByPrescriberProfile(int profileId);
     }
 }
