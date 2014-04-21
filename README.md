@@ -32,6 +32,7 @@ Team City is setup to run FluentMigrator with each build.  As long as you proper
 To update your local database you'll simply need to run the migration project on your local box.  To do this:
 
 1. Launch visual Studio **Developer Command Prompt** (*this will ensure MSBuild is in your path*)
+2. Build the solution.
 2. navigate to the folder you're keeping your solution in (for me it's `c:\my dev\remslogic\website`)
 3. Modify the connection string in `Migration.msbuild` **MigrateDv** taget to match your setup
 4. Run `msbuild /v:d /target:MigrateDev Migration.msbuild`
