@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompliancyRepository.cs" />
-    <Compile Include="ICompliancyRepository.cs" />
+    <Compile Include="ComplianceRepository.cs" />
+    <Compile Include="DrugRepository.cs" />
+    <Compile Include="IComplianceRepository.cs" />
+    <Compile Include="IDrugRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IWidgetRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

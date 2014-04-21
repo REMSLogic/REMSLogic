@@ -10,7 +10,7 @@ namespace RemsLogic.Repositories
     public interface IRepository<TModel>
         where TModel : IEntity
     {
-        TModel Get(Int32 id);
+        TModel Get(long id);
 
         void Save(TModel model);
         void Delete(TModel model);

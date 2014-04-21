@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drug.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="EocRequirement.cs" />
+    <Compile Include="Eoc.cs" />
+    <Compile Include="PrescriberEoc.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

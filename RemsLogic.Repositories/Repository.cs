@@ -21,7 +21,7 @@ namespace RemsLogic.Repositories
         #endregion
 
         #region IRespository Implementation
-        public virtual TModel Get(int id)
+        public virtual TModel Get(long id)
         {
             throw new NotImplementedException();
         }
