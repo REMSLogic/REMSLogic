@@ -31,7 +31,7 @@ namespace RemsLogic.Services.Tests
             // arrange
             List<Eoc> expectedEocs = new List<Eoc>
             {
-                new Eoc{Id = 1,Name = "Eoc 1",},
+                new Eoc{Id = 1,Name = "Eoc 1"},
                 new Eoc{Id = 2,Name = "Eoc 2"}
             };
 

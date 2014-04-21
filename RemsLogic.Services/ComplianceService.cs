@@ -18,6 +18,16 @@ namespace RemsLogic.Services
             _complianceRepo = complianceRepo;
         }
 
+        public PrescriberEoc Find(long profileId, long drugId, long eocId)
+        {
+            return _complianceRepo.Find(profileId, drugId, eocId);
+        }
+
+        public void Save(PrescriberEoc prescriberEoc)
+        {
+            _complianceRepo.Save(prescriberEoc);
+        }
+
         public void AddEocsToPrescriberProfile(long profileId, long drugId)
         {
             // first, load all of the EOCs for the given drug
