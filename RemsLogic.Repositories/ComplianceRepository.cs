@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using RemsLogic.Model;
+using RemsLogic.Repositories.ProxyObjects;
 
 namespace RemsLogic.Repositories
 {
@@ -205,6 +206,35 @@ namespace RemsLogic.Repositories
                 }
             }
         }
+
+        public IEnumerable<PrescriberEocLogEntry> GetComplianceLog(long prescriberEocId)
+        {
+            const string sql = @"
+                SELECT *
+                FROM UserEocsLog
+                WHERE
+                    UserEocsId = @PrescriberEocId
+                ORDER BY
+                    RecordedAt ASC;";
+
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("PrescriberEocId", prescriberEocId);
+
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while(reader.Read())
+                        {
+                            yield return ReadPrescriberEocLogEntry(reader);
+                        }
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Utility Methods
@@ -224,7 +254,7 @@ namespace RemsLogic.Repositories
 
         private PrescriberEoc ReadPrescriberEoc(SqlDataReader reader)
         {
-            return new PrescriberEoc
+            return new PrescriberEocProxy(this)
             {
                 Id = (long)reader["ID"],
                 PrescriberProfileId = (long)reader["ProfileId"],
@@ -234,6 +264,16 @@ namespace RemsLogic.Repositories
                     ? (DateTime)reader["DateCompleted"]
                     : (DateTime?)null,
                 Deleted = (bool)reader["Deleted"]
+            };
+        }
+
+        private PrescriberEocLogEntry ReadPrescriberEocLogEntry(SqlDataReader reader)
+        {
+            return new PrescriberEocLogEntry
+            {
+                Id = (long)reader["Id"],
+                PrescriberEocId = (long)reader["UserEocsId"],
+                RecordedAt = (DateTime)reader["RecordedAt"]
             };
         }
         #endregion

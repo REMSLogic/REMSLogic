@@ -5,6 +5,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using RemsLogic.Model;
 using RemsLogic.Repositories;
+using RemsLogic.Repositories.ProxyObjects;
 using Rhino.Mocks;
 
 namespace RemsLogic.Services.Tests
@@ -37,7 +38,7 @@ namespace RemsLogic.Services.Tests
 
             List<PrescriberEoc> savedPrescriberEocs = new List<PrescriberEoc>();
 
-            _complianceRepo.Stub(x => x.GetByDrug(Arg<long>.Is.Anything)).Return(expectedEocs);
+            _complianceRepo.Stub(x => x.GetByDrugAndRole(0, "")).IgnoreArguments().Return(expectedEocs);
             _complianceRepo.Stub(x => x.Find(0,0,0)).IgnoreArguments().Return(null);
             _complianceRepo.Stub(x => x.Save(Arg<PrescriberEoc>.Is.Anything))
                 .WhenCalled(x => savedPrescriberEocs.Add((PrescriberEoc)x.Arguments.First()));
@@ -81,6 +82,46 @@ namespace RemsLogic.Services.Tests
             // assert
             logEntry.PrescriberEocId.Should().Be(expectedEoc.Id);
             logEntry.RecordedAt.Should().Be(expectedEoc.CompletedAt.Value);
+        }
+
+        [Test]
+        public void sould_load_compliance_log_via_lazy_loading()
+        {
+            // arrange
+            PrescriberEoc expectedEoc = new PrescriberEocProxy(_complianceRepo)
+            {
+                Id = 1,
+                PrescriberProfileId = 1,
+                DrugId = 1,
+                EocId = 1,
+                CompletedAt = DateTime.Now
+            };
+
+            List<PrescriberEocLogEntry> expectedLog = new List<PrescriberEocLogEntry>
+            {
+                new PrescriberEocLogEntry
+                {
+                    PrescriberEocId = 1,
+                    RecordedAt = DateTime.Now.AddMinutes(-100)
+                },
+                new PrescriberEocLogEntry
+                {
+                    PrescriberEocId = 1,
+                    RecordedAt = DateTime.Now
+                }
+            };
+
+            PrescriberEoc loadedEoc = null;
+
+            _complianceRepo.Stub(x => x.Find(0,0,0)).IgnoreArguments().Return(expectedEoc);
+            _complianceRepo.Stub(x => x.GetComplianceLog(Arg<int>.Is.Anything)).Return(expectedLog);
+
+            // act
+            loadedEoc = _complianceSvc.Find(-1, -1, -1);
+
+            // assert
+            loadedEoc.ComplianceLog.Should().NotBeNull();
+            loadedEoc.ComplianceLog.Count.Should().Be(2);
         }
     }
 }

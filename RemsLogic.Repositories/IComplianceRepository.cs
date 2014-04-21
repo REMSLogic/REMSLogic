@@ -13,5 +13,7 @@ namespace RemsLogic.Repositories
         IEnumerable<Eoc> GetByDrug(long drugId);
         IEnumerable<Eoc> GetByDrugAndRole(long drugId, string p);
         IEnumerable<PrescriberEoc> GetByPrescriberProfile(long profileId);
+
+        IEnumerable<PrescriberEocLogEntry> GetComplianceLog(long prescriberEocID);
     }
 }
