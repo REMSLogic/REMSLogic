@@ -208,7 +208,7 @@ namespace Lib.API.Prescriber
 
 			//cert.Save();
 
-            UpdatePrescriberEoc(cert);
+            RecordCompliance(cert);
 
             Systems.PrescriberUpdate.DrugCertified(p, d);
 
@@ -251,7 +251,7 @@ namespace Lib.API.Prescriber
             complianceService.AddEocsToPrescriberProfile(profileId, drugId);
         }
 
-        private static void UpdatePrescriberEoc(Data.UserEoc cert)
+        private static void RecordCompliance(Data.UserEoc cert)
         {
             
             // typically i would have an IoC container setup to take care of all of this
@@ -270,7 +270,7 @@ namespace Lib.API.Prescriber
                 };
 
             eoc.CompletedAt = cert.DateCompleted;
-            complianceService.Save(eoc);
+            complianceService.RecordCompliance(eoc);
         }
 
         private static void RemoveEocs(long profileId, long drugId)

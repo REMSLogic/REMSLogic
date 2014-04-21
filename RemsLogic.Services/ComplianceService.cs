@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using RemsLogic.Model;
 using RemsLogic.Repositories;
@@ -23,9 +24,20 @@ namespace RemsLogic.Services
             return _complianceRepo.Find(profileId, drugId, eocId);
         }
 
-        public void Save(PrescriberEoc prescriberEoc)
+        public void RecordCompliance(PrescriberEoc prescriberEoc)
         {
             _complianceRepo.Save(prescriberEoc);
+
+            // TODO: Optimize this.  This approach is terrible
+            PrescriberEoc eoc = _complianceRepo.Find(prescriberEoc.PrescriberProfileId, prescriberEoc.DrugId, prescriberEoc.EocId);
+
+            if(eoc.Id > 0 && eoc.CompletedAt != null)
+                LogEocComplianceEntry(eoc.Id, eoc.CompletedAt.Value);
+        }
+
+        public void LogEocComplianceEntry(long prescriberEocId, DateTime recordedAt)
+        {
+            _complianceRepo.LogEocComplianceEntry(prescriberEocId, recordedAt);
         }
 
         public void AddEocsToPrescriberProfile(long profileId, long drugId)
@@ -58,7 +70,7 @@ namespace RemsLogic.Services
         public void RemoveEocsFromPrescriberProfile(long profileId, long drugId)
         {
             // first, load all of hte eocs for the given drug
-            List<Eoc> eocs = _complianceRepo.GetByDrugId(drugId).ToList();
+            List<Eoc> eocs = _complianceRepo.GetByDrug(drugId).ToList();
 
             // now "delete" each eoc from the user's profile.  the entries are
             // only marked as deleted.  they are not actually deleted

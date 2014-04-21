@@ -45,6 +45,7 @@
     <Compile Include="Eoc.cs" />
     <Compile Include="PrescriberEoc.cs" />
     <Compile Include="IEntity.cs" />
+    <Compile Include="PrescriberEocLogEntry.cs" />
     <Compile Include="Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WidgetSettings.cs" />

@@ -65,6 +65,28 @@ namespace RemsLogic.Repositories
         #endregion
 
         #region IComplianceRepository Implementaion
+        public void LogEocComplianceEntry(long prescriberEocId, DateTime recordedAt)
+        {
+            const string sql = @"
+                INSERT INTO UserEocsLog
+                    (UserEocsId, RecordedAt)
+                VALUES
+                    (@UserEocsId, @RecordedAt);";
+
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("UserEocsId", prescriberEocId);
+                    command.Parameters.AddWithValue("RecordedAt", recordedAt);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
         public PrescriberEoc Find(long profileId, long drugId, long eocId)
         {
             const string sql = @"
