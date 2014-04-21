@@ -55,6 +55,25 @@ namespace RemsLogic.Services
             }
         }
 
+        public void RemoveEocsFromPrescriberProfile(long profileId, long drugId)
+        {
+            // first, load all of hte eocs for the given drug
+            List<Eoc> eocs = _complianceRepo.GetByDrugId(drugId).ToList();
+
+            // now "delete" each eoc from the user's profile.  the entries are
+            // only marked as deleted.  they are not actually deleted
+            foreach(Eoc eoc in eocs)
+            {
+                PrescriberEoc prescriberEoc = _complianceRepo.Find(profileId, drugId, eoc.Id);
+
+                if(prescriberEoc == null)
+                    continue;
+
+                prescriberEoc.Deleted = true;
+                _complianceRepo.Save(prescriberEoc);
+            }
+        }
+
         public Dictionary<Drug, List<PrescriberEoc>> GetEocsByPrescriberProfile(int profileId)
         {
             // first, load all of the prescriber profile drugs

@@ -9,6 +9,8 @@ namespace RemsLogic.Services
         void Save(PrescriberEoc prescriberEoc);
 
         void AddEocsToPrescriberProfile(long profileId, long drugId);
+        void RemoveEocsFromPrescriberProfile(long profileId, long drugId);
+
         Dictionary<Drug, List<PrescriberEoc>> GetEocsByPrescriberProfile(int profileId);
     }
 }

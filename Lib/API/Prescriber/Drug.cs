@@ -74,16 +74,7 @@ namespace Lib.API.Prescriber
 
             Systems.PrescriberUpdate.DrugAdded(p, d);
 
-            // typically i would have an IoC container setup to take care of all of this
-            string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
-            IDrugRepository drugRepo = new DrugRepository(connectionString);
-            IComplianceRepository complianceRepo = new ComplianceRepository(connectionString);
-
-            ComplianceService complianceService = new ComplianceService(drugRepo, complianceRepo);
-
-            // this adds the entries into the UserEoc table for all possible eocs for the drug.
-            // the date completed is left null
-            complianceService.AddEocsToPrescriberProfile(profile.ID.Value, d.ID.Value);
+            AddEocs(profile.ID.Value, d.ID.Value);
         }
 
 		[SecurityRole("view_prescriber")]
@@ -118,6 +109,8 @@ namespace Lib.API.Prescriber
 			drug_list.RemoveItem( d.ID.Value );
 
             Systems.PrescriberUpdate.DrugRemoved(p, d);
+
+            RemoveEocs(profile.ID.Value, d.ID.Value);
 
 			return new ReturnObject
 			{
@@ -244,6 +237,20 @@ namespace Lib.API.Prescriber
 			};
         }
 
+        private static void AddEocs(long profileId, long drugId)
+        {
+            // typically i would have an IoC container setup to take care of all of this
+            string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
+            IDrugRepository drugRepo = new DrugRepository(connectionString);
+            IComplianceRepository complianceRepo = new ComplianceRepository(connectionString);
+
+            ComplianceService complianceService = new ComplianceService(drugRepo, complianceRepo);
+
+            // this adds the entries into the UserEoc table for all possible eocs for the drug.
+            // the date completed is left null
+            complianceService.AddEocsToPrescriberProfile(profileId, drugId);
+        }
+
         private static void UpdatePrescriberEoc(Data.UserEoc cert)
         {
             
@@ -255,15 +262,27 @@ namespace Lib.API.Prescriber
             ComplianceService complianceService = new ComplianceService(drugRepo, complianceRepo);
 
             PrescriberEoc eoc = complianceService.Find(cert.ProfileID, cert.DrugID, cert.EocID) ?? new PrescriberEoc
-            {
-                PrescriberProfileId = cert.ProfileID,
-                DrugId = cert.DrugID,
-                EocId = cert.EocID,
-                Deleted = false,
-            };
+                {
+                    PrescriberProfileId = cert.ProfileID,
+                    DrugId = cert.DrugID,
+                    EocId = cert.EocID,
+                    Deleted = false,
+                };
 
             eoc.CompletedAt = cert.DateCompleted;
             complianceService.Save(eoc);
+        }
+
+        private static void RemoveEocs(long profileId, long drugId)
+        {
+            // typically i would have an IoC container setup to take care of all of this
+            string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
+            IDrugRepository drugRepo = new DrugRepository(connectionString);
+            IComplianceRepository complianceRepo = new ComplianceRepository(connectionString);
+
+            ComplianceService complianceService = new ComplianceService(drugRepo, complianceRepo);
+
+            complianceService.RemoveEocsFromPrescriberProfile(profileId, drugId);
         }
 	}
 }
