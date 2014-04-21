@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrugList.cs" />
+    <Compile Include="DrugListItem.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="Widget.cs" />

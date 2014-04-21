@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrugListRepository.cs" />
+    <Compile Include="IDrugListRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IWidgetRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
