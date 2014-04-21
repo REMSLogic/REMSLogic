@@ -1,7 +1,22 @@
-﻿namespace Site.App.Controls.Widgets
+﻿using RemsLogic.Model;
+using RemsLogic.Repositories;
+using System.Configuration;
+namespace Site.App.Controls.Widgets
 {
     public partial class MyDrugList : System.Web.UI.UserControl
     {
+        private readonly IDrugListRepository _drugListRepo;
+        public MyDrugList()
+        {
+            _drugListRepo = new DrugListRepository(ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString);
+        }
+
+        public DrugList GetDrugList()
+        {
+            long userId = Framework.Security.Manager.GetUser().ID.Value;
+            return _drugListRepo.GetDrugListByUserId(userId);
+        }
+
         public string GetEOCData(Lib.Data.Drug d)
         {
             var ret = "";

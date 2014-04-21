@@ -44,7 +44,8 @@
 
 <%
     //var drugs = Lib.Data.PrescriberDrug.FindByPrescriber(Lib.Data.Prescriber.FindByProfile(Lib.Data.UserProfile.FindByUser(Framework.Security.Manager.GetUser())));
-    var drugs = Lib.Systems.Security.GetCurrentPrescriber().GetDrugInfo();
+    //var drugs = Lib.Systems.Security.GetCurrentPrescriber().GetDrugInfo();
+    var drugs = GetDrugList();
 %>
 
 <header class="portlet-header">
@@ -118,8 +119,8 @@
     </div>
     --%>
     <ul id="drug-list-widget" class="dashboard-drugs mydrug-list">
-        <%foreach (var pd in drugs){
-        var pd_drug = new Lib.Data.Drug(pd.DrugID);%>
+        <%foreach (var pd in drugs.Drugs){
+        var pd_drug = new Lib.Data.Drug(pd.Id);%>
         <li class="ui-state-default" data-drug-id="<%=pd_drug.ID %>"<%=GetEOCData(pd_drug) %>>
             <%if(pd.PercentComplete >= 1){ %>
             <div class="compliance-holder green-alert" id="<%=pd_drug.ID %>">
