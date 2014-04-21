@@ -48,6 +48,7 @@
     <Compile Include="Sprint07\Migration002AddWidgetSettings.cs" />
     <Compile Include="Sprint08\Migration001AddDeletedColumnToUserEoc.cs" />
     <Compile Include="Sprint08\Migration002MakeDateCompletedNullable.cs" />
+    <Compile Include="Sprint08\Migration003AddRolesToEoc.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

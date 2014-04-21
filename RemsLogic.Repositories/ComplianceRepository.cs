@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using RemsLogic.Model;
 
 namespace RemsLogic.Repositories
@@ -161,7 +162,11 @@ namespace RemsLogic.Repositories
             {
                 Id = (long)reader["ID"],
                 Name = (string)reader["Name"],
-                DisplayName = (string)reader["DisplayName"]
+                DisplayName = (string)reader["DisplayName"],
+                AppliesTo = reader["Roles"] != DBNull.Value
+                    ? ((string)reader["Roles"]).Split(new []{'|'}, StringSplitOptions.RemoveEmptyEntries)
+                        .ToList()
+                    : new List<string>()
             };
         }
 
