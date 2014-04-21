@@ -26,11 +26,11 @@ namespace RemsLogic.Repositories
             DrugList retList = new DrugList();
             long profileId = GetProfileId(userId);
 
-            //Find list Id if exists... if not, create new list
+            //Find list Id if exists
             long listId = GetListId(ListType.FavList, profileId);
             if(listId == 0)
             {
-                listId = CreateNewList(ListType.FavList, profileId);
+                return null;
             }
 
             retList.Id = listId;
@@ -46,11 +46,11 @@ namespace RemsLogic.Repositories
             DrugList retList = new DrugList();
             long profileId = GetProfileId(userId);
 
-            //Find list Id if exists... if not, create new list
+            //Find list Id if exists
             long listId = GetListId(ListType.DrugList, profileId);
             if (listId == 0)
             {
-                listId = CreateNewList(ListType.DrugList, profileId);
+                return null;
             }
 
             retList.Id = listId;
@@ -61,26 +61,51 @@ namespace RemsLogic.Repositories
             return retList;
         }
 
-        public bool AddDrugToFavorites(long profileId, long drugId)
+        public bool CreateNewFavoritesList(long userId)
+        {
+            long profileId = GetProfileId(userId);
+
+            long listId = GetListId(ListType.FavList, profileId);
+            if (listId == 0)
+            {
+                listId = CreateNewList(ListType.FavList, profileId);
+                return true;
+            }
+            return false;
+        }
+
+        public bool CreateNewDrugList(long userId)
+        {
+            long profileId = GetProfileId(userId);
+
+            long listId = GetListId(ListType.DrugList, profileId);
+            if (listId == 0)
+            {
+                listId = CreateNewList(ListType.DrugList, profileId);
+                return true;
+            }
+            return false;
+        }
+
+        public void AddDrugToFavorites(long profileId, long drugId)
         {
             long listId = GetListId(ListType.FavList, profileId);
             string SQL = "INSERT INTO [dbo].[UserListItems]([ListID],[ItemID],[Order],[DateAdded]) " +
-                         "VALUES(@ListId,@ItemId,0,GETDATE())";
+                         "VALUES(@ListId,@ItemId,0,@Date)";
             using (SqlConnection connection = new SqlConnection(ConnectinString))
             {
                 using (SqlCommand cmd = new SqlCommand(SQL, connection))
                 {
                     cmd.Parameters.AddWithValue("@ListId", listId);
                     cmd.Parameters.AddWithValue("@ItemId", drugId);
+                    cmd.Parameters.AddWithValue("@Date", DateTime.Now);
                     connection.Open();
                     cmd.ExecuteScalar();
                 }
             }
-
-            return true;
         }
 
-        public bool RemoveDrugFromFavorites(long profileId, long drugId)
+        public void RemoveDrugFromFavorites(long profileId, long drugId)
         {
             long listId = GetListId(ListType.FavList, profileId);
             string SQL = "DELETE FROM [dbo].[UserListItems] WHERE ListID = @ListId AND ItemID = @ItemId";
@@ -94,30 +119,27 @@ namespace RemsLogic.Repositories
                     cmd.ExecuteScalar();
                 }
             }
-
-            return true;
         }
 
-        public bool AddDrugToDrugList(long profileId, long drugId)
+        public void AddDrugToDrugList(long profileId, long drugId)
         {
             long listId = GetListId(ListType.DrugList, profileId);
             string SQL = "INSERT INTO [dbo].[UserListItems]([ListID],[ItemID],[Order],[DateAdded]) " +
-                         "VALUES(@ListId,@ItemId,0,GETDATE())";
+                         "VALUES(@ListId,@ItemId,0,@Date)";
             using (SqlConnection connection = new SqlConnection(ConnectinString))
             {
                 using (SqlCommand cmd = new SqlCommand(SQL, connection))
                 {
                     cmd.Parameters.AddWithValue("@ListId", listId);
                     cmd.Parameters.AddWithValue("@ItemId", drugId);
+                    cmd.Parameters.AddWithValue("@Date", DateTime.Now);
                     connection.Open();
                     cmd.ExecuteScalar();
                 }
             }
-
-            return true;
         }
 
-        public bool RemoveDrugFromDrugList(long profileId, long drugId)
+        public void RemoveDrugFromDrugList(long profileId, long drugId)
         {
             long listId = GetListId(ListType.DrugList, profileId);
             string SQL = "DELETE FROM [dbo].[UserListItems] WHERE ListID = @ListId AND ItemID = @ItemId";
@@ -131,8 +153,6 @@ namespace RemsLogic.Repositories
                     cmd.ExecuteScalar();
                 }
             }
-
-            return true;
         }
 
         #endregion
@@ -141,6 +161,7 @@ namespace RemsLogic.Repositories
 
         enum ListType
         {
+            Undefined = 0,
             DrugList = 1,
             FavList = 2
         };
@@ -186,13 +207,14 @@ namespace RemsLogic.Repositories
             if (!string.IsNullOrEmpty(name))
             {
                 string SQL = "INSERT INTO [dbo].[UserLists]( [UserProfileID],[Name],[DateCreated],[DateModified],[DataType],[System]) " +
-                             "VALUES( @ProfileId,@Name,GETDATE(),GETDATE(),drug,1); " +
+                             "VALUES( @ProfileId,@Name,@Date,@Date,drug,1); " +
                              "SELECT Scope_Identity()";
                 using (SqlConnection connection = new SqlConnection(ConnectinString))
                 {
                     using (SqlCommand cmd = new SqlCommand(SQL, connection))
                     {
                         cmd.Parameters.AddWithValue("@ProfileId", profileId);
+                        cmd.Parameters.AddWithValue("@Date", DateTime.Now);
                         cmd.Parameters.Add(new SqlParameter("@Name", SqlDbType.VarChar, 500));
                         cmd.Parameters["@Name"].Value = name;
                         connection.Open();
@@ -247,25 +269,25 @@ namespace RemsLogic.Repositories
         {
             List<DrugListItem> retList = new List<DrugListItem>();
 
-            string SQL = "SELECT D.[ID] AS [DrugID], D.[GenericName] AS [DrugName], L.[DateAdded], [DrugEocCounts].[NumEocs] AS [DrugEocs], [UserEocCounts].[NumEocs] AS [UserEocs] " +
-                         "FROM [dbo].[UserListItems] L " +
-                         "LEFT JOIN [dbo].[Drugs] D " +
-			                "ON L.[ItemID] = D.[ID] " +
-                         "LEFT JOIN (SELECT [DrugEocs].[DrugID], COUNT(1) AS [NumEocs] FROM [DrugEocs] " +
-						            "INNER JOIN [EocUserTypes] " +
-							            "ON [DrugEocs].[EocID] = [EocUserTypes].[EocID] " +
-						            "LEFT JOIN [UserTypes] " +
-							            "ON [EocUserTypes].[UserTypeID] = [UserTypes].[ID] " +
-					                "WHERE [UserTypes].[Name] = 'prescriber' " +
-					                "GROUP BY [DrugEocs].[DrugID] " +
-                                    ") AS [DrugEocCounts] " +
-			                "ON D.[ID] = [DrugEocCounts].[DrugID] " +
-                         "LEFT JOIN (SELECT [UserEocs].[ProfileID], [UserEocs].[DrugID], COUNT(1) [NumEocs] FROM [UserEocs] " +
-					                "WHERE [UserEocs].[DateCompleted] IS NOT NULL " +
-					                "GROUP BY [UserEocs].[ProfileID], [UserEocs].[DrugID] " +
-                                    ") AS [UserEocCounts] " +
-			                "ON [UserEocCounts].[ProfileID] = @ProfileId AND D.[ID] = [UserEocCounts].[DrugID] " +
-                         "WHERE L.ListID = @ListId";
+            string SQL = @"SELECT D.[ID] AS [DrugID], D.[GenericName] AS [DrugName], L.[DateAdded], [DrugEocCounts].[NumEocs] AS [DrugEocs], [UserEocCounts].[NumEocs] AS [UserEocs]
+                         FROM [dbo].[UserListItems] L
+                         LEFT JOIN [dbo].[Drugs] D 
+			                ON L.[ItemID] = D.[ID] 
+                         LEFT JOIN (SELECT [DrugEocs].[DrugID], COUNT(1) AS [NumEocs] FROM [DrugEocs] 
+						            INNER JOIN [EocUserTypes]
+							            ON [DrugEocs].[EocID] = [EocUserTypes].[EocID] 
+						            LEFT JOIN [UserTypes]
+							            ON [EocUserTypes].[UserTypeID] = [UserTypes].[ID]
+					                WHERE [UserTypes].[Name] = 'prescriber' 
+					                GROUP BY [DrugEocs].[DrugID]
+                                    ) AS [DrugEocCounts]
+			                ON D.[ID] = [DrugEocCounts].[DrugID]
+                         LEFT JOIN (SELECT [UserEocs].[ProfileID], [UserEocs].[DrugID], COUNT(1) [NumEocs] FROM [UserEocs]
+					                WHERE [UserEocs].[DateCompleted] IS NOT NULL
+					                GROUP BY [UserEocs].[ProfileID], [UserEocs].[DrugID]
+                                    ) AS [UserEocCounts]
+			                ON [UserEocCounts].[ProfileID] = @ProfileId AND D.[ID] = [UserEocCounts].[DrugID]
+                         WHERE L.ListID = @ListId";
             using (SqlConnection connection = new SqlConnection(ConnectinString))
             {
                 using (SqlCommand cmd = new SqlCommand(SQL, connection))
@@ -279,11 +301,11 @@ namespace RemsLogic.Repositories
                         {
                             retList.Add(new DrugListItem
                                         {
-                                            Id = reader.IsDBNull(0) ? 0 : reader.GetInt64(0),
-                                            DrugName = reader.IsDBNull(1) ? string.Empty : reader.GetString(1),
-                                            DrugEocsCount = reader.IsDBNull(3) ? 0 : reader.GetInt32(3),
-                                            UserEocsCount = reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
-                                            DateAdded = reader.IsDBNull(2) ? DateTime.Now : reader.GetDateTime(2)
+                                            Id = reader["DrugID"] == DBNull.Value ? 0 : (long)reader["DrugID"],
+                                            DrugName = reader["DrugName"] == DBNull.Value ? string.Empty : reader["DrugName"].ToString(),
+                                            DrugEocsCount = reader["DrugEocs"] == DBNull.Value ? 0 : (int)reader["DrugEocs"],
+                                            UserEocsCount = reader["UserEocs"] == DBNull.Value ? 0 : (int)reader["UserEocs"],
+                                            DateAdded = reader["DateAdded"] == DBNull.Value ? DateTime.Now : (DateTime)reader["DateAdded"]
                                         });
                         }
                     }

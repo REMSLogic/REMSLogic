@@ -12,12 +12,16 @@ namespace RemsLogic.Repositories
 
         DrugList GetDrugListByUserId(long userId);
 
-        bool AddDrugToFavorites(long userId, long drugId);
+        bool CreateNewFavoritesList(long userId);
 
-        bool RemoveDrugFromFavorites(long userId, long drugId);
+        bool CreateNewDrugList(long userId);
 
-        bool AddDrugToDrugList(long userId, long drugId);
+        void AddDrugToFavorites(long userId, long drugId);
 
-        bool RemoveDrugFromDrugList(long userId, long drugId);
+        void RemoveDrugFromFavorites(long userId, long drugId);
+
+        void AddDrugToDrugList(long userId, long drugId);
+
+        void RemoveDrugFromDrugList(long userId, long drugId);
     }
 }
