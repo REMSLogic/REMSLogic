@@ -22,21 +22,22 @@ namespace RemsLogic.Repositories
             if(model.Id == 0)
             {
                 sql = @"
-                    INSERT INTO UserEoc
+                    INSERT INTO UserEocs
                         (ProfileId, DrugId, EocId, DateCompleted, Deleted)
                     VALUES
-                        (@ProfileId, @DrugId, @EoczId, @DateCompleted, @Deleted)";
+                        (@ProfileId, @DrugId, @EocId, @DateCompleted, @Deleted)";
             }
             else
             {
                 sql = @"
-                    UPDATE UserEoc
+                    UPDATE UserEocs
                         SET 
                             ProfileId = @ProfileId,
                             DrugId = @DrugId,
                             EocId = @EocId,
                             DateCompleted = @DateCompleted,
-                            Deleted = @Deleted;";
+                            Deleted = @Deleted
+                    WHERE ID = @UserEocId;";
             }
 
             using(SqlConnection connection = new SqlConnection(ConnectionString))
@@ -48,8 +49,13 @@ namespace RemsLogic.Repositories
                     command.Parameters.AddWithValue("ProfileId", model.PrescriberProfileId);
                     command.Parameters.AddWithValue("DrugId", model.DrugId);
                     command.Parameters.AddWithValue("EocId", model.EocId);
-                    command.Parameters.AddWithValue("DateCompleted", model.CompletedAt);
+                    command.Parameters.AddWithValue("DateCompleted", model.CompletedAt != null
+                        ? (object)model.CompletedAt.Value 
+                        : DBNull.Value);
                     command.Parameters.AddWithValue("Deleted", model.Deleted);
+
+                    if(model.Id > 0)
+                        command.Parameters.AddWithValue("UserEocId", model.Id);
 
                     command.ExecuteNonQuery();
                 }
@@ -163,10 +169,13 @@ namespace RemsLogic.Repositories
         {
             return new PrescriberEoc
             {
+                Id = (long)reader["ID"],
                 PrescriberProfileId = (long)reader["ProfileId"],
                 DrugId = (long)reader["DrugId"],
                 EocId = (long)reader["EocId"],
-                CompletedAt = (DateTime)reader["DateCompleted"],
+                CompletedAt = reader["DateCompleted"] != DBNull.Value
+                    ? (DateTime)reader["DateCompleted"]
+                    : (DateTime?)null,
                 Deleted = (bool)reader["Deleted"]
             };
         }

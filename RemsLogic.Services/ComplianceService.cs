@@ -18,7 +18,7 @@ namespace RemsLogic.Services
             _complianceRepo = complianceRepo;
         }
 
-        public void AddEocRequirmentsForPrescriberProfile(long profileId, long drugId)
+        public void AddEocsToPrescriberProfile(long profileId, long drugId)
         {
             // first, load all of the EOCs for the given drug
             List<Eoc> eocs = _complianceRepo.GetByDrugId(drugId).ToList();
@@ -45,7 +45,7 @@ namespace RemsLogic.Services
             }
         }
 
-        public Dictionary<Drug, List<PrescriberEoc>> GetEocRequirementsByPrescriberProfile(int profileId)
+        public Dictionary<Drug, List<PrescriberEoc>> GetEocsByPrescriberProfile(int profileId)
         {
             // first, load all of the prescriber profile drugs
             List<Drug> drugs = _drugRepo.GetByPrescriberProfile(profileId).ToList();

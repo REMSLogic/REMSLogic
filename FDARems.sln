@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemsLogic.Respositories.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemsLogic.Services", "RemsLogic.Services\RemsLogic.Services.csproj", "{BADEC8EE-E997-4663-B61A-C84972DEFA5F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemsLogic.Services.Tests", "RemsLogic.Services.Tests\RemsLogic.Services.Tests.csproj", "{8926398A-7418-4084-9CAB-273C22F3ADBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,14 @@ Global
 		{BADEC8EE-E997-4663-B61A-C84972DEFA5F}.Production|Any CPU.Build.0 = Release|Any CPU
 		{BADEC8EE-E997-4663-B61A-C84972DEFA5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BADEC8EE-E997-4663-B61A-C84972DEFA5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8926398A-7418-4084-9CAB-273C22F3ADBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8926398A-7418-4084-9CAB-273C22F3ADBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8926398A-7418-4084-9CAB-273C22F3ADBF}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{8926398A-7418-4084-9CAB-273C22F3ADBF}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{8926398A-7418-4084-9CAB-273C22F3ADBF}.Production|Any CPU.ActiveCfg = Release|Any CPU
+		{8926398A-7418-4084-9CAB-273C22F3ADBF}.Production|Any CPU.Build.0 = Release|Any CPU
+		{8926398A-7418-4084-9CAB-273C22F3ADBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8926398A-7418-4084-9CAB-273C22F3ADBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -36,7 +36,7 @@ namespace RemsLogic.Respositories.Tests
             eocs.Count.Should().NotBe(0);
         }
 
-        [Test]
+        [Test, Ignore("I don't want this run against dev or prod databases.")]
         public void should_save_and_read_prescriber_eoc()
         {
             // arrange
@@ -45,7 +45,7 @@ namespace RemsLogic.Respositories.Tests
                 PrescriberProfileId =  -1,
                 DrugId = -1,
                 EocId = -1,
-                Deleted = false,
+                Deleted = true,
                 CompletedAt = null
             };
 
@@ -54,12 +54,17 @@ namespace RemsLogic.Respositories.Tests
             // act
             _complianceRepo.Save(savedEoc);
             loadedEoc = _complianceRepo.Find(-1, -1, -1);
+            
+            loadedEoc.Deleted = false;
+            _complianceRepo.Save(loadedEoc);
+            loadedEoc = _complianceRepo.Find(-1, -1, -1);
 
             // assert
             loadedEoc.Should().NotBeNull();
             loadedEoc.Id.Should().NotBe(0);
             loadedEoc.DrugId.Should().Be(-1);
             loadedEoc.CompletedAt.Should().Be(null);
+            loadedEoc.Deleted.Should().BeFalse();
         }
     }
 }
