@@ -7,10 +7,10 @@
             $(MSBuildProjectDirectory)\packages\FluentMigrator.1.1.2.1\tools\
         </MigratorTasksDirectory>
         <DevConnectionString>
-            Data Source=localhost\MSSQLSERVER2012;Initial Catalog=devfdarems;User Id=devfdarems;Password=devfdarems;
+            Data Source=localhost;Initial Catalog=devfdarems;User Id=devfdarems;Password=5m3R!5m3R;
         </DevConnectionString>
         <ProdConnectionString>
-            Data Source=localhost;Initial Catalog=devfdarems;User Id=devfdarems;Password=FD423m5!@#;
+            Data Source=localhost;Initial Catalog=devfdarems;User Id=devfdarems;Password=5m3R!5m3R;
         </ProdConnectionString>        
     </PropertyGroup>
 
