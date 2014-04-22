@@ -92,7 +92,7 @@ namespace RemsLogic.Repositories
             long listId = GetListId(ListType.FavList, profileId);
             string SQL = "INSERT INTO [dbo].[UserListItems]([ListID],[ItemID],[Order],[DateAdded]) " +
                          "VALUES(@ListId,@ItemId,0,@Date)";
-            using (SqlConnection connection = new SqlConnection(ConnectinString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(SQL, connection))
                 {
@@ -109,7 +109,7 @@ namespace RemsLogic.Repositories
         {
             long listId = GetListId(ListType.FavList, profileId);
             string SQL = "DELETE FROM [dbo].[UserListItems] WHERE ListID = @ListId AND ItemID = @ItemId";
-            using (SqlConnection connection = new SqlConnection(ConnectinString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(SQL, connection))
                 {
@@ -126,7 +126,7 @@ namespace RemsLogic.Repositories
             long listId = GetListId(ListType.DrugList, profileId);
             string SQL = "INSERT INTO [dbo].[UserListItems]([ListID],[ItemID],[Order],[DateAdded]) " +
                          "VALUES(@ListId,@ItemId,0,@Date)";
-            using (SqlConnection connection = new SqlConnection(ConnectinString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(SQL, connection))
                 {
@@ -143,7 +143,7 @@ namespace RemsLogic.Repositories
         {
             long listId = GetListId(ListType.DrugList, profileId);
             string SQL = "DELETE FROM [dbo].[UserListItems] WHERE ListID = @ListId AND ItemID = @ItemId";
-            using (SqlConnection connection = new SqlConnection(ConnectinString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(SQL, connection))
                 {
@@ -171,7 +171,7 @@ namespace RemsLogic.Repositories
             long retVal = 0;
 
             string SQL = " SELECT TOP 1 * FROM [dbo].[UserProfiles] WHERE UserID = @UserId";
-            using (SqlConnection connection = new SqlConnection(ConnectinString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(SQL, connection))
                 {
@@ -209,7 +209,7 @@ namespace RemsLogic.Repositories
                 string SQL = "INSERT INTO [dbo].[UserLists]( [UserProfileID],[Name],[DateCreated],[DateModified],[DataType],[System]) " +
                              "VALUES( @ProfileId,@Name,@Date,@Date,drug,1); " +
                              "SELECT Scope_Identity()";
-                using (SqlConnection connection = new SqlConnection(ConnectinString))
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     using (SqlCommand cmd = new SqlCommand(SQL, connection))
                     {
@@ -243,7 +243,7 @@ namespace RemsLogic.Repositories
             if (!string.IsNullOrEmpty(name))
             {
                 string SQL = "SELECT TOP 1 * FROM [dbo].[UserLists] WHERE UserProfileID = @ProfileId AND Name = @Name";
-                using (SqlConnection connection = new SqlConnection(ConnectinString))
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     using (SqlCommand cmd = new SqlCommand(SQL, connection))
                     {
@@ -288,7 +288,7 @@ namespace RemsLogic.Repositories
                                     ) AS [UserEocCounts]
 			                ON [UserEocCounts].[ProfileID] = @ProfileId AND D.[ID] = [UserEocCounts].[DrugID]
                          WHERE L.ListID = @ListId";
-            using (SqlConnection connection = new SqlConnection(ConnectinString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(SQL, connection))
                 {
