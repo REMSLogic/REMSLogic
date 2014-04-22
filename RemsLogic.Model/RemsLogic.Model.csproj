@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Drug.cs" />
+    <Compile Include="DrugList.cs" />
+    <Compile Include="DrugListItem.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Eoc.cs" />
     <Compile Include="PrescriberEoc.cs" />

@@ -44,6 +44,8 @@
     <Compile Include="DrugRepository.cs" />
     <Compile Include="IComplianceRepository.cs" />
     <Compile Include="IDrugRepository.cs" />
+    <Compile Include="DrugListRepository.cs" />
+    <Compile Include="IDrugListRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IWidgetRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
