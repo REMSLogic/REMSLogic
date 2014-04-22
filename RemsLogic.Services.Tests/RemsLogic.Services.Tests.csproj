@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B1A22E2F-F0DD-44CB-B74A-C8119B409D16}</ProjectGuid>
+    <ProjectGuid>{8926398A-7418-4084-9CAB-273C22F3ADBF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RemsLogic.Repositories</RootNamespace>
-    <AssemblyName>RemsLogic.Repositories</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>RemsLogic.Services.Tests</RootNamespace>
+    <AssemblyName>RemsLogic.Services.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentAssertions">
+      <HintPath>..\packages\FluentAssertions.2.2.0.0\lib\net45\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,23 +48,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ComplianceRepository.cs" />
-    <Compile Include="DrugRepository.cs" />
-    <Compile Include="IComplianceRepository.cs" />
-    <Compile Include="IDrugRepository.cs" />
-    <Compile Include="DrugListRepository.cs" />
-    <Compile Include="IDrugListRepository.cs" />
-    <Compile Include="IRepository.cs" />
-    <Compile Include="IWidgetRepository.cs" />
+    <Compile Include="ComplianceServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProxyObjects\PrescriberEocProxy.cs" />
-    <Compile Include="Repository.cs" />
-    <Compile Include="WidgetRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RemsLogic.Model\RemsLogic.Model.csproj">
       <Project>{40e89cf0-7a46-4049-bfa2-61cac8e3d7a2}</Project>
       <Name>RemsLogic.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RemsLogic.Repositories\RemsLogic.Repositories.csproj">
+      <Project>{b1a22e2f-f0dd-44cb-b74a-c8119b409d16}</Project>
+      <Name>RemsLogic.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RemsLogic.Services\RemsLogic.Services.csproj">
+      <Project>{badec8ee-e997-4663-b61a-c84972defa5f}</Project>
+      <Name>RemsLogic.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

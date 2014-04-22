@@ -42,7 +42,7 @@ namespace RemsLogic.Repositories
                 sql.Append("WHERE UserId="+settings.UserId);
             }
 
-            using(SqlConnection connection = new SqlConnection(ConnectinString))
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
 
@@ -60,7 +60,7 @@ namespace RemsLogic.Repositories
                 FROM UserWidgetSettings
                 WHERE UserId = "+userId;
 
-            using(SqlConnection connection = new SqlConnection(ConnectinString))
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
 
@@ -98,7 +98,7 @@ namespace RemsLogic.Repositories
                     .Select(r => String.Format(" Roles LIKE '%{0}%'", r) )
                     .Aggregate((i,j) => i+" OR "+j));
 
-            using(SqlConnection connection = new SqlConnection(ConnectinString))
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
 

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security;
 using System.Web;
 using Framework.API;
-using Framework.Data;
 using Lib.Systems.Tasks;
+using RemsLogic.Model;
+using RemsLogic.Repositories;
+using RemsLogic.Services;
 using CertificationReminder = Lib.Systems.Tasks.CertificationReminder;
 
 namespace Lib.API.Prescriber
@@ -16,46 +19,6 @@ namespace Lib.API.Prescriber
 		[Method("Prescriber/Drug/Add")]
 		public static ReturnObject Add(HttpContext context, long id, int order)
 		{
-            /*
-			var d = new Data.Drug(id);
-			if (d.ID == null || d.ID.Value != id || !d.Active)
-			{
-				return new ReturnObject
-				{
-					Error = true,
-					StatusCode = 404,
-					Message = "That is not a valid drug."
-				};
-			}
-
-			var profile = Data.UserProfile.FindByUser(Framework.Security.Manager.GetUser());
-			var p = Data.Prescriber.FindByProfile(profile);
-
-			if (p == null || p.ID == null)
-			{
-				return new ReturnObject
-				{
-					Error = true,
-					StatusCode = 403,
-					Message = "You must be logged in to do that."
-				};
-			}
-
-			var pds = Data.PrescriberDrug.FindByPrescriber(p);
-
-			foreach (var pd in pds)
-			{
-				if (pd.Order >= order)
-				{
-					pd.Order++;
-					pd.Save();
-				}
-			}
-
-			p.AddDrug(d, order);
-			Systems.PrescriberUpdate.DrugAdded(p, d);
-            */
-
             try
             {
                 AddDrugToPrescriber(id, order);
@@ -110,6 +73,8 @@ namespace Lib.API.Prescriber
 			drug_list.AddItem( d.ID.Value, order );
 
             Systems.PrescriberUpdate.DrugAdded(p, d);
+
+            AddEocs(profile.ID.Value, d.ID.Value);
         }
 
 		[SecurityRole("view_prescriber")]
@@ -144,6 +109,8 @@ namespace Lib.API.Prescriber
 			drug_list.RemoveItem( d.ID.Value );
 
             Systems.PrescriberUpdate.DrugRemoved(p, d);
+
+            RemoveEocs(profile.ID.Value, d.ID.Value);
 
 			return new ReturnObject
 			{
@@ -234,7 +201,14 @@ namespace Lib.API.Prescriber
 			cert.DrugID = d.ID.Value;
 			cert.EocID = eoc.ID.Value;
 			cert.ProfileID = p.ProfileID.Value;
-			cert.Save();
+
+            // this is handle differently now.  there will already be an existing
+            // entry for the eoc. we just need to update the date comleted. sie note,
+            // this method is to big.
+
+			//cert.Save();
+
+            RecordCompliance(cert);
 
             Systems.PrescriberUpdate.DrugCertified(p, d);
 
@@ -261,6 +235,54 @@ namespace Lib.API.Prescriber
 					}
 				}
 			};
+        }
+
+        private static void AddEocs(long profileId, long drugId)
+        {
+            // typically i would have an IoC container setup to take care of all of this
+            string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
+            IDrugRepository drugRepo = new DrugRepository(connectionString);
+            IComplianceRepository complianceRepo = new ComplianceRepository(connectionString);
+
+            ComplianceService complianceService = new ComplianceService(drugRepo, complianceRepo);
+
+            // this adds the entries into the UserEoc table for all possible eocs for the drug.
+            // the date completed is left null
+            complianceService.AddEocsToPrescriberProfile(profileId, drugId);
+        }
+
+        private static void RecordCompliance(Data.UserEoc cert)
+        {
+            
+            // typically i would have an IoC container setup to take care of all of this
+            string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
+            IDrugRepository drugRepo = new DrugRepository(connectionString);
+            IComplianceRepository complianceRepo = new ComplianceRepository(connectionString);
+
+            ComplianceService complianceService = new ComplianceService(drugRepo, complianceRepo);
+
+            PrescriberEoc eoc = complianceService.Find(cert.ProfileID, cert.DrugID, cert.EocID) ?? new PrescriberEoc
+                {
+                    PrescriberProfileId = cert.ProfileID,
+                    DrugId = cert.DrugID,
+                    EocId = cert.EocID,
+                    Deleted = false,
+                };
+
+            eoc.CompletedAt = cert.DateCompleted;
+            complianceService.RecordCompliance(eoc);
+        }
+
+        private static void RemoveEocs(long profileId, long drugId)
+        {
+            // typically i would have an IoC container setup to take care of all of this
+            string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
+            IDrugRepository drugRepo = new DrugRepository(connectionString);
+            IComplianceRepository complianceRepo = new ComplianceRepository(connectionString);
+
+            ComplianceService complianceService = new ComplianceService(drugRepo, complianceRepo);
+
+            complianceService.RemoveEocsFromPrescriberProfile(profileId, drugId);
         }
 	}
 }
