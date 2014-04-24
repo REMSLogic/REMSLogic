@@ -153,11 +153,14 @@ namespace RemsLogic.Repositories
         public IEnumerable<Eoc> GetByDrug(long drugId)
         {
             const string sql = @"
-                SELECT *
-                FROM Eocs
-                    INNER JOIN DrugEocs ON DrugEocs.EocID = Eocs.ID
+                SELECT 
+                    Eocs.*
+                FROM DSQ_Answers
+                    INNER JOIN DSQ_Questions ON DSQ_Questions.ID = DSQ_Answers.QuestionID
+                    INNER JOIN Eocs ON Eocs.ID = DSQ_Questions.EocId
                 WHERE
-                    DrugEocs.DrugID = @DrugId;";
+                    DSQ_Questions.EocId IS NOT NULL AND
+                    DrugID = @DrugId;";
 
             using(SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -181,11 +184,14 @@ namespace RemsLogic.Repositories
         public IEnumerable<Eoc> GetByDrugAndRole(long drugId, string role)
         {
             const string sql = @"
-                SELECT *
-                FROM Eocs
-                    INNER JOIN DrugEocs ON DrugEocs.EocID = Eocs.ID
+                SELECT 
+                    Eocs.*
+                FROM DSQ_Answers
+                    INNER JOIN DSQ_Questions ON DSQ_Questions.ID = DSQ_Answers.QuestionID
+                    INNER JOIN Eocs ON Eocs.ID = DSQ_Questions.EocId
                 WHERE
-                    DrugEocs.DrugID = @DrugId AND
+                    DSQ_Questions.EocId IS NOT NULL AND
+                    DrugID = @DrugId AND
                     Eocs.Roles LIKE @Role;";
 
             using(SqlConnection connection = new SqlConnection(ConnectionString))

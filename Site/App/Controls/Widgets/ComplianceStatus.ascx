@@ -43,7 +43,9 @@ foreach (var pdi in pdis)
 
 float total_drug_eocs = (from pdi in pdis select pdi.DrugEocs).Sum();
 float total_user_eocs = (from pdi in pdis select pdi.UserEocs).Sum();
-float total_percent = total_user_eocs/total_drug_eocs;
+float total_percent = total_drug_eocs > 0
+    ? total_user_eocs/total_drug_eocs
+    : 1.0F;
 %>
 
 <header class="portlet-header">
