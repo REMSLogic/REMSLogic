@@ -86,7 +86,7 @@ namespace RemsLogic.Services
             }
         }
 
-        public Dictionary<Drug, List<PrescriberEoc>> GetEocsByPrescriberProfile(int profileId)
+        public Dictionary<Drug, List<PrescriberEoc>> GetEocsByPrescriberProfile(long profileId)
         {
             // first, load all of the prescriber profile drugs
             List<Drug> drugs = _drugRepo.GetByPrescriberProfile(profileId).ToList();

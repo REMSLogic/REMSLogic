@@ -113,7 +113,8 @@ function updateChildContainer($this) {
 		if (Q == null || Q == '')
 			return;
 
-		var show = question_eval.evaluate(Q, values);
+	    //var show = question_eval.evaluate(Q, values);
+		var show = true;
 
 		if (show) {
 			shown = true;

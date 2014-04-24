@@ -50,6 +50,8 @@
     <Compile Include="Sprint08\Migration002MakeDateCompletedNullable.cs" />
     <Compile Include="Sprint08\Migration003AddRolesToEoc.cs" />
     <Compile Include="Sprint08\Migration004AddEocLogTable.cs" />
+    <Compile Include="Sprint09\Migration001AddEocToDsqQuestion.cs" />
+    <Compile Include="Sprint09\Migration002AddSetIdentityAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

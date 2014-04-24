@@ -182,31 +182,13 @@ namespace Lib.API.Prescriber
                 };
             }
 
-			var certs = Data.UserEoc.FindByUserandDrug( p.ProfileID.Value, d.ID.Value );
-			var cert = (from c in certs
-						where c.EocID == eoc.ID.Value
-						select c).FirstOrDefault();
-
-			if( cert != null )
-			{
-				return new ReturnObject {
-					Error = true,
-					StatusCode = 400,
-					Message = "You are already certified in that EOC."
-				};
-			}
-
-			cert = new Data.UserEoc();
-			cert.DateCompleted = DateTime.Now;
-			cert.DrugID = d.ID.Value;
-			cert.EocID = eoc.ID.Value;
-			cert.ProfileID = p.ProfileID.Value;
-
-            // this is handle differently now.  there will already be an existing
-            // entry for the eoc. we just need to update the date comleted. sie note,
-            // this method is to big.
-
-			//cert.Save();
+            Data.UserEoc cert = new Data.UserEoc()
+            {
+                DateCompleted = DateTime.Now,
+                DrugID = d.ID.Value,
+                EocID = eoc.ID.Value,
+                ProfileID = p.ProfileID.Value
+            };
 
             RecordCompliance(cert);
 
@@ -253,7 +235,6 @@ namespace Lib.API.Prescriber
 
         private static void RecordCompliance(Data.UserEoc cert)
         {
-            
             // typically i would have an IoC container setup to take care of all of this
             string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
             IDrugRepository drugRepo = new DrugRepository(connectionString);

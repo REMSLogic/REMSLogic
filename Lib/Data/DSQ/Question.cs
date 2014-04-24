@@ -118,6 +118,8 @@ namespace Lib.Data.DSQ
 		public string ShowChildrenForAnswers;
         [Column]
         public bool HideFromView;
+        [Column]
+        public long? EocId;
 
 		public Question(long? id = null) : base(id)
 		{ }

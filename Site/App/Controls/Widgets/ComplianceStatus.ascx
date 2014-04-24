@@ -28,7 +28,6 @@ var in_progress_drugs = new List<Lib.Data.Prescriber.PresciberDrugInfo>();
 var not_started_drugs = new List<Lib.Data.Prescriber.PresciberDrugInfo>();
 
 var pdis = Lib.Systems.Security.GetCurrentPrescriber().GetDrugInfo();
-float total_percent = 0.0f;
 
 foreach (var pdi in pdis)
 {
@@ -40,10 +39,13 @@ foreach (var pdi in pdis)
         complete_drugs.Add(pdi);
     else
         in_progress_drugs.Add(pdi);
-    total_percent += percent;
 }
 
-total_percent = total_percent / ((float)pdis.Count);
+float total_drug_eocs = (from pdi in pdis select pdi.DrugEocs).Sum();
+float total_user_eocs = (from pdi in pdis select pdi.UserEocs).Sum();
+float total_percent = total_drug_eocs > 0
+    ? total_user_eocs/total_drug_eocs
+    : 1.0F;
 %>
 
 <header class="portlet-header">

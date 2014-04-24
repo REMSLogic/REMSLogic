@@ -121,14 +121,47 @@ namespace RemsLogic.Repositories
             return null;
         }
 
-        public IEnumerable<Eoc> GetByDrug(long drugId)
+        public Eoc GetEoc(long id)
         {
             const string sql = @"
                 SELECT *
                 FROM Eocs
-                    INNER JOIN DrugEocs ON DrugEocs.EocID = Eocs.ID
                 WHERE
-                    DrugEocs.DrugID = @DrugId;";
+                    Eocs.ID = @EocId;";
+
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("EocId", id);
+
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if(reader.Read())
+                        {
+                            return ReadEoc(reader);
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public IEnumerable<Eoc> GetByDrug(long drugId)
+        {
+            const string sql = @"
+                SELECT 
+                    Eocs.*
+                FROM DSQ_Answers
+                    INNER JOIN DSQ_Questions ON DSQ_Questions.ID = DSQ_Answers.QuestionID
+                    INNER JOIN Eocs ON Eocs.ID = DSQ_Questions.EocId
+                WHERE
+                    DSQ_Questions.EocId IS NOT NULL AND
+                    Value LIKE 'Yes' AND
+                    DrugID = @DrugId;";
 
             using(SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -152,11 +185,15 @@ namespace RemsLogic.Repositories
         public IEnumerable<Eoc> GetByDrugAndRole(long drugId, string role)
         {
             const string sql = @"
-                SELECT *
-                FROM Eocs
-                    INNER JOIN DrugEocs ON DrugEocs.EocID = Eocs.ID
+                SELECT 
+                    Eocs.*
+                FROM DSQ_Answers
+                    INNER JOIN DSQ_Questions ON DSQ_Questions.ID = DSQ_Answers.QuestionID
+                    INNER JOIN Eocs ON Eocs.ID = DSQ_Questions.EocId
                 WHERE
-                    DrugEocs.DrugID = @DrugId AND
+                    DSQ_Questions.EocId IS NOT NULL AND
+                    Value LIKE 'Yes' AND
+                    DrugID = @DrugId AND
                     Eocs.Roles LIKE @Role;";
 
             using(SqlConnection connection = new SqlConnection(ConnectionString))
