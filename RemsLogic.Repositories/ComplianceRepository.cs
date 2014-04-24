@@ -160,6 +160,7 @@ namespace RemsLogic.Repositories
                     INNER JOIN Eocs ON Eocs.ID = DSQ_Questions.EocId
                 WHERE
                     DSQ_Questions.EocId IS NOT NULL AND
+                    Value LIKE 'Yes' AND
                     DrugID = @DrugId;";
 
             using(SqlConnection connection = new SqlConnection(ConnectionString))
@@ -191,6 +192,7 @@ namespace RemsLogic.Repositories
                     INNER JOIN Eocs ON Eocs.ID = DSQ_Questions.EocId
                 WHERE
                     DSQ_Questions.EocId IS NOT NULL AND
+                    Value LIKE 'Yes' AND
                     DrugID = @DrugId AND
                     Eocs.Roles LIKE @Role;";
 

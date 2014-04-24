@@ -296,8 +296,13 @@ namespace Lib.Web.Controls
 				if( eoc_applies && has_drug )
 				{
                     PrescriberEoc prescriberEoc = complianceRepo.Find(Systems.Security.GetCurrentProfile().ID ?? 0, Drug.ID ?? 0, eocForQ.Id);
-                    bool is_certified = prescriberEoc.CompletedAt != null;
-                    DateTime? date_certified = prescriberEoc.CompletedAt;
+                    bool is_certified = prescriberEoc != null 
+                        ? prescriberEoc.CompletedAt != null
+                        : false;
+
+                    DateTime? date_certified = prescriberEoc != null
+                        ? prescriberEoc.CompletedAt
+                        : null;
 
 					writer.AddAttribute( "data-parent-id", q.ID.Value.ToString() );
 					writer.AddAttribute( "data-parent-checks", "Required|Optional" );
