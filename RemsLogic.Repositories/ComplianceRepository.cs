@@ -121,6 +121,35 @@ namespace RemsLogic.Repositories
             return null;
         }
 
+        public Eoc GetEoc(long id)
+        {
+            const string sql = @"
+                SELECT *
+                FROM Eocs
+                WHERE
+                    Eocs.ID = @EocId;";
+
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("EocId", id);
+
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if(reader.Read())
+                        {
+                            return ReadEoc(reader);
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public IEnumerable<Eoc> GetByDrug(long drugId)
         {
             const string sql = @"

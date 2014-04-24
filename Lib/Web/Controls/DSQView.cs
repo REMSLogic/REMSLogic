@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using RemsLogic.Model;
+using RemsLogic.Repositories;
 using RemsLogic.Utilities;
 
 namespace Lib.Web.Controls
@@ -134,6 +136,7 @@ namespace Lib.Web.Controls
 				return;
 
             IMarkdownService markdownSvc = new MarkdownService(enableSyntaxHighlighting: true);
+            IComplianceRepository complianceRepo = new ComplianceRepository(ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString);
 
 			string a = null;
 			if (DrugID != null)
@@ -168,9 +171,18 @@ namespace Lib.Web.Controls
                 return;
             }
 
-			bool for_eoc = false;
-			if( q.FieldType == "EOC" )
-				for_eoc = true;
+            Eoc eocForQ = null;
+            bool for_eoc = false;
+
+            if(q.EocId != null)
+            {
+                eocForQ = complianceRepo.GetEoc(q.EocId.Value);
+
+                if(eocForQ != null && eocForQ.AppliesTo.Any(r => Framework.Security.Manager.HasRole(r)))
+                {
+                    for_eoc = true;
+                }
+            }
 
 			string cssClass = "clearfix form-row";
 			if (has_children)
@@ -253,6 +265,7 @@ namespace Lib.Web.Controls
 
 			if( for_eoc )
 			{
+                /*
 				eoc = new Lib.Data.Eoc( long.Parse(q.Answers) );
 				if( eoc != null )
 				{
@@ -260,6 +273,11 @@ namespace Lib.Web.Controls
 					if( profile != null && eoc.HasUserType( profile.UserTypeID ) )
 						eoc_applies = true;
 				}
+                */
+
+                // code has been changed to only display as an eoc if the
+                // eoc applies to the current user.
+                eoc_applies = for_eoc;
 			}
 
 			if( has_children || eoc_applies )
@@ -277,11 +295,9 @@ namespace Lib.Web.Controls
 
 				if( eoc_applies && has_drug )
 				{
-					bool is_certified = false;
-					DateTime date_certified = DateTime.MinValue;
-
-					if( Lib.Systems.EOC.IsCertified( Systems.Security.GetCurrentProfile(), eoc, Drug, ref date_certified ) )
-						is_certified = true;
+                    PrescriberEoc prescriberEoc = complianceRepo.Find(Systems.Security.GetCurrentProfile().ID ?? 0, Drug.ID ?? 0, eocForQ.Id);
+                    bool is_certified = prescriberEoc.CompletedAt != null;
+                    DateTime? date_certified = prescriberEoc.CompletedAt;
 
 					writer.AddAttribute( "data-parent-id", q.ID.Value.ToString() );
 					writer.AddAttribute( "data-parent-checks", "Required|Optional" );
@@ -315,7 +331,7 @@ namespace Lib.Web.Controls
 
 								writer.RenderBeginTag( "span" );
 								{
-									writer.WriteEncodedText( "Complete as of " + date_certified.ToShortDateString() + " " + date_certified.ToShortTimeString() );
+									writer.WriteEncodedText( "Complete as of " + date_certified.Value.ToShortDateString() + " " + date_certified.Value.ToShortTimeString() );
 								}
 								writer.RenderEndTag();
 							}
@@ -328,7 +344,7 @@ namespace Lib.Web.Controls
 								writer.RenderEndTag();
 
 								writer.AddAttribute( "class", "button ajax-button" );
-								writer.AddAttribute( "href", "/api/App/Users/Certified?drug_id=" + Drug.ID.Value + "&eoc_name=" + eoc.Name );
+								writer.AddAttribute( "href", "/api/App/Users/Certified?drug_id=" + Drug.ID.Value + "&eoc_name=" + eocForQ.Name );
 								writer.RenderBeginTag( "a" );
 								{
 									writer.WriteEncodedText( "YES" );

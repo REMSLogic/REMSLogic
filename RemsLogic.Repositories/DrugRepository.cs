@@ -41,13 +41,15 @@ namespace RemsLogic.Repositories
         public IEnumerable<Drug> GetByPrescriberProfile(long profileId)
         {
             const string sql = @"
-                SELECT *
-                FROM Drugs
-                    INNER JOIN DrugSelections ON DrugSelections.DrugID = Drugs.ID
-                    INNER JOIN PrescriberProfiles ON DrugSelections.PrescriberId = PrescriberProfiles.PrescriberID
+                SELECT Drugs.*
+                FROM UserListItems
+	                INNER JOIN UserLists ON UserLists.ID = UserListItems.ListID
+	                INNer JOIN Drugs ON Drugs.ID = UserListItems.ItemID
                 WHERE
-                    PrescriberProfiles.ID = @ProfileId AND
-                    Prescribes = 1;";
+	                DataType = 'drug' AND
+	                UserProfileID = @ProfileId
+                ORDER BY
+	                GenericName ASC;";
 
             using(SqlConnection connection = new SqlConnection(ConnectionString))
             {

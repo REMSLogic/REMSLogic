@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Web;
 using Framework.API;
 using Lib.Systems.Tasks;
+using RemsLogic.Model;
+using RemsLogic.Repositories;
+using RemsLogic.Services;
 using CertificationReminder = Lib.Systems.Tasks.CertificationReminder;
 
 namespace Lib.API.App
@@ -46,26 +50,15 @@ namespace Lib.API.App
 				};
 			}
 
-			var certs = Data.UserEoc.FindByUserandDrug( p.ID.Value, d.ID.Value );
-			var cert = (from c in certs
-						where c.EocID == eoc.ID.Value
-						select c).FirstOrDefault();
+            Data.UserEoc cert = new Data.UserEoc()
+            {
+                DateCompleted = DateTime.Now,
+                DrugID = d.ID.Value,
+                EocID = eoc.ID.Value,
+                ProfileID = p.ID.Value
+            };
 
-			if( cert != null )
-			{
-				return new ReturnObject {
-					Error = true,
-					StatusCode = 400,
-					Message = "You are already certified in that EOC."
-				};
-			}
-
-			cert = new Data.UserEoc();
-			cert.DateCompleted = DateTime.Now;
-			cert.DrugID = d.ID.Value;
-			cert.EocID = eoc.ID.Value;
-			cert.ProfileID = p.ID.Value;
-			cert.Save();
+            RecordCompliance(cert);
 
 			if( p.UserType.Name == "prescriber" )
 				Systems.PrescriberUpdate.DrugCertified( Lib.Systems.Security.GetCurrentPrescriber(), d );
@@ -93,5 +86,26 @@ namespace Lib.API.App
 				}
 			};
 		}
+
+        private static void RecordCompliance(Data.UserEoc cert)
+        {
+            // typically i would have an IoC container setup to take care of all of this
+            string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
+            IDrugRepository drugRepo = new DrugRepository(connectionString);
+            IComplianceRepository complianceRepo = new ComplianceRepository(connectionString);
+
+            ComplianceService complianceService = new ComplianceService(drugRepo, complianceRepo);
+
+            PrescriberEoc eoc = complianceService.Find(cert.ProfileID, cert.DrugID, cert.EocID) ?? new PrescriberEoc
+                {
+                    PrescriberProfileId = cert.ProfileID,
+                    DrugId = cert.DrugID,
+                    EocId = cert.EocID,
+                    Deleted = false,
+                };
+
+            eoc.CompletedAt = cert.DateCompleted;
+            complianceService.RecordCompliance(eoc);
+        }
 	}
 }

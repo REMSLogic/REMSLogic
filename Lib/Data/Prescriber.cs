@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Linq;
 using Framework.Data;
+using RemsLogic.Repositories;
+using RemsLogic.Services;
 
 namespace Lib.Data
 {
@@ -197,7 +201,7 @@ namespace Lib.Data
 
 		}
 
-		public class PresciberDrugInfo : RowView
+		public class PresciberDrugInfo
 		{
 			[Column]
 			public long DrugID;
@@ -222,19 +226,38 @@ namespace Lib.Data
 					return ((float)UserEocs) / ((float)DrugEocs);
 				}
 			}
-
-			public PresciberDrugInfo(IDataRecord row) : base(row)
-			{}
 		}
 
 		public IList<PresciberDrugInfo> GetDrugInfo()
 		{
+            /*
 			var db = Database.Get( "FDARems" );
 
 			var ps = new List<Parameter>();
 			ps.Add( new Parameter( "pid", this.ID.Value ) );
 
 			return db.ExecuteQuery<PresciberDrugInfo>( "Prescriber_GetDrugInfo", ps.ToArray(), CommandType.StoredProcedure );
+            */
+
+            string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
+            long profileId = Systems.Security.GetCurrentProfile().ID.Value;
+
+            IDrugRepository drugRepo = new DrugRepository(connectionString);
+            IComplianceRepository complianceRepo = new ComplianceRepository(connectionString);
+
+            IComplianceService complianceSvc = new ComplianceService(drugRepo, complianceRepo);
+
+            var eocs = complianceSvc.GetEocsByPrescriberProfile(profileId);
+
+            return (from eoc in eocs
+                    select new PresciberDrugInfo
+                    {
+                        DrugID = eoc.Key.Id,
+                        DrugName = eoc.Key.GenericName,
+                        DateAdded = DateTime.Now,
+                        DrugEocs = eoc.Value.Count,
+                        UserEocs = eoc.Value.Count(x => x.CompletedAt != null)
+                    }).ToList();
 		}
 	}
 }

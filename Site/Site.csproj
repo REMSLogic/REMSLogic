@@ -1014,6 +1014,10 @@
       <Project>{b1a22e2f-f0dd-44cb-b74a-c8119b409d16}</Project>
       <Name>RemsLogic.Repositories</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RemsLogic.Services\RemsLogic.Services.csproj">
+      <Project>{badec8ee-e997-4663-b61a-c84972defa5f}</Project>
+      <Name>RemsLogic.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
