@@ -6,7 +6,6 @@ namespace RemsLogic.Services
 {
     public interface IComplianceService
     {
-
         PrescriberEoc Find(long profileId, long drugId, long eocId);
         void RecordCompliance(PrescriberEoc prescriberEoc);
         void LogEocComplianceEntry(long precriberEocId, DateTime recordedAt);
@@ -14,6 +13,6 @@ namespace RemsLogic.Services
         void AddEocsToPrescriberProfile(long profileId, long drugId);
         void RemoveEocsFromPrescriberProfile(long profileId, long drugId);
 
-        Dictionary<Drug, List<PrescriberEoc>> GetEocsByPrescriberProfile(long profileId);
+        Dictionary<Drug, List<PrescriberEoc>> GetEocsByPrescriberProfile(long profileId, ListType listType);
     }
 }

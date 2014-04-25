@@ -8,33 +8,15 @@ namespace RemsLogic.Repositories
 {
     public interface IDrugListRepository : IRepository<DrugList>
     {
-        DrugList GetFavoritesListByUserId(long userId);
+        long GetDrugListId(long profileId);
 
-        DrugList GetDrugListByUserId(long userId);
+        long GetFavListId(long profileId);
 
-        DrugList GetFavoritesListByProfileId(long profileId);
-
-        DrugList GetDrugListByProfileId(long profileId);
-
-        long GetOrCreateNewFavoritesListByUserId(long userId);
-
-        long GetOrCreateNewDrugListByUserId(long userId);
-
-        long GetOrCreateNewFavoritesListByProfileId(long profileId);
-
-        long GetOrCreateNewDrugListByProfileId(long profileId);
-
-        void AddDrugToFavoritesByUserId(long userId, long drugId);
-
-        void RemoveDrugFromFavoritesByUserId(long userId, long drugId);
+        List<long> GetFavList(long profileId);
 
         void AddDrugToFavoritesByProfileId(long profileId, long drugId);
 
         void RemoveDrugFromFavoritesByProfileId(long profileId, long drugId);
-
-        void AddDrugToDrugListByUserId(long userId, long drugId);
-
-        void RemoveDrugFromDrugListByUserId(long userId, long drugId);
 
         void AddDrugToDrugListByProfileId(long profileId, long drugId);
 

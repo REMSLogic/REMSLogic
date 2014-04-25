@@ -247,7 +247,7 @@ namespace Lib.Data
 
             IComplianceService complianceSvc = new ComplianceService(drugRepo, complianceRepo);
 
-            var eocs = complianceSvc.GetEocsByPrescriberProfile(profileId);
+            var eocs = complianceSvc.GetEocsByPrescriberProfile(profileId, ListType.MYDRUGLIST);
 
             return (from eoc in eocs
                     select new PresciberDrugInfo

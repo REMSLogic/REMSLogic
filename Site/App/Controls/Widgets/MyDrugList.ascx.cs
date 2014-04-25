@@ -12,7 +12,7 @@ namespace Site.App.Controls.Widgets
         private readonly IDrugListRepository _drugListRepo;
         private readonly IDrugRepository _drugRepo;
         private readonly IComplianceRepository _complianceRepo;
-        private readonly IComplianceService _complianceSvc;
+        private readonly IDrugListService _drugListSvc;
 
         public MyDrugList()
         {
@@ -22,7 +22,7 @@ namespace Site.App.Controls.Widgets
             _drugListRepo = new DrugListRepository(connectionString);
             _complianceRepo = new ComplianceRepository(connectionString);
 
-            _complianceSvc = new ComplianceService(_drugRepo, _complianceRepo);
+            _drugListSvc = new DrugListService(_drugListRepo, _drugRepo, _complianceRepo);
         }
 
         public DrugList GetDrugList()
@@ -40,7 +40,7 @@ namespace Site.App.Controls.Widgets
             //    Id = 0,
             //    ListName = String.Empty,
             //    UserProfileId = profileId,
-            //    Drugs = 
+            //    Drugs =
             //        (from eoc in eocs
             //         select new DrugListItem
             //         {
@@ -52,7 +52,7 @@ namespace Site.App.Controls.Widgets
             //         }).ToList()
             //};
 
-            return _drugListRepo.GetFavoritesListByProfileId(profileId);
+            return _drugListSvc.GetDrugListByProfileId(profileId, ListType.FAVDRUGLIST);
             
         }
 

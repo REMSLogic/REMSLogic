@@ -2,6 +2,7 @@
 using Framework.Security;
 using RemsLogic.Model;
 using RemsLogic.Repositories;
+using RemsLogic.Services;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,14 +17,18 @@ namespace Lib.API.Common
         [Method("Common/DrugList/AddDrugToFavorites")]
         public static ReturnObject AddDrugToFavorites(HttpContext context, long id)
         {
-            IDrugListRepository dlRepo = new DrugListRepository(ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString);
+            string conn = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
+            IDrugListRepository dlRepo = new DrugListRepository(conn);
+            IDrugRepository dRepo = new DrugRepository(conn);
+            IComplianceRepository cRepo = new ComplianceRepository(conn);
+            IDrugListService dlService = new DrugListService(dlRepo, dRepo, cRepo);
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
 
             if (profile != null && profile.ID != null)
             {
-                dlRepo.AddDrugToFavoritesByProfileId(profile.ID.Value, id);
+                dlService.AddDrugToDrugListByProfileId(profile.ID.Value, id, ListType.FAVDRUGLIST);
             }
 
             return new ReturnObject()
@@ -43,14 +48,18 @@ namespace Lib.API.Common
         [Method("Common/DrugList/RemoveDrugFromFavorites")]
         public static ReturnObject RemoveDrugFromFavorites(HttpContext context, long id)
         {
-            IDrugListRepository dlRepo = new DrugListRepository(ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString);
+            string conn = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
+            IDrugListRepository dlRepo = new DrugListRepository(conn);
+            IDrugRepository dRepo = new DrugRepository(conn);
+            IComplianceRepository cRepo = new ComplianceRepository(conn);
+            IDrugListService dlService = new DrugListService(dlRepo, dRepo, cRepo);
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
 
             if (profile != null && profile.ID != null)
             {
-                dlRepo.RemoveDrugFromFavoritesByProfileId(profile.ID.Value, id);
+                dlService.RemoveDrugFromDrugListByProfileId(profile.ID.Value, id, ListType.FAVDRUGLIST);
             }
 
             return new ReturnObject()
@@ -70,14 +79,18 @@ namespace Lib.API.Common
         [Method("Common/DrugList/AddDrugToList")]
         public static ReturnObject AddDrugToList(HttpContext context, long id)
         {
-            IDrugListRepository dlRepo = new DrugListRepository(ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString);
+            string conn = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
+            IDrugListRepository dlRepo = new DrugListRepository(conn);
+            IDrugRepository dRepo = new DrugRepository(conn);
+            IComplianceRepository cRepo = new ComplianceRepository(conn);
+            IDrugListService dlService = new DrugListService(dlRepo, dRepo, cRepo);
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
 
             if (profile != null && profile.ID != null)
             {
-                dlRepo.AddDrugToDrugListByProfileId(profile.ID.Value, id);
+                dlService.AddDrugToDrugListByProfileId(profile.ID.Value, id, ListType.MYDRUGLIST);
             }
 
             return new ReturnObject()
@@ -97,14 +110,18 @@ namespace Lib.API.Common
         [Method("Common/DrugList/RemoveDrugFromList")]
         public static ReturnObject RemoveDrugFromList(HttpContext context, long id)
         {
-            IDrugListRepository dlRepo = new DrugListRepository(ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString);
+            string conn = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
+            IDrugListRepository dlRepo = new DrugListRepository(conn);
+            IDrugRepository dRepo = new DrugRepository(conn);
+            IComplianceRepository cRepo = new ComplianceRepository(conn);
+            IDrugListService dlService = new DrugListService(dlRepo, dRepo, cRepo);
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
 
             if (profile != null && profile.ID != null)
             {
-                dlRepo.RemoveDrugFromDrugListByProfileId(profile.ID.Value, id);
+                dlService.RemoveDrugFromDrugListByProfileId(profile.ID.Value, id, ListType.MYDRUGLIST);
             }
 
             return new ReturnObject()
