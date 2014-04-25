@@ -33,24 +33,26 @@ namespace Site.App.Controls.Widgets
             // list instead of the drug list (which means adding a method to the
             // compliance repository as well.
             long profileId = Lib.Systems.Security.GetCurrentProfile().ID.Value;
-            var eocs = _complianceSvc.GetEocsByPrescriberProfile(profileId);
+            //var eocs = _complianceSvc.GetEocsByPrescriberProfile(profileId);
 
-            return new DrugList
-            {
-                Id = 0,
-                ListName = String.Empty,
-                UserProfileId = profileId,
-                Drugs = 
-                    (from eoc in eocs
-                     select new DrugListItem
-                     {
-                         Id = eoc.Key.Id,
-                         DrugName = eoc.Key.GenericName,
-                         DateAdded = DateTime.Now,
-                         DrugEocsCount = eoc.Value.Count(),
-                         UserEocsCount = eoc.Value.Count(x => x.CompletedAt.HasValue)
-                     }).ToList()
-            };
+            //return new DrugList
+            //{
+            //    Id = 0,
+            //    ListName = String.Empty,
+            //    UserProfileId = profileId,
+            //    Drugs = 
+            //        (from eoc in eocs
+            //         select new DrugListItem
+            //         {
+            //             Id = eoc.Key.Id,
+            //             DrugName = eoc.Key.GenericName,
+            //             DateAdded = DateTime.Now,
+            //             DrugEocsCount = eoc.Value.Count(),
+            //             UserEocsCount = eoc.Value.Count(x => x.CompletedAt.HasValue)
+            //         }).ToList()
+            //};
+
+            return _drugListRepo.GetFavoritesListByProfileId(profileId);
             
         }
 

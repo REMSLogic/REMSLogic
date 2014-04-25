@@ -32,18 +32,32 @@
             $doc = $(this);
             var id = parseInt($doc.attr('id').toString().substring(3));
             $listItem = $(eval('fav' + id.toString()));
-            $listItem.toggleClass("fa-star-o fa-star");
-//            if (id) {
-//                $.ajax({
-//                    url: "/api/Prescriber/Drug/Remove",
-//                    type: 'POST',
-//                    dataType: 'json',
-//                    data: { 'id': id },
-//                    success: function (response) {
-//                        $listItem.remove();
-//                    }
-//                });
-//            }
+            if ($listItem.hasClass("fa-star")) { //Remove From My Favorites
+                if (id) {
+                    $.ajax({
+                        url: "/api/Common/DrugList/RemoveDrugFromFavorites",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { 'id': id },
+                        success: function (response) {
+                            $listItem.toggleClass("fa-star-o fa-star");
+                        }
+                    });
+                }
+            }
+            else { //Add to My Favorites
+                if (id) {
+                    $.ajax({
+                        url: "/api/Common/DrugList/AddDrugToFavorites",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { 'id': id },
+                        success: function (response) {
+                            $listItem.toggleClass("fa-star-o fa-star");
+                        }
+                    });
+                }
+            }
         });
 
         $('#drugs-filter').keyup(function () {

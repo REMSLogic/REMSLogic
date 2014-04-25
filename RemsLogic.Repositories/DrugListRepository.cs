@@ -23,12 +23,25 @@ namespace RemsLogic.Repositories
 
         public DrugList GetFavoritesListByUserId(long userId)
         {
-            DrugList retList = new DrugList();
             long profileId = GetProfileId(userId);
+
+            return GetFavoritesListByProfileId(profileId);
+        }
+
+        public DrugList GetDrugListByUserId(long userId)
+        {
+            long profileId = GetProfileId(userId);
+
+            return GetDrugListByProfileId(profileId);
+        }
+
+        public DrugList GetFavoritesListByProfileId(long profileId)
+        {
+            DrugList retList = new DrugList();
 
             //Find list Id if exists
             long listId = GetListId(ListType.FavList, profileId);
-            if(listId == 0)
+            if (listId == 0)
             {
                 return null;
             }
@@ -41,10 +54,9 @@ namespace RemsLogic.Repositories
             return retList;
         }
 
-        public DrugList GetDrugListByUserId(long userId)
+        public DrugList GetDrugListByProfileId(long profileId)
         {
             DrugList retList = new DrugList();
-            long profileId = GetProfileId(userId);
 
             //Find list Id if exists
             long listId = GetListId(ListType.DrugList, profileId);
@@ -61,35 +73,58 @@ namespace RemsLogic.Repositories
             return retList;
         }
 
-        public bool CreateNewFavoritesList(long userId)
+        public long GetOrCreateNewFavoritesListByUserId(long userId)
         {
             long profileId = GetProfileId(userId);
 
+            return GetOrCreateNewFavoritesListByProfileId(profileId);
+        }
+
+        public long GetOrCreateNewDrugListByUserId(long userId)
+        {
+            long profileId = GetProfileId(userId);
+
+            return GetOrCreateNewDrugListByProfileId(profileId);
+        }
+
+        public long GetOrCreateNewFavoritesListByProfileId(long profileId)
+        {
             long listId = GetListId(ListType.FavList, profileId);
             if (listId == 0)
             {
                 listId = CreateNewList(ListType.FavList, profileId);
-                return true;
             }
-            return false;
+            return listId;
         }
 
-        public bool CreateNewDrugList(long userId)
+        public long GetOrCreateNewDrugListByProfileId(long profileId)
         {
-            long profileId = GetProfileId(userId);
-
             long listId = GetListId(ListType.DrugList, profileId);
             if (listId == 0)
             {
                 listId = CreateNewList(ListType.DrugList, profileId);
-                return true;
             }
-            return false;
+            return listId;
         }
 
-        public void AddDrugToFavorites(long profileId, long drugId)
+        public void AddDrugToFavoritesByUserId(long userId, long drugId)
         {
-            long listId = GetListId(ListType.FavList, profileId);
+            long profileId = GetProfileId(userId);
+
+            AddDrugToFavoritesByProfileId(profileId, drugId);
+        }
+
+        public void RemoveDrugFromFavoritesByUserId(long userId, long drugId)
+        {
+            long profileId = GetProfileId(userId);
+
+            RemoveDrugFromFavoritesByProfileId(profileId, drugId);
+        }
+
+        public void AddDrugToFavoritesByProfileId(long profileId, long drugId)
+        {
+            long listId = GetOrCreateNewFavoritesListByProfileId(profileId);
+
             string SQL = "INSERT INTO [dbo].[UserListItems]([ListID],[ItemID],[Order],[DateAdded]) " +
                          "VALUES(@ListId,@ItemId,0,@Date)";
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -105,25 +140,43 @@ namespace RemsLogic.Repositories
             }
         }
 
-        public void RemoveDrugFromFavorites(long profileId, long drugId)
+        public void RemoveDrugFromFavoritesByProfileId(long profileId, long drugId)
         {
             long listId = GetListId(ListType.FavList, profileId);
-            string SQL = "DELETE FROM [dbo].[UserListItems] WHERE ListID = @ListId AND ItemID = @ItemId";
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            if (listId != 0)
             {
-                using (SqlCommand cmd = new SqlCommand(SQL, connection))
+                string SQL = "DELETE FROM [dbo].[UserListItems] WHERE ListID = @ListId AND ItemID = @ItemId";
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@ListId", listId);
-                    cmd.Parameters.AddWithValue("@ItemId", drugId);
-                    connection.Open();
-                    cmd.ExecuteScalar();
+                    using (SqlCommand cmd = new SqlCommand(SQL, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@ListId", listId);
+                        cmd.Parameters.AddWithValue("@ItemId", drugId);
+                        connection.Open();
+                        cmd.ExecuteScalar();
+                    }
                 }
             }
         }
 
-        public void AddDrugToDrugList(long profileId, long drugId)
+        public void AddDrugToDrugListByUserId(long userId, long drugId)
         {
-            long listId = GetListId(ListType.DrugList, profileId);
+            long profileId = GetProfileId(userId);
+
+            AddDrugToDrugListByProfileId(profileId, drugId);
+        }
+
+        public void RemoveDrugFromDrugListByUserId(long userId, long drugId)
+        {
+            long profileId = GetProfileId(userId);
+
+            RemoveDrugFromDrugListByProfileId(profileId, drugId);
+        }
+
+        public void AddDrugToDrugListByProfileId(long profileId, long drugId)
+        {
+            long listId = GetOrCreateNewDrugListByProfileId(profileId);
+
             string SQL = "INSERT INTO [dbo].[UserListItems]([ListID],[ItemID],[Order],[DateAdded]) " +
                          "VALUES(@ListId,@ItemId,0,@Date)";
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -139,18 +192,21 @@ namespace RemsLogic.Repositories
             }
         }
 
-        public void RemoveDrugFromDrugList(long profileId, long drugId)
+        public void RemoveDrugFromDrugListByProfileId(long profileId, long drugId)
         {
             long listId = GetListId(ListType.DrugList, profileId);
-            string SQL = "DELETE FROM [dbo].[UserListItems] WHERE ListID = @ListId AND ItemID = @ItemId";
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            if (listId != 0)
             {
-                using (SqlCommand cmd = new SqlCommand(SQL, connection))
+                string SQL = "DELETE FROM [dbo].[UserListItems] WHERE ListID = @ListId AND ItemID = @ItemId";
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@ListId", listId);
-                    cmd.Parameters.AddWithValue("@ItemId", drugId);
-                    connection.Open();
-                    cmd.ExecuteScalar();
+                    using (SqlCommand cmd = new SqlCommand(SQL, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@ListId", listId);
+                        cmd.Parameters.AddWithValue("@ItemId", drugId);
+                        connection.Open();
+                        cmd.ExecuteScalar();
+                    }
                 }
             }
         }
@@ -207,8 +263,8 @@ namespace RemsLogic.Repositories
             if (!string.IsNullOrEmpty(name))
             {
                 string SQL = "INSERT INTO [dbo].[UserLists]( [UserProfileID],[Name],[DateCreated],[DateModified],[DataType],[System]) " +
-                             "VALUES( @ProfileId,@Name,@Date,@Date,drug,1); " +
-                             "SELECT Scope_Identity()";
+                             "VALUES( @ProfileId,@Name,@Date,@Date,'drug',1); " +
+                             "SELECT ID FROM [dbo].[UserLists] WHERE [UserProfileID] = @ProfileId AND [Name] = @Name";
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     using (SqlCommand cmd = new SqlCommand(SQL, connection))

@@ -20,11 +20,10 @@ namespace Lib.API.Common
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
-            var p = Data.Prescriber.FindByProfile(profile);
 
-            if (p != null && p.ID != null)
+            if (profile != null && profile.ID != null)
             {
-                dlRepo.AddDrugToFavorites(p.ID.Value, id);
+                dlRepo.AddDrugToFavoritesByProfileId(profile.ID.Value, id);
             }
 
             return new ReturnObject()
@@ -48,11 +47,10 @@ namespace Lib.API.Common
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
-            var p = Data.Prescriber.FindByProfile(profile);
 
-            if (p != null && p.ID != null)
+            if (profile != null && profile.ID != null)
             {
-                dlRepo.RemoveDrugFromFavorites(p.ID.Value, id);
+                dlRepo.RemoveDrugFromFavoritesByProfileId(profile.ID.Value, id);
             }
 
             return new ReturnObject()
@@ -76,11 +74,10 @@ namespace Lib.API.Common
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
-            var p = Data.Prescriber.FindByProfile(profile);
 
-            if (p != null && p.ID != null)
+            if (profile != null && profile.ID != null)
             {
-                dlRepo.AddDrugToDrugList(p.ID.Value, id);
+                dlRepo.AddDrugToDrugListByProfileId(profile.ID.Value, id);
             }
 
             return new ReturnObject()
@@ -104,11 +101,10 @@ namespace Lib.API.Common
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
-            var p = Data.Prescriber.FindByProfile(profile);
 
-            if (p != null && p.ID != null)
+            if (profile != null && profile.ID != null)
             {
-                dlRepo.RemoveDrugFromDrugList(p.ID.Value, id);
+                dlRepo.RemoveDrugFromDrugListByProfileId(profile.ID.Value, id);
             }
 
             return new ReturnObject()
