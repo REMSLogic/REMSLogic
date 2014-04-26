@@ -54,15 +54,15 @@
             $listItem = $(eval('drug' + id.toString()));
 
             if (id) {
-                //$.ajax({
-                //    url: "/api/Prescriber/Drug/Remove",
-                //    type: 'POST',
-                //    dataType: 'json',
-                //    data: { 'id': id },
-                //    success: function (response) {
+                $.ajax({
+                    url: "/api/Common/DrugList/RemoveDrugFromList",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { 'id': id },
+                    success: function (response) {
                         $listItem.remove();
-                //    }
-                //});
+                    }
+                });
             }
         });
 
@@ -70,18 +70,32 @@
             $doc = $(this);
             var id = parseInt($doc.attr('id').toString().substring(3));
             $listItem = $(eval('fav' + id.toString()));
-            $listItem.toggleClass("fa-star-o fa-star");
-            //            if (id) {
-            //                $.ajax({
-            //                    url: "/api/Prescriber/Drug/Remove",
-            //                    type: 'POST',
-            //                    dataType: 'json',
-            //                    data: { 'id': id },
-            //                    success: function (response) {
-            //                        $listItem.remove();
-            //                    }
-            //                });
-            //            }
+            if ($listItem.hasClass("fa-star")) { //Remove From My Favorites
+                if (id) {
+                    $.ajax({
+                        url: "/api/Common/DrugList/RemoveDrugFromFavorites",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { 'id': id },
+                        success: function (response) {
+                            $listItem.toggleClass("fa-star-o fa-star");
+                        }
+                    });
+                }
+            }
+            else { //Add to My Favorites
+                if (id) {
+                    $.ajax({
+                        url: "/api/Common/DrugList/AddDrugToFavorites",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { 'id': id },
+                        success: function (response) {
+                            $listItem.toggleClass("fa-star-o fa-star");
+                        }
+                    });
+                }
+            }
         });
 
         $('#drugs-filter').keyup(function () {
@@ -138,12 +152,12 @@
 <div class="container_12 clearfix">
     <div class="grid_12 portlet manage-drug-list leading">
         <header>
-			<h2 class="title-header">Facility Drug List</h2>
+			<h2 class="title-header">My Drug List</h2>
             <div class="drug-list-options">
                 <span class="add-drugs-btn-2" id="eoc-menu-toggle"><i class="fa fa-th"></i></span>
                 <span class="add-drugs-btn">
                         <%--<a href="#prescriber/drugs/select" class="grey-btn"><i class="fa fa-plus-circle pad-right"></i>Add Drugs</a>--%>
-                        <a href="#" class="grey-btn"><i class="fa fa-plus-circle pad-right"></i>Add Drugs</a>
+                        <a href="#common/drugs/select" class="grey-btn"><i class="fa fa-plus-circle pad-right"></i>Add Drugs</a>
                 </span>
             </div>
 		</header>
@@ -207,21 +221,25 @@
 		</div>
 
         <div id="demo" class="clearfix">
-            <%--<div class="drug-content-wrap">--%>
+            <%if (this.Drugs.Drugs == null || this.Drugs.Drugs.Count <= 0)
+            {%>
+                <div class="drugName"><span class="name">You do not have any drugs</span></div>
+            <%}else{%>
             <ul id="man-drugs" class="drug-content-wrap">
-            <% foreach (var drug in this.Drugs) { %>
-                <li class="man-drug" id="drug<%=drug.ID %>" data-drug-id="<%=drug.ID %>"<%=GetEOCData(drug) %>>
-                    <span class="drugName" style="display: none"><%=drug.GenericName %></span>
-                    <ul class="clearfix" data-id="<%=drug.ID%>">
-                        <li class="one"><a href="#common/drugs/detail?id=<%=drug.ID%>"><%=drug.GenericName%></a></li>
-                        <li class="two"><strong>Last Update:</strong> <%=drug.Updated.ToShortDateString() %></li>
-                        <li class="three star-icon" id="str<%=drug.ID%>"><i id="fav<%=drug.ID%>" class="fa fa-star-o"></i></li>
-                        <li class="four remove-icon" id="rmv<%=drug.ID%>"><i class="fa fa-times-circle"></i></li>
+            <% foreach (var drug in this.Drugs.Drugs) { 
+                   var pd_drug = new Lib.Data.Drug(drug.Id);%>
+                <li class="man-drug" id="drug<%=drug.Id %>" data-drug-id="<%=drug.Id %>"<%=GetEOCData(pd_drug) %>>
+                    <span class="drugName" style="display: none"><%=drug.DrugName %></span>
+                    <ul class="clearfix" data-id="<%=drug.Id%>">
+                        <li class="one"><a href="#common/drugs/detail?id=<%=drug.Id%>"><%=drug.DrugName%></a></li>
+                        <li class="two"><strong>Last Update:</strong> <%=pd_drug.Updated.ToShortDateString() %></li>
+                        <li class="three star-icon" id="str<%=drug.Id%>"><i id="fav<%=drug.Id%>" class="fa <%=drug.IsFav ? "fa-star" : "fa-star-o"%>"></i></li>
+                        <li class="four remove-icon" id="rmv<%=drug.Id%>"><i class="fa fa-times-circle"></i></li>
                     </ul>
                 </li>
             <% } %>
             </ul>
-            <%--</div>--%>
+            <%}%>
         </div>
     </div>
 </div>

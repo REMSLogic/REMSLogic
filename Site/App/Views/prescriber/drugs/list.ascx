@@ -17,7 +17,7 @@
 
             if (id) {
                 $.ajax({
-                    url: "/api/Prescriber/Drug/Remove",
+                    url: "/api/Common/DrugList/RemoveDrugFromList",
                     type: 'POST',
                     dataType: 'json',
                     data: { 'id': id },

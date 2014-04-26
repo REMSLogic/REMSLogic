@@ -36,6 +36,8 @@ namespace Site.App.Views.prescriber.drugs
 
 				AvailableDrugs.Add(d);
 			}
+            SelectedDrugs = SelectedDrugs.OrderBy(l => l.GenericName).ToList();
+            AvailableDrugs = AvailableDrugs.OrderBy(l => l.GenericName).ToList();
 		}
 
 		public string GetEOCData(Lib.Data.Drug d)

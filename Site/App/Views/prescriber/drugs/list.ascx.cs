@@ -30,6 +30,7 @@ namespace Site.App.Views.prescriber.drugs
 
             _drugListSvc = new DrugListService(_drugListRepo, _drugRepo, _complianceRepo);
         }
+
 		protected void Page_Init(object sender, EventArgs e)
 		{
 			//Drugs = Lib.Systems.Lists.GetMyDrugs();

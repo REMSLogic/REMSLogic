@@ -807,7 +807,7 @@ button.blue-btn:hover
 .eoc-menu { width: 100%; background-color: #E3F0FB; display: inline-block; }
 .eoc-menu-toggle { cursor: pointer; }
 .eoc-menu a { margin-left: 20px; display: inline-block; vertical-align: top; margin-top: 10px; }
-.eoc-filter { padding: 2px; display: none; background-color: #fff;}
+.eoc-filter { padding: 2px; display: inline-block; background-color: #fff;}
 .eoc-filter .eoc-filter-item { height: 104px; width: 72px; float:left; }/*display: inline-block;*/
 .eoc-filter .eoc-filter-item p { font-size: 8px; text-align: center; line-height: 4px; }
 .eoc-filter .eoc-filter-item img { height: 72px; cursor: pointer; }
@@ -816,7 +816,7 @@ button.blue-btn:hover
 .eoc-filter .clear-btn:hover { cursor: pointer; color: #0283aa; text-decoration: underline; }
 
 .fac-menu-toggle { cursor: pointer; }
-.fac-filter { padding: 2px; display: none; background-color: #fff;}
+.fac-filter { padding: 2px; display: inline-block; background-color: #fff;}
 .fac-filter .fac-filter-item { height: 104px; width: 72px;float:left;  }/*display: inline-block;*/
 .fac-filter .fac-filter-item p { font-size: 8px; text-align: center; line-height: 4px; }
 .fac-filter .fac-filter-item img { height: 72px; cursor: pointer; }
