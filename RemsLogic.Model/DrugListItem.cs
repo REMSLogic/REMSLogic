@@ -15,6 +15,8 @@ namespace RemsLogic.Model
 
         public int UserEocsCount { get; set; }
 
+        public bool IsFav { get; set; }
+
         public float PercentComplete
         {
             get

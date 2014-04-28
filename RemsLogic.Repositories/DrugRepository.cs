@@ -47,7 +47,8 @@ namespace RemsLogic.Repositories
 	                INNer JOIN Drugs ON Drugs.ID = UserListItems.ItemID
                 WHERE
 	                DataType = 'drug' AND
-	                UserProfileID = @ProfileId
+	                UserProfileID = @ProfileId AND
+                    Name = 'My Drugs'
                 ORDER BY
 	                GenericName ASC;";
 
@@ -62,6 +63,37 @@ namespace RemsLogic.Repositories
                     using(SqlDataReader reader = command.ExecuteReader())
                     {
                         while(reader.Read())
+                            yield return ReadDrug(reader);
+                    }
+                }
+            }
+        }
+
+        public IEnumerable<Drug> GetFavByPrescriberProfile(long profileId)
+        {
+            const string sql = @"
+                SELECT Drugs.*
+                FROM UserListItems
+	                INNER JOIN UserLists ON UserLists.ID = UserListItems.ListID
+	                INNer JOIN Drugs ON Drugs.ID = UserListItems.ItemID
+                WHERE
+	                DataType = 'drug' AND
+	                UserProfileID = @ProfileId AND
+                    Name = 'Fav Drugs'
+                ORDER BY
+	                GenericName ASC;";
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("ProfileId", profileId);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
                             yield return ReadDrug(reader);
                     }
                 }

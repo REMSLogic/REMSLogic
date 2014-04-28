@@ -51,7 +51,7 @@
 <header class="portlet-header">
     <%--<a href="#prescriber/drugs/select" class="add-drugs-icon" style="float: right; margin-top: -4px; margin-right: -10px;"><img src="/App/images/dashboard-icon.png" alt="Dashboard-icon" width="24" height="24" /></a>--%>
     <img class="eoc-menu-toggle" style="float: right; margin-top: 0px; margin-right: -10px;" src="/App/images/dashboard-icon.png" alt="Filter Menu" width="24" height="24"/>
-    <h2>My Drug List</h2>
+    <h2>My Favorite Drugs</h2>
 </header>
 <section>
     <div id="divEoc-filter" class="eoc-filter">
@@ -118,9 +118,13 @@
         <span class="actions">Actions</span>
     </div>
     --%>
+    <%if (drugs == null)
+    {%>
+        <div class="drugName"><span class="name">You do not have any favorites</span></div>
+    <%}else{%>
     <ul id="drug-list-widget" class="dashboard-drugs mydrug-list">
         <%foreach (var pd in drugs.Drugs){
-        var pd_drug = new Lib.Data.Drug(pd.Id);%>
+            var pd_drug = new Lib.Data.Drug(pd.Id);%>
         <li class="ui-state-default" data-drug-id="<%=pd_drug.ID %>"<%=GetEOCData(pd_drug) %>>
             <%if(pd.PercentComplete >= 1){ %>
             <div class="compliance-holder green-alert" id="<%=pd_drug.ID %>">
@@ -208,6 +212,6 @@
             </span>
             --%>
         </li>
-        <% } %>
+        <% } }%>
     </ul>
 </section>

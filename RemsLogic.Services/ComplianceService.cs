@@ -6,6 +6,12 @@ using RemsLogic.Repositories;
 
 namespace RemsLogic.Services
 {
+    public enum ListType
+    {
+        UNDEFINED = 0,
+        MYDRUGLIST = 1,
+        FAVDRUGLIST = 2
+    }
     public class ComplianceService : IComplianceService
     {
         private readonly IDrugRepository _drugRepo;
@@ -86,11 +92,22 @@ namespace RemsLogic.Services
             }
         }
 
-        public Dictionary<Drug, List<PrescriberEoc>> GetEocsByPrescriberProfile(long profileId)
+        public Dictionary<Drug, List<PrescriberEoc>> GetEocsByPrescriberProfile(long profileId, ListType listType)
         {
-            // first, load all of the prescriber profile drugs
-            List<Drug> drugs = _drugRepo.GetByPrescriberProfile(profileId).ToList();
+            List<Drug> drugs = new List<Drug>();
 
+            // first, load all of the prescriber profile drugs
+            switch(listType)
+            {
+                case ListType.MYDRUGLIST:
+                    drugs = _drugRepo.GetByPrescriberProfile(profileId).ToList();
+                    break;
+                case ListType.FAVDRUGLIST:
+                    drugs = _drugRepo.GetFavByPrescriberProfile(profileId).ToList();
+                    break;
+
+            }
+            
             // second, load all of the eoc requirements
             List<PrescriberEoc> reqs = _complianceRepo.GetByPrescriberProfile(profileId).ToList();
 

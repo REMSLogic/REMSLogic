@@ -398,6 +398,13 @@
     <Compile Include="App\Views\common\drugs\list.ascx.designer.cs">
       <DependentUpon>list.ascx</DependentUpon>
     </Compile>
+    <Compile Include="App\Views\common\drugs\select.ascx.cs">
+      <DependentUpon>select.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App\Views\common\drugs\select.ascx.designer.cs">
+      <DependentUpon>select.ascx</DependentUpon>
+    </Compile>
     <Compile Include="App\Views\common\notifications\archive.ascx.cs">
       <DependentUpon>archive.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1047,6 +1054,7 @@
     <Content Include="App\images\Warning_Red_Exclimation.png" />
     <Content Include="App\images\Warning_Yellow_Exclimation.png" />
     <Content Include="App\js\lib\jquery.radialProgressBar.js" />
+    <Content Include="App\js\views\common\drugs\select.js" />
     <Content Include="App\Locked.aspx" />
     <Content Include="App\css\cupertino\images\animated-overlay.gif" />
     <Content Include="App\css\cupertino\images\ui-bg_diagonals-thick_90_eeeeee_40x40.png" />
@@ -1884,6 +1892,7 @@
     <Content Include="App\Views\common\drugs\companies\detail.ascx" />
     <Content Include="App\Views\common\drugs\detail.ascx" />
     <Content Include="App\Views\common\drugs\list.ascx" />
+    <Content Include="App\Views\common\drugs\select.ascx" />
     <Content Include="App\Views\common\notifications\archive.ascx" />
     <Content Include="App\Views\common\notifications\create.ascx" />
     <Content Include="App\Views\dashboard.ascx" />

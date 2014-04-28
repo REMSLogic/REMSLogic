@@ -1,9 +1,5 @@
-﻿using RemsLogic.Model;
-using RemsLogic.Repositories;
-using RemsLogic.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -11,32 +7,38 @@ using System.Web.UI.WebControls;
 
 namespace Site.App.Views.common.drugs
 {
-	public partial class list : Lib.Web.AppControlPage
-	{
-        private readonly IDrugListRepository _drugListRepo;
-        private readonly IDrugRepository _drugRepo;
-        private readonly IComplianceRepository _complianceRepo;
-        private readonly IDrugListService _drugListSvc;
+    public partial class select : System.Web.UI.UserControl
+    {
+        public IList<Lib.Data.Drug> Drugs;
+        public IList<Lib.Data.Drug> AvailableDrugs;
+        public IList<Lib.Data.Drug> SelectedDrugs;
 
-        public DrugList Drugs;
-
-        public list()
+        protected void Page_Init(object sender, EventArgs e)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
+            Drugs = Lib.Data.Drug.FindAll();
+            SelectedDrugs = Lib.Systems.Lists.GetMyDrugs();
+            AvailableDrugs = new List<Lib.Data.Drug>();
 
-            _drugRepo = new DrugRepository(connectionString);
-            _drugListRepo = new DrugListRepository(connectionString);
-            _complianceRepo = new ComplianceRepository(connectionString);
+            foreach (var d in Drugs)
+            {
+                bool found = false;
+                for (int i = 0; i < SelectedDrugs.Count; i++)
+                {
+                    if (d.ID.Value == SelectedDrugs[i].ID.Value)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
 
-            _drugListSvc = new DrugListService(_drugListRepo, _drugRepo, _complianceRepo);
+                if (found)
+                    continue;
+
+                AvailableDrugs.Add(d);
+            }
+            SelectedDrugs = SelectedDrugs.OrderBy(l => l.GenericName).ToList();
+            AvailableDrugs = AvailableDrugs.OrderBy(l => l.GenericName).ToList();
         }
-
-		protected void Page_Init(object sender, EventArgs e)
-		{
-			//Drugs = Lib.Data.Drug.FindAll();
-            long profileId = Lib.Systems.Security.GetCurrentProfile().ID.Value;
-            Drugs = _drugListSvc.GetDrugListByProfileId(profileId, ListType.MYDRUGLIST);
-		}
 
         public string GetEOCData(Lib.Data.Drug d)
         {
@@ -55,5 +57,5 @@ namespace Site.App.Views.common.drugs
 
             return ret;
         }
-	}
+    }
 }
