@@ -321,7 +321,7 @@
 	<div id="notifications-popover" class="popover">
         <header class="clearfix">
             <div style="float: left; padding-left: 8px;">Notifications</div>
-            <div style="float: right; padding-right: 8px;"><a class="button" href="#common/notifications/archive" />View Archive</a></div>
+            <div style="float: right; padding-right: 8px;"><a class="button" href="#common/notifications/archive">View Archive</a></div>
         </header>
         <section>
             <div class="content">

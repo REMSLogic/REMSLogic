@@ -535,11 +535,15 @@ function pageDownloaded(data, id) {
 
 	if ($('#wrapper > section > section').css('position') == 'absolute') {
 		$("> div:last", target).css({ left: 0, position: 'relative' }).siblings().remove();
-		$('#wrapper > section > section').show().animate({ left: 0 }, 300, "easeInOutQuart", function () { $(this).css('left', 0); });
+		$('#wrapper > section > section').show().animate({ left: 0 }, 300, "easeInOutQuart", function () {
+		    $(this).css('left', 0);
+		    $(window).trigger('page-animation-completed').unbind('page-animation-completed');
+		});
 	} else {
 		$("> div", target).animate({ left: "-=100%" }, "slow", "easeInOutQuart", function () {
 			$(this).css('left', 0);
 			$("> div:last", target).css({ position: 'relative' }).siblings().remove();
+			$(window).trigger('page-animation-completed').unbind('page-animation-completed');
 		});
 	}
 

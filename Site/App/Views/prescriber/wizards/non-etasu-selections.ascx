@@ -4,12 +4,19 @@
 <h1 class="page-title">Non-ETASU Drug Selections</h1>
 <div class="container_12 clearfix leading">  
     <div class="grid_12">
-        <p>
-            Below is a complete list of all non-ETASU drugs currently in the REMS Logic system.  Select only the drugs you currently prescribe.  The drugs you select will be easily accessible from the dashboard once you log into the site.
+        <p style="font-size: 18px; font-weight: bold;">
+            Below is the list of REMS drugs that are categorized as Non-ETASU.  These medications do not require certification.  
         </p>
+        <ul style="margin-bottom: 32px;">
+            <li>Selection of drugs from this page is elective.</li>
+            <li>Any drugs you select from this page will be added to your personalized drug list to allow quick access to any pertaining materials.</li>
+            <li>Selection of Non-ETASU medications will not contribute to, or negatively impact compliance with the ETASU drugs.</li>
+            <li>You will be able to modify your drug preferences at any time after profile creation using the ‘Manage Drugs’ page.</li>
+        </ul>
+
         <form class="form has-validation ajax-form" action="/api/Prescriber/Wizards/NonETASUSelections">
         
-			<div class="clearfix">
+            <div class="clearfix">
                 <label for="form-drug-selections" class="form-label" style="width: 75%;">Drug Name</label>
                 <div class="form-input" style="width: 25%;"><span class="form-info">I Prescribe</span></div>
             </div>

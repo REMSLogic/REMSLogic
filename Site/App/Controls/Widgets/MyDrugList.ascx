@@ -118,9 +118,12 @@
         <span class="actions">Actions</span>
     </div>
     --%>
-    <%if (drugs == null)
+    <%if (drugs == null || drugs.Drugs.Count == 0)
     {%>
-        <div class="drugName"><span class="name">You do not have any favorites</span></div>
+        <div class="no-data">
+            You do not have any favorites.  Please visit the Manage Drugs page to add drugs to your favorites list.
+        </div>
+        
     <%}else{%>
     <ul id="drug-list-widget" class="dashboard-drugs mydrug-list">
         <%foreach (var pd in drugs.Drugs){

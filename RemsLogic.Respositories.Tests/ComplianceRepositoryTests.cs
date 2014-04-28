@@ -21,7 +21,7 @@ namespace RemsLogic.Respositories.Tests
             _complianceRepo = new ComplianceRepository(_connectionString);
         }
 
-        [Test]
+        [Test, Ignore()]
         public void should_read_eoc_for_drug_19()
         {
             // arrange
