@@ -21,7 +21,7 @@ namespace RemsLogic.Respositories.Tests
             _drugRepo = new DrugRepository(_connectionString);
         }
 
-        [Test]
+        [Test, Ignore()]
         public void should_load_drug_19()
         {
             // arrange
@@ -36,7 +36,7 @@ namespace RemsLogic.Respositories.Tests
             drug.GenericName.Should().NotBeNullOrEmpty();
         }
 
-        [Test]
+        [Test, Ignore()]
         public void should_load_all_drugs_for_prescriber_profile()
         {
             // arrange

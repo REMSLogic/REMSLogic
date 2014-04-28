@@ -297,7 +297,7 @@ namespace Lib.API.Prescriber
                 "Drugs Updated",
                 "Your drug selections have been updated.",
                 null,
-                "Default.aspx#dashboard");
+                "Default.aspx#prescriber/drugs/list");
         }
 
         [Method("Prescriber/Wizards/LastStep")]

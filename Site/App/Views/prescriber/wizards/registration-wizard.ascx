@@ -103,7 +103,7 @@
                     <header>
                         <h2>
                             <strong>Step 2:</strong> Facility Information
-                            <em>Verify your facility information</em>
+                            <em>Select your primary facility</em>
                         </h2>
                     </header>
                     
@@ -134,7 +134,7 @@
                 <section>
                     <header>
                         <h2>
-                            <strong>Step 3:</strong> Change Password
+                            <strong>Step 3:</strong> Create your password
                             <em>Change your password:</em>
                         </h2>
                     </header>
@@ -365,17 +365,6 @@
             //$('.wizard').trigger('resize');
         } catch (ex) { }
 
-
-        // using setTimeout adds a new event to the queue that gets processed after
-        // this event finishes.  this allows the content-bind to completely finish
-        // before the code in the function is executed.  there is no need to set the
-        // delay to anything higher than 0.  we are simply queuing the event.
-        setTimeout(function () {
-
-            $('.wizard').trigger('resize');
-            $('#video-container').height($('#video-container').width() * 0.5625);
-        }, 100);
-
         $('input[name="watched-video"]').change(function () {
             if ($('input[name="watched-video"]').is(':checked'))
                 $('.video-proceed-button').removeAttr('disabled');
@@ -393,5 +382,10 @@
         $('#form-new-password').keyup(function () {
             $('#result').html(passwordStrength($('#form-new-password').val(), ""));
         });
+    });
+
+    $(window).bind('page-animation-completed', function () {
+        $('.wizard').trigger('resize');
+        $('#video-container').height($('#video-container').width() * 0.5625);
     });
 </script>
