@@ -5,6 +5,7 @@ using RemsLogic.Repositories;
 using RemsLogic.Services;
 using System.Configuration;
 using System.Web;
+using StructureMap;
 
 namespace Lib.API.Common
 {
@@ -13,12 +14,7 @@ namespace Lib.API.Common
         [Method("Common/DrugList/AddDrugToFavorites")]
         public static ReturnObject AddDrugToFavorites(HttpContext context, long id)
         {
-            string conn = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
-            IDrugListRepository dlRepo = new DrugListRepository(conn);
-            IDrugRepository dRepo = new DrugRepository(conn);
-            IComplianceRepository cRepo = new ComplianceRepository(conn);
-            IComplianceService complianceSvc = new ComplianceService(dRepo, cRepo);
-            IDrugListService dlService = new DrugListService(complianceSvc, dlRepo, dRepo);
+            IDrugListService dlService = ObjectFactory.GetInstance<IDrugListService>();
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
@@ -45,12 +41,7 @@ namespace Lib.API.Common
         [Method("Common/DrugList/RemoveDrugFromFavorites")]
         public static ReturnObject RemoveDrugFromFavorites(HttpContext context, long id)
         {
-            string conn = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
-            IDrugListRepository dlRepo = new DrugListRepository(conn);
-            IDrugRepository dRepo = new DrugRepository(conn);
-            IComplianceRepository cRepo = new ComplianceRepository(conn);
-            IComplianceService complianceSvc = new ComplianceService(dRepo, cRepo);
-            IDrugListService dlService = new DrugListService(complianceSvc, dlRepo, dRepo);
+            IDrugListService dlService = ObjectFactory.GetInstance<IDrugListService>();
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
@@ -78,12 +69,7 @@ namespace Lib.API.Common
         public static ReturnObject AddDrugToList(HttpContext context, long id)
         {
             // MJL - It doesn't appear that this is used?
-            string conn = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
-            IDrugListRepository dlRepo = new DrugListRepository(conn);
-            IDrugRepository dRepo = new DrugRepository(conn);
-            IComplianceRepository cRepo = new ComplianceRepository(conn);
-            IComplianceService complianceSvc = new ComplianceService(dRepo, cRepo);
-            IDrugListService dlService = new DrugListService(complianceSvc, dlRepo, dRepo);
+            IDrugListService dlService = ObjectFactory.GetInstance<IDrugListService>();
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
@@ -110,12 +96,7 @@ namespace Lib.API.Common
         [Method("Common/DrugList/RemoveDrugFromList")]
         public static ReturnObject RemoveDrugFromList(HttpContext context, long id)
         {
-            string conn = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
-            IDrugListRepository dlRepo = new DrugListRepository(conn);
-            IDrugRepository dRepo = new DrugRepository(conn);
-            IComplianceRepository cRepo = new ComplianceRepository(conn);
-            IComplianceService complianceSvc = new ComplianceService(dRepo, cRepo);
-            IDrugListService dlService = new DrugListService(complianceSvc, dlRepo, dRepo);
+            IDrugListService dlService = ObjectFactory.GetInstance<IDrugListService>();
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);

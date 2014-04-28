@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemsLogic.Services", "RemsL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemsLogic.Services.Tests", "RemsLogic.Services.Tests\RemsLogic.Services.Tests.csproj", "{8926398A-7418-4084-9CAB-273C22F3ADBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemsLogic.Wiring", "RemsLogic.Wiring\RemsLogic.Wiring.csproj", "{B4BC013B-28B1-4F29-BC84-C7DAA1FC4C38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,6 +123,14 @@ Global
 		{8926398A-7418-4084-9CAB-273C22F3ADBF}.Production|Any CPU.Build.0 = Release|Any CPU
 		{8926398A-7418-4084-9CAB-273C22F3ADBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8926398A-7418-4084-9CAB-273C22F3ADBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4BC013B-28B1-4F29-BC84-C7DAA1FC4C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4BC013B-28B1-4F29-BC84-C7DAA1FC4C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4BC013B-28B1-4F29-BC84-C7DAA1FC4C38}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4BC013B-28B1-4F29-BC84-C7DAA1FC4C38}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{B4BC013B-28B1-4F29-BC84-C7DAA1FC4C38}.Production|Any CPU.ActiveCfg = Release|Any CPU
+		{B4BC013B-28B1-4F29-BC84-C7DAA1FC4C38}.Production|Any CPU.Build.0 = Release|Any CPU
+		{B4BC013B-28B1-4F29-BC84-C7DAA1FC4C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4BC013B-28B1-4F29-BC84-C7DAA1FC4C38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -48,6 +48,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4">
+      <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -1024,6 +1030,10 @@
     <ProjectReference Include="..\RemsLogic.Services\RemsLogic.Services.csproj">
       <Project>{badec8ee-e997-4663-b61a-c84972defa5f}</Project>
       <Name>RemsLogic.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RemsLogic.Wiring\RemsLogic.Wiring.csproj">
+      <Project>{b4bc013b-28b1-4f29-bc84-c7daa1fc4c38}</Project>
+      <Name>RemsLogic.Wiring</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
