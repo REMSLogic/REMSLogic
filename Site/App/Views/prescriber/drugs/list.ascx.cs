@@ -16,6 +16,7 @@ namespace Site.App.Views.prescriber.drugs
         private readonly IDrugListRepository _drugListRepo;
         private readonly IDrugRepository _drugRepo;
         private readonly IComplianceRepository _complianceRepo;
+        private readonly IComplianceService _complianceSvc;
         private readonly IDrugListService _drugListSvc;
 
         public DrugList Drugs;
@@ -27,8 +28,9 @@ namespace Site.App.Views.prescriber.drugs
             _drugRepo = new DrugRepository(connectionString);
             _drugListRepo = new DrugListRepository(connectionString);
             _complianceRepo = new ComplianceRepository(connectionString);
+            _complianceSvc = new ComplianceService(_drugRepo, _complianceRepo);
 
-            _drugListSvc = new DrugListService(_drugListRepo, _drugRepo, _complianceRepo);
+            _drugListSvc = new DrugListService(_complianceSvc, _drugListRepo, _drugRepo);
         }
 
         protected void Page_Init(object sender, EventArgs e)

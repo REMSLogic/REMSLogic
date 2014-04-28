@@ -155,12 +155,10 @@ namespace RemsLogic.Repositories
             const string sql = @"
                 SELECT 
                     Eocs.*
-                FROM DSQ_Answers
-                    INNER JOIN DSQ_Questions ON DSQ_Questions.ID = DSQ_Answers.QuestionID
-                    INNER JOIN Eocs ON Eocs.ID = DSQ_Questions.EocId
+                FROM DSQ_Eocs
+                    INNER JOIN Eocs ON Eocs.ID = DSQ_Eocs.EocId
+    
                 WHERE
-                    DSQ_Questions.EocId IS NOT NULL AND
-                    Value LIKE 'Yes' AND
                     DrugID = @DrugId;";
 
             using(SqlConnection connection = new SqlConnection(ConnectionString))
@@ -187,12 +185,10 @@ namespace RemsLogic.Repositories
             const string sql = @"
                 SELECT 
                     Eocs.*
-                FROM DSQ_Answers
-                    INNER JOIN DSQ_Questions ON DSQ_Questions.ID = DSQ_Answers.QuestionID
-                    INNER JOIN Eocs ON Eocs.ID = DSQ_Questions.EocId
+                FROM DSQ_Eocs
+                    INNER JOIN Eocs ON Eocs.ID = DSQ_Eocs.EocId
+    
                 WHERE
-                    DSQ_Questions.EocId IS NOT NULL AND
-                    Value LIKE 'Yes' AND
                     DrugID = @DrugId AND
                     Eocs.Roles LIKE @Role;";
 

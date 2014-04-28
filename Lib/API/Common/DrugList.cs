@@ -17,7 +17,8 @@ namespace Lib.API.Common
             IDrugListRepository dlRepo = new DrugListRepository(conn);
             IDrugRepository dRepo = new DrugRepository(conn);
             IComplianceRepository cRepo = new ComplianceRepository(conn);
-            IDrugListService dlService = new DrugListService(dlRepo, dRepo, cRepo);
+            IComplianceService complianceSvc = new ComplianceService(dRepo, cRepo);
+            IDrugListService dlService = new DrugListService(complianceSvc, dlRepo, dRepo);
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
@@ -48,7 +49,8 @@ namespace Lib.API.Common
             IDrugListRepository dlRepo = new DrugListRepository(conn);
             IDrugRepository dRepo = new DrugRepository(conn);
             IComplianceRepository cRepo = new ComplianceRepository(conn);
-            IDrugListService dlService = new DrugListService(dlRepo, dRepo, cRepo);
+            IComplianceService complianceSvc = new ComplianceService(dRepo, cRepo);
+            IDrugListService dlService = new DrugListService(complianceSvc, dlRepo, dRepo);
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
@@ -75,11 +77,13 @@ namespace Lib.API.Common
         [Method("Common/DrugList/AddDrugToList")]
         public static ReturnObject AddDrugToList(HttpContext context, long id)
         {
+            // MJL - It doesn't appear that this is used?
             string conn = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
             IDrugListRepository dlRepo = new DrugListRepository(conn);
             IDrugRepository dRepo = new DrugRepository(conn);
             IComplianceRepository cRepo = new ComplianceRepository(conn);
-            IDrugListService dlService = new DrugListService(dlRepo, dRepo, cRepo);
+            IComplianceService complianceSvc = new ComplianceService(dRepo, cRepo);
+            IDrugListService dlService = new DrugListService(complianceSvc, dlRepo, dRepo);
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
@@ -110,7 +114,8 @@ namespace Lib.API.Common
             IDrugListRepository dlRepo = new DrugListRepository(conn);
             IDrugRepository dRepo = new DrugRepository(conn);
             IComplianceRepository cRepo = new ComplianceRepository(conn);
-            IDrugListService dlService = new DrugListService(dlRepo, dRepo, cRepo);
+            IComplianceService complianceSvc = new ComplianceService(dRepo, cRepo);
+            IDrugListService dlService = new DrugListService(complianceSvc, dlRepo, dRepo);
 
             User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);

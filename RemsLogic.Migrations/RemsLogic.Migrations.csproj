@@ -52,6 +52,7 @@
     <Compile Include="Sprint08\Migration004AddEocLogTable.cs" />
     <Compile Include="Sprint09\Migration001AddEocToDsqQuestion.cs" />
     <Compile Include="Sprint09\Migration002AddSetIdentityAttribute.cs" />
+    <Compile Include="Sprint09\Migration003AddDrugEocsTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
