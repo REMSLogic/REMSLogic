@@ -3,17 +3,16 @@ using FluentMigrator;
 
 namespace RemsLogic.Migrations.Sprint09
 {
-    [Migration(201404240519)]
-    public class Migration002AddSetIdentityAttribute : Migration
+    [Migration(201404280448)]
+    public class Migration003AddDrugEocsTable : Migration
     {
         public override void Up()
         {
-            Delete.Table("UserEocsLog");
-
-            Create.Table("UserEocsLog")
+            Create.Table("DSQ_Eocs")
                 .WithColumn("Id").AsInt64().PrimaryKey().Identity()
-                .WithColumn("UserEocsId").AsInt64().NotNullable()
-                .WithColumn("RecordedAt").AsDateTime().NotNullable();
+                .WithColumn("DrugId").AsInt64().NotNullable()
+                .WithColumn("EocId").AsInt64().NotNullable()
+                .WithColumn("QuestionId").AsInt64().NotNullable();
         }
 
         public override void Down()

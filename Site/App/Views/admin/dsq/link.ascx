@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="link.ascx.cs" Inherits="Site.App.Views.admin.dsq.link" %>
+<%@ Import Namespace="RemsLogic.Model" %>
 
 <script type="text/javascript">
 	$(window).bind('content-loaded', function () {
@@ -82,6 +83,19 @@
 			<div class="clearfix" id="form-file-container" style="display: none;">
                 <label for="form-file" class="form-label">File Upload</label>
                 <div class="form-input"><input type="file" id="form-file" name="file" data-url="/api/Dev/DSQ/Link/Upload" data-update-field="form-link" data-callback="UploadCallBack" data-form-data='{"drug-id": <%=this.item.DrugID%>}' placeholder="Select an File" /></div>
+            </div>
+            
+            <div class="clearfix">
+                <label for="form-type" class="form-label">EOC <em>*</em></label>
+                <div class="form-input">
+                    <select id="form-eoc" name="eoc_id">
+                        <option value="None">None</option>
+                        
+                        <%foreach(Eoc eoc in Eocs){%>
+                            <option value="<%=eoc.Id%>"><%=eoc.DisplayName%></option>
+                        <%} %>
+                    </select>
+                </div>
             </div>
 
 			<div class="form-action clearfix">

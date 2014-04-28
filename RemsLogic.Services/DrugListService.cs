@@ -10,15 +10,17 @@ namespace RemsLogic.Services
     {
         private readonly IDrugListRepository _drugListRepo;
         private readonly IDrugRepository _drugRepo;
-        private readonly IComplianceRepository _complianceRepo;
         private readonly IComplianceService _complianceSvc;
 
-        public DrugListService( IDrugListRepository drugListRepo, IDrugRepository drugRepo, IComplianceRepository compRepo)
+        public DrugListService(
+            IComplianceService complianceSvc,
+            IDrugListRepository drugListRepo, 
+            IDrugRepository drugRepo 
+            )
         {
             _drugListRepo = drugListRepo;
             _drugRepo = drugRepo;
-            _complianceRepo = compRepo;
-            _complianceSvc = new ComplianceService(_drugRepo, _complianceRepo);
+            _complianceSvc = complianceSvc;
         }
 
         public DrugList GetDrugListByProfileId(long profileId, string listType)
@@ -65,28 +67,14 @@ namespace RemsLogic.Services
 
         public void AddDrugToDrugListByProfileId(long profileId, long drugId, string listType)
         {
-            switch (listType)
-            {
-                case DrugListType.MyDrugs:
-                    _drugListRepo.AddDrugToDrugListByProfileId(profileId, drugId);
-                    break;
-                case DrugListType.Favorites:
-                    _drugListRepo.AddDrugToFavoritesByProfileId(profileId, drugId);
-                    break;
-            }
+            _drugListRepo.AddDrugToList(profileId, drugId, listType);
+            _complianceSvc.AddEocsToPrescriberProfile(profileId, drugId);
         }
 
         public void RemoveDrugFromDrugListByProfileId(long profileId, long drugId, string listType)
         {
-            switch (listType)
-            {
-                case DrugListType.MyDrugs:
-                    _drugListRepo.RemoveDrugFromDrugListByProfileId(profileId, drugId);
-                    break;
-                case DrugListType.Favorites:
-                    _drugListRepo.RemoveDrugFromFavoritesByProfileId(profileId, drugId);
-                    break;
-            }
+            _drugListRepo.RemoveDrugFromList(profileId, drugId, listType);
+            _complianceSvc.RemoveEocsFromPrescriberProfile(profileId, drugId);
         }
     }
 }

@@ -42,10 +42,12 @@
   <ItemGroup>
     <Compile Include="ComplianceRepository.cs" />
     <Compile Include="DrugRepository.cs" />
+    <Compile Include="DsqRepository.cs" />
     <Compile Include="IComplianceRepository.cs" />
     <Compile Include="IDrugRepository.cs" />
     <Compile Include="DrugListRepository.cs" />
     <Compile Include="IDrugListRepository.cs" />
+    <Compile Include="IDsqRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IWidgetRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

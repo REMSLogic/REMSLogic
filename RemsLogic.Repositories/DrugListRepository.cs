@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 
 namespace RemsLogic.Repositories
 {
@@ -17,7 +15,6 @@ namespace RemsLogic.Repositories
             : base(connectionString)
         {
         }
-
         #endregion
 
         #region IDrugListRepository Implementation
@@ -85,9 +82,9 @@ namespace RemsLogic.Repositories
             return retList;
         }
 
-        public void AddDrugToFavoritesByProfileId(long profileId, long drugId)
+        public void AddDrugToList(long profileId, long drugId, string listType)
         {
-            long listId = GetOrCreateNewDrugListByProfileId(profileId, DrugListType.Favorites);
+            long listId = GetOrCreateNewDrugListByProfileId(profileId, listType);
 
             string SQL = "INSERT INTO [dbo].[UserListItems]([ListID],[ItemID],[Order],[DateAdded]) " +
                          "VALUES(@ListId,@ItemId,0,@Date)";
@@ -104,9 +101,9 @@ namespace RemsLogic.Repositories
             }
         }
 
-        public void RemoveDrugFromFavoritesByProfileId(long profileId, long drugId)
+        public void RemoveDrugFromList(long profileId, long drugId, string listType)
         {
-            long listId = GetDrugListId(profileId, DrugListType.Favorites);
+            long listId = GetDrugListId(profileId, listType);
 
             if (listId != 0)
             {
@@ -123,45 +120,6 @@ namespace RemsLogic.Repositories
                 }
             }
         }
-
-        public void AddDrugToDrugListByProfileId(long profileId, long drugId)
-        {
-            long listId = GetOrCreateNewDrugListByProfileId(profileId, DrugListType.MyDrugs);
-
-            string SQL = "INSERT INTO [dbo].[UserListItems]([ListID],[ItemID],[Order],[DateAdded]) " +
-                         "VALUES(@ListId,@ItemId,0,@Date)";
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                using (SqlCommand cmd = new SqlCommand(SQL, connection))
-                {
-                    cmd.Parameters.AddWithValue("@ListId", listId);
-                    cmd.Parameters.AddWithValue("@ItemId", drugId);
-                    cmd.Parameters.AddWithValue("@Date", DateTime.Now);
-                    connection.Open();
-                    cmd.ExecuteScalar();
-                }
-            }
-        }
-
-        public void RemoveDrugFromDrugListByProfileId(long profileId, long drugId)
-        {
-            long listId = GetDrugListId(profileId, DrugListType.MyDrugs);
-            if (listId != 0)
-            {
-                string SQL = "DELETE FROM [dbo].[UserListItems] WHERE ListID = @ListId AND ItemID = @ItemId";
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
-                {
-                    using (SqlCommand cmd = new SqlCommand(SQL, connection))
-                    {
-                        cmd.Parameters.AddWithValue("@ListId", listId);
-                        cmd.Parameters.AddWithValue("@ItemId", drugId);
-                        connection.Open();
-                        cmd.ExecuteScalar();
-                    }
-                }
-            }
-        }
-
         #endregion
 
         #region Private Methods
@@ -207,57 +165,6 @@ namespace RemsLogic.Repositories
                 }
             }
         }
-
-//        private List<DrugListItem> GetListDrugs(long listId, long profileId)
-//        {
-//            List<DrugListItem> retList = new List<DrugListItem>();
-
-//            string SQL = @"SELECT D.[ID] AS [DrugID], D.[GenericName] AS [DrugName], L.[DateAdded], [DrugEocCounts].[NumEocs] AS [DrugEocs], [UserEocCounts].[NumEocs] AS [UserEocs]
-//                         FROM [dbo].[UserListItems] L
-//                         LEFT JOIN [dbo].[Drugs] D 
-//			                ON L.[ItemID] = D.[ID] 
-//                         LEFT JOIN (SELECT [DrugEocs].[DrugID], COUNT(1) AS [NumEocs] FROM [DrugEocs] 
-//						            INNER JOIN [EocUserTypes]
-//							            ON [DrugEocs].[EocID] = [EocUserTypes].[EocID] 
-//						            LEFT JOIN [UserTypes]
-//							            ON [EocUserTypes].[UserTypeID] = [UserTypes].[ID]
-//					                WHERE [UserTypes].[Name] = 'prescriber' 
-//					                GROUP BY [DrugEocs].[DrugID]
-//                                    ) AS [DrugEocCounts]
-//			                ON D.[ID] = [DrugEocCounts].[DrugID]
-//                         LEFT JOIN (SELECT [UserEocs].[ProfileID], [UserEocs].[DrugID], COUNT(1) [NumEocs] FROM [UserEocs]
-//					                WHERE [UserEocs].[DateCompleted] IS NOT NULL
-//					                GROUP BY [UserEocs].[ProfileID], [UserEocs].[DrugID]
-//                                    ) AS [UserEocCounts]
-//			                ON [UserEocCounts].[ProfileID] = @ProfileId AND D.[ID] = [UserEocCounts].[DrugID]
-//                         WHERE L.ListID = @ListId";
-//            using (SqlConnection connection = new SqlConnection(ConnectionString))
-//            {
-//                using (SqlCommand cmd = new SqlCommand(SQL, connection))
-//                {
-//                    cmd.Parameters.AddWithValue("@ProfileId", profileId);
-//                    cmd.Parameters.AddWithValue("@ListId", listId);
-//                    connection.Open();
-//                    using (SqlDataReader reader = cmd.ExecuteReader())
-//                    {
-//                        while(reader.Read())
-//                        {
-//                            retList.Add(new DrugListItem
-//                                        {
-//                                            Id = reader["DrugID"] == DBNull.Value ? 0 : (long)reader["DrugID"],
-//                                            DrugName = reader["DrugName"] == DBNull.Value ? string.Empty : reader["DrugName"].ToString(),
-//                                            DrugEocsCount = reader["DrugEocs"] == DBNull.Value ? 0 : (int)reader["DrugEocs"],
-//                                            UserEocsCount = reader["UserEocs"] == DBNull.Value ? 0 : (int)reader["UserEocs"],
-//                                            DateAdded = reader["DateAdded"] == DBNull.Value ? DateTime.Now : (DateTime)reader["DateAdded"]
-//                                        });
-//                        }
-//                    }
-//                }
-//            }
-
-//            return retList;
-//        }
-
         #endregion
     }
 }

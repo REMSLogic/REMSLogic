@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using Framework.API;
+using RemsLogic.Model;
+using RemsLogic.Services;
+using StructureMap;
 
 namespace Lib.API.Dev.DSQ
 {
@@ -10,7 +13,7 @@ namespace Lib.API.Dev.DSQ
 	{
 		[SecurityRole( "view_admin" )]
 		[Method( "Dev/DSQ/Link/Edit" )]
-		public static ReturnObject Edit( HttpContext context, long drug_id, long question_id, string label, string value, DateTime date, string help_text = "", long? id = null )
+		public static ReturnObject Edit( HttpContext context, long drug_id, long question_id, long eoc_id, string label, string value, DateTime date, string help_text = "", long? id = null )
 		{
 			Data.DSQ.Link item;
 
@@ -55,6 +58,42 @@ namespace Lib.API.Dev.DSQ
 					}
 				}
 			};
+
+            /*
+             * This will be the new way once I get all of the piping done.
+             * 
+            var link = new DsqLink
+            {
+                Id = id ?? 0,
+                DrugId = drug_id,
+                QuestionId = question_id,
+                EocId = eoc_id,
+                Label = label,
+                Value = value,
+                Date = date,
+                HelpText = help_text
+            };
+
+            // a nice and testable method call
+            ObjectFactory.GetInstance<IDsqService>().UpdateLink(link);
+
+            return new ReturnObject()
+            {
+                Result = link,
+                Redirect = new ReturnRedirectObject()
+                {
+                    Hash = "admin/dsq/edit?id=" + drug_id + "&section-id=" + link.Question.SectionId
+                },
+                Growl = new ReturnGrowlObject()
+                {
+                    Type = "default",
+                    Vars = new ReturnGrowlVarsObject()
+                    {
+                        text = "You have successfully saved this link.", title = "Link Saved"
+                    }
+                }
+            };
+            */
 		}
 
 		[SecurityRole( "view_admin" )]

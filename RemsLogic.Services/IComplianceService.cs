@@ -14,5 +14,7 @@ namespace RemsLogic.Services
         void RemoveEocsFromPrescriberProfile(long profileId, long drugId);
 
         Dictionary<Drug, List<PrescriberEoc>> GetEocsStatus(long profileId, string listType);
+
+        IEnumerable<Eoc> GetByDrug(long drugId);
     }
 }

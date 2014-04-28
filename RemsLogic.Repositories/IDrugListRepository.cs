@@ -9,9 +9,7 @@ namespace RemsLogic.Repositories
 
         List<long> GetFavList(long profileId);
 
-        void AddDrugToFavoritesByProfileId(long profileId, long drugId);
-        void RemoveDrugFromFavoritesByProfileId(long profileId, long drugId);
-        void AddDrugToDrugListByProfileId(long profileId, long drugId);
-        void RemoveDrugFromDrugListByProfileId(long profileId, long drugId);
+        void AddDrugToList(long profileId, long drugId, string listType);
+        void RemoveDrugFromList(long profileId, long drugId, string listType);
     }
 }

@@ -1,26 +1,18 @@
 ﻿using RemsLogic.Model;
-using RemsLogic.Repositories;
-using System.Configuration;
 using RemsLogic.Services;
+using StructureMap;
 
 namespace Site.App.Controls.Widgets
 {
     public partial class MyDrugList : System.Web.UI.UserControl
     {
-        private readonly IDrugListRepository _drugListRepo;
-        private readonly IDrugRepository _drugRepo;
-        private readonly IComplianceRepository _complianceRepo;
+        private readonly IComplianceService _complianceSvc;
         private readonly IDrugListService _drugListSvc;
 
         public MyDrugList()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
-
-            _drugRepo = new DrugRepository(connectionString);
-            _drugListRepo = new DrugListRepository(connectionString);
-            _complianceRepo = new ComplianceRepository(connectionString);
-
-            _drugListSvc = new DrugListService(_drugListRepo, _drugRepo, _complianceRepo);
+            _complianceSvc = ObjectFactory.GetInstance<IComplianceService>();
+            _drugListSvc = ObjectFactory.GetInstance<IDrugListService>();
         }
 
         public DrugList GetDrugList()
