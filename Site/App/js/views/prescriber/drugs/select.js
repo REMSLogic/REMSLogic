@@ -47,7 +47,7 @@ $(function () {
         if ($drug.hasClass("myDrug-remove")) { //Remove From My Drugs
             if (id) {
                 $.ajax({
-                    url: "/api/Prescriber/Drug/Remove",
+                    url: "/api/Common/DrugList/RemoveDrugFromList",
                     type: 'POST',
                     dataType: 'json',
                     data: { 'id': id },
@@ -66,10 +66,10 @@ $(function () {
                 $listItem.appendTo('#selected-drugs');
                 $index = $listItem.index();
                 $.ajax({
-                    url: "/api/Prescriber/Drug/Add",
+                    url: "/api/Common/DrugList/AddDrugToList",
                     type: 'POST',
                     dataType: 'json',
-                    data: { 'id': id, 'order': $index.toString()
+                    data: { 'id': id
                     }
                 });
             }
@@ -161,7 +161,7 @@ function handleDrop(event, ui)
 	    $drug.toggleClass("myDrug-remove selectDrug-add");
 		//console.log('Removing drug with ID ' + drugId.toString());
 		$.ajax({
-			url: "/api/Prescriber/Drug/Remove",
+		    url: "/api/Common/DrugList/RemoveDrugFromList",
 			type: 'POST',
 			dataType: 'json',
 			data: {
@@ -175,12 +175,11 @@ function handleDrop(event, ui)
 	    $drug.toggleClass("myDrug-remove selectDrug-add");
 		//console.log('Adding drug with ID ' + drugId.toString());
 		$.ajax({
-			url: "/api/Prescriber/Drug/Add",
+		    url: "/api/Common/DrugList/AddDrugToList",
 			type: 'POST',
 			dataType: 'json',
 			data: {
-				'id': drugId,
-				'order': ui.item.index()
+				'id': drugId
 			}
 		});
 	}
