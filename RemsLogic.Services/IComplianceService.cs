@@ -13,6 +13,6 @@ namespace RemsLogic.Services
         void AddEocsToPrescriberProfile(long profileId, long drugId);
         void RemoveEocsFromPrescriberProfile(long profileId, long drugId);
 
-        Dictionary<Drug, List<PrescriberEoc>> GetEocsByPrescriberProfile(long profileId, ListType listType);
+        Dictionary<Drug, List<PrescriberEoc>> GetEocsStatus(long profileId, string listType);
     }
 }

@@ -38,19 +38,19 @@ namespace RemsLogic.Repositories
             }
         }
 
-        public IEnumerable<Drug> GetByPrescriberProfile(long profileId)
+        public IEnumerable<Drug> GetByList(long profileId, string listType)
         {
             const string sql = @"
                 SELECT Drugs.*
                 FROM UserListItems
-	                INNER JOIN UserLists ON UserLists.ID = UserListItems.ListID
-	                INNer JOIN Drugs ON Drugs.ID = UserListItems.ItemID
+                    INNER JOIN UserLists ON UserLists.ID = UserListItems.ListID
+                    INNer JOIN Drugs ON Drugs.ID = UserListItems.ItemID
                 WHERE
-	                DataType = 'drug' AND
-	                UserProfileID = @ProfileId AND
-                    Name = 'My Drugs'
+                    DataType = 'drug' AND
+                    UserProfileID = @ProfileId AND
+                    Name = @ListType
                 ORDER BY
-	                GenericName ASC;";
+                    GenericName ASC;";
 
             using(SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -59,41 +59,11 @@ namespace RemsLogic.Repositories
                 using(SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("ProfileId", profileId);
+                    command.Parameters.AddWithValue("ListType", listType);
 
                     using(SqlDataReader reader = command.ExecuteReader())
                     {
                         while(reader.Read())
-                            yield return ReadDrug(reader);
-                    }
-                }
-            }
-        }
-
-        public IEnumerable<Drug> GetFavByPrescriberProfile(long profileId)
-        {
-            const string sql = @"
-                SELECT Drugs.*
-                FROM UserListItems
-	                INNER JOIN UserLists ON UserLists.ID = UserListItems.ListID
-	                INNer JOIN Drugs ON Drugs.ID = UserListItems.ItemID
-                WHERE
-	                DataType = 'drug' AND
-	                UserProfileID = @ProfileId AND
-                    Name = 'Fav Drugs'
-                ORDER BY
-	                GenericName ASC;";
-
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue("ProfileId", profileId);
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
                             yield return ReadDrug(reader);
                     }
                 }

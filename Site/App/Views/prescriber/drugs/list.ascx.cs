@@ -11,14 +11,14 @@ using System.Web.UI.WebControls;
 
 namespace Site.App.Views.prescriber.drugs
 {
-	public partial class list : Lib.Web.AppControlPage
-	{
+    public partial class list : Lib.Web.AppControlPage
+    {
         private readonly IDrugListRepository _drugListRepo;
         private readonly IDrugRepository _drugRepo;
         private readonly IComplianceRepository _complianceRepo;
         private readonly IDrugListService _drugListSvc;
 
-		public DrugList Drugs;
+        public DrugList Drugs;
 
         public list()
         {
@@ -31,12 +31,12 @@ namespace Site.App.Views.prescriber.drugs
             _drugListSvc = new DrugListService(_drugListRepo, _drugRepo, _complianceRepo);
         }
 
-		protected void Page_Init(object sender, EventArgs e)
-		{
-			//Drugs = Lib.Systems.Lists.GetMyDrugs();
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            //Drugs = Lib.Systems.Lists.GetMyDrugs();
             long profileId = Lib.Systems.Security.GetCurrentProfile().ID.Value;
-            Drugs = _drugListSvc.GetDrugListByProfileId(profileId, ListType.MYDRUGLIST);
-		}
+            Drugs = _drugListSvc.GetDrugListByProfileId(profileId, DrugListType.MyDrugs);
+        }
 
         public string GetEOCData(Lib.Data.Drug d)
         {
@@ -55,5 +55,5 @@ namespace Site.App.Views.prescriber.drugs
 
             return ret;
         }
-	}
+    }
 }

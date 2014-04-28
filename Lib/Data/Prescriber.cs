@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using Framework.Data;
+using RemsLogic.Model;
 using RemsLogic.Repositories;
 using RemsLogic.Services;
 
@@ -219,26 +220,18 @@ namespace Lib.Data
 				get
 				{
 					if( DrugEocs <= 0 )
-						return 1.0f;
+						return 100.0f;
+
 					if( UserEocs <= 0 )
 						return 0.0f;
 
-					return ((float)UserEocs) / ((float)DrugEocs);
+					return ((float)UserEocs/(float)DrugEocs)*100.0F;
 				}
 			}
 		}
 
 		public IList<PresciberDrugInfo> GetDrugInfo()
 		{
-            /*
-			var db = Database.Get( "FDARems" );
-
-			var ps = new List<Parameter>();
-			ps.Add( new Parameter( "pid", this.ID.Value ) );
-
-			return db.ExecuteQuery<PresciberDrugInfo>( "Prescriber_GetDrugInfo", ps.ToArray(), CommandType.StoredProcedure );
-            */
-
             string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
             long profileId = Systems.Security.GetCurrentProfile().ID.Value;
 
@@ -247,7 +240,7 @@ namespace Lib.Data
 
             IComplianceService complianceSvc = new ComplianceService(drugRepo, complianceRepo);
 
-            var eocs = complianceSvc.GetEocsByPrescriberProfile(profileId, ListType.MYDRUGLIST);
+            var eocs = complianceSvc.GetEocsStatus(profileId, DrugListType.MyDrugs);
 
             return (from eoc in eocs
                     select new PresciberDrugInfo

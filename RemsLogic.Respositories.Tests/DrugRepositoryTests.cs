@@ -44,7 +44,7 @@ namespace RemsLogic.Respositories.Tests
             List<Drug> drugs = null;
 
             // act
-            drugs = _drugRepo.GetByPrescriberProfile(profileId).ToList();
+            drugs = _drugRepo.GetByList(profileId, DrugListType.MyDrugs).ToList();
 
             // assert
             drugs.Should().NotBeNull();

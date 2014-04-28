@@ -3,11 +3,7 @@ using Framework.Security;
 using RemsLogic.Model;
 using RemsLogic.Repositories;
 using RemsLogic.Services;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
 using System.Web;
 
 namespace Lib.API.Common
@@ -28,7 +24,7 @@ namespace Lib.API.Common
 
             if (profile != null && profile.ID != null)
             {
-                dlService.AddDrugToDrugListByProfileId(profile.ID.Value, id, ListType.FAVDRUGLIST);
+                dlService.AddDrugToDrugListByProfileId(profile.ID.Value, id, DrugListType.Favorites);
             }
 
             return new ReturnObject()
@@ -59,7 +55,7 @@ namespace Lib.API.Common
 
             if (profile != null && profile.ID != null)
             {
-                dlService.RemoveDrugFromDrugListByProfileId(profile.ID.Value, id, ListType.FAVDRUGLIST);
+                dlService.RemoveDrugFromDrugListByProfileId(profile.ID.Value, id, DrugListType.Favorites);
             }
 
             return new ReturnObject()
@@ -90,7 +86,7 @@ namespace Lib.API.Common
 
             if (profile != null && profile.ID != null)
             {
-                dlService.AddDrugToDrugListByProfileId(profile.ID.Value, id, ListType.MYDRUGLIST);
+                dlService.AddDrugToDrugListByProfileId(profile.ID.Value, id, DrugListType.MyDrugs);
             }
 
             return new ReturnObject()
@@ -121,7 +117,7 @@ namespace Lib.API.Common
 
             if (profile != null && profile.ID != null)
             {
-                dlService.RemoveDrugFromDrugListByProfileId(profile.ID.Value, id, ListType.MYDRUGLIST);
+                dlService.RemoveDrugFromDrugListByProfileId(profile.ID.Value, id, DrugListType.MyDrugs);
             }
 
             return new ReturnObject()

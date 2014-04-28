@@ -22,14 +22,31 @@ namespace RemsLogic.Repositories
 
         #region IDrugListRepository Implementation
 
-        public long GetDrugListId(long profileId)
+        public long GetDrugListId(long profileId, string listType)
         {
-            return GetListId(ListType.DrugList, profileId);
-        }
+            if(String.IsNullOrEmpty(listType))
+                throw new ArgumentException("Invalid list ltype", "listType");
 
-        public long GetFavListId(long profileId)
-        {
-            return GetListId(ListType.FavList, profileId);
+            const string SQL = "SELECT TOP 1 * FROM [dbo].[UserLists] WHERE UserProfileID = @ProfileId AND Name = @Name";
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQL, connection))
+                {
+                    cmd.Parameters.AddWithValue("@ProfileId", profileId);
+                    cmd.Parameters.Add(new SqlParameter("@Name", SqlDbType.VarChar, 500));
+                    cmd.Parameters["@Name"].Value = listType;
+                    connection.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                            return (long)reader["ID"];
+                    }
+                }
+            }
+
+            return 0;
         }
 
         public List<long> GetFavList(long profileId)
@@ -70,7 +87,7 @@ namespace RemsLogic.Repositories
 
         public void AddDrugToFavoritesByProfileId(long profileId, long drugId)
         {
-            long listId = GetOrCreateNewDrugListByProfileId(profileId, ListType.FavList);
+            long listId = GetOrCreateNewDrugListByProfileId(profileId, DrugListType.Favorites);
 
             string SQL = "INSERT INTO [dbo].[UserListItems]([ListID],[ItemID],[Order],[DateAdded]) " +
                          "VALUES(@ListId,@ItemId,0,@Date)";
@@ -89,7 +106,8 @@ namespace RemsLogic.Repositories
 
         public void RemoveDrugFromFavoritesByProfileId(long profileId, long drugId)
         {
-            long listId = GetListId(ListType.FavList, profileId);
+            long listId = GetDrugListId(profileId, DrugListType.Favorites);
+
             if (listId != 0)
             {
                 string SQL = "DELETE FROM [dbo].[UserListItems] WHERE ListID = @ListId AND ItemID = @ItemId";
@@ -108,7 +126,7 @@ namespace RemsLogic.Repositories
 
         public void AddDrugToDrugListByProfileId(long profileId, long drugId)
         {
-            long listId = GetOrCreateNewDrugListByProfileId(profileId, ListType.DrugList);
+            long listId = GetOrCreateNewDrugListByProfileId(profileId, DrugListType.MyDrugs);
 
             string SQL = "INSERT INTO [dbo].[UserListItems]([ListID],[ItemID],[Order],[DateAdded]) " +
                          "VALUES(@ListId,@ItemId,0,@Date)";
@@ -127,7 +145,7 @@ namespace RemsLogic.Repositories
 
         public void RemoveDrugFromDrugListByProfileId(long profileId, long drugId)
         {
-            long listId = GetListId(ListType.DrugList, profileId);
+            long listId = GetDrugListId(profileId, DrugListType.MyDrugs);
             if (listId != 0)
             {
                 string SQL = "DELETE FROM [dbo].[UserListItems] WHERE ListID = @ListId AND ItemID = @ItemId";
@@ -147,121 +165,47 @@ namespace RemsLogic.Repositories
         #endregion
 
         #region Private Methods
-
-        enum ListType
+        private long GetOrCreateNewDrugListByProfileId(long profileId, string listType)
         {
-            Undefined = 0,
-            DrugList = 1,
-            FavList = 2
-        };
+            // if GetDRugListId returned long?, then this method could be simplified to
+            // 
+            // return GetDrugListId(profileId, listType) ?? CreateNewList(listType, profileId);
 
-        private long GetProfileId(long userId)
+            long listId = GetDrugListId(profileId, listType);
+
+            if (listId == 0)
+            {
+                listId = CreateNewList(profileId, listType);
+            }
+
+            return listId;
+        }
+
+        private long CreateNewList(long profileId, string listType)
         {
-            long retVal = 0;
+            if(String.IsNullOrEmpty(listType))
+                throw new ArgumentException("You must specify a valid list type.", "listType");
 
-            string SQL = " SELECT TOP 1 * FROM [dbo].[UserProfiles] WHERE UserID = @UserId";
+            const string SQL = "INSERT INTO [dbo].[UserLists]( [UserProfileID],[Name],[DateCreated],[DateModified],[DataType],[System]) " +
+                            "VALUES( @ProfileId,@Name,@Date,@Date,'drug',1); " +
+                            "SELECT ID FROM [dbo].[UserLists] WHERE [UserProfileID] = @ProfileId AND [Name] = @Name";
+
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(SQL, connection))
                 {
-                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@ProfileId", profileId);
+                    cmd.Parameters.AddWithValue("@Date", DateTime.Now);
+
+                    // why the different approach for this parameter?
+                    cmd.Parameters.Add(new SqlParameter("@Name", SqlDbType.VarChar, 500));
+                    cmd.Parameters["@Name"].Value = listType;
+
                     connection.Open();
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            retVal = (long)reader["Id"];
-                        }
-                    }
+
+                    return (long)cmd.ExecuteScalar();
                 }
             }
-
-            return retVal;
-        }
-
-        private long GetOrCreateNewDrugListByProfileId(long profileId, ListType listType)
-        {
-            long listId = GetListId(listType, profileId);
-            if (listId == 0)
-            {
-                listId = CreateNewList(listType, profileId);
-            }
-            return listId;
-        }
-
-        private long CreateNewList(ListType type, long profileId)
-        {
-            long retVal = 0;
-            string name = "";
-            switch(type)
-            {
-                case ListType.DrugList:
-                    name = "My Drugs";
-                    break;
-                case ListType.FavList:
-                    name = "Fav Drugs";
-                    break;
-            }
-
-            if (!string.IsNullOrEmpty(name))
-            {
-                string SQL = "INSERT INTO [dbo].[UserLists]( [UserProfileID],[Name],[DateCreated],[DateModified],[DataType],[System]) " +
-                             "VALUES( @ProfileId,@Name,@Date,@Date,'drug',1); " +
-                             "SELECT ID FROM [dbo].[UserLists] WHERE [UserProfileID] = @ProfileId AND [Name] = @Name";
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
-                {
-                    using (SqlCommand cmd = new SqlCommand(SQL, connection))
-                    {
-                        cmd.Parameters.AddWithValue("@ProfileId", profileId);
-                        cmd.Parameters.AddWithValue("@Date", DateTime.Now);
-                        cmd.Parameters.Add(new SqlParameter("@Name", SqlDbType.VarChar, 500));
-                        cmd.Parameters["@Name"].Value = name;
-                        connection.Open();
-                        retVal = (long)cmd.ExecuteScalar();
-                    }
-                }
-            }
-
-            return retVal;
-        }
-
-        private long GetListId(ListType type, long profileId)
-        {
-            long retVal = 0;
-            string name = "";
-            switch(type)
-            {
-                case ListType.DrugList:
-                    name = "My Drugs";
-                    break;
-                case ListType.FavList:
-                    name = "Fav Drugs";
-                    break;
-            }
-
-            if (!string.IsNullOrEmpty(name))
-            {
-                string SQL = "SELECT TOP 1 * FROM [dbo].[UserLists] WHERE UserProfileID = @ProfileId AND Name = @Name";
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
-                {
-                    using (SqlCommand cmd = new SqlCommand(SQL, connection))
-                    {
-                        cmd.Parameters.AddWithValue("@ProfileId", profileId);
-                        cmd.Parameters.Add(new SqlParameter("@Name", SqlDbType.VarChar, 500));
-                        cmd.Parameters["@Name"].Value = name;
-                        connection.Open();
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                retVal = (long)reader["ID"];
-                            }
-                        }
-                    }
-                }
-            }
-
-            return retVal;
         }
 
 //        private List<DrugListItem> GetListDrugs(long listId, long profileId)
