@@ -68,13 +68,20 @@ namespace RemsLogic.Services
         public void AddDrugToDrugListByProfileId(long profileId, long drugId, string listType)
         {
             _drugListRepo.AddDrugToList(profileId, drugId, listType);
-            _complianceSvc.AddEocsToPrescriberProfile(profileId, drugId);
+            if (listType.Equals(DrugListType.MyDrugs))
+            {
+                _complianceSvc.AddEocsToPrescriberProfile(profileId, drugId);
+            }
         }
 
         public void RemoveDrugFromDrugListByProfileId(long profileId, long drugId, string listType)
         {
             _drugListRepo.RemoveDrugFromList(profileId, drugId, listType);
-            _complianceSvc.RemoveEocsFromPrescriberProfile(profileId, drugId);
+            if (listType.Equals(DrugListType.MyDrugs))
+            {
+                _drugListRepo.RemoveDrugFromList(profileId, drugId, DrugListType.Favorites);
+                _complianceSvc.RemoveEocsFromPrescriberProfile(profileId, drugId);
+            }
         }
     }
 }

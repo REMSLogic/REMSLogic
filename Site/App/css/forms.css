@@ -89,7 +89,7 @@ fieldset.fieldset-buttons {
 .dvform .dvform-row .dvform-label .dvform-label-parent { line-height: 32px; font-size: 14px; margin-left: 5px; }
 .dvform .dvform-row .dvform-label .dvform-label-child 
 {
-     background: url(../images/navicons-small/13.png) center left no-repeat; 
+     /*background: url(../images/navicons-small/13.png) center left no-repeat;*/ 
      display: inline-block; 
      float: left; 
      font-size: 12px; 
@@ -709,7 +709,7 @@ table.simple tr.highlight,
 {
 	margin-left: 2%;
 	padding-left: 3%;
-	background: url(../images/navicons-small/13.png) center left no-repeat;
+	/*background: url(../images/navicons-small/13.png) center left no-repeat;*/
 	font-size: 12px;
 	width: 40%;
 }
