@@ -33,7 +33,7 @@ namespace RemsLogic.Respositories.Tests
 
             // assert
             results.Should().NotBeNull();
-            results.Count.Should().Be(6);
+            results.Count.Should().BeGreaterOrEqualTo(1);
         }
 
         [Test]
