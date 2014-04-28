@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using Framework.API;
+using RemsLogic.Model;
 using RemsLogic.Services;
 using StructureMap;
 
@@ -41,10 +42,6 @@ namespace Lib.API.Dev.DSQ
 
 			var q = new Lib.Data.DSQ.Question( item.QuestionID );
 
-            IComplianceService complianceSvc = ObjectFactory.GetInstance<IComplianceService>();
-
-            complianceSvc.UpdateDsqEoc(question_id, drug_id, eoc_id);
-
 			return new ReturnObject()
 			{
 				Result = item,
@@ -61,6 +58,41 @@ namespace Lib.API.Dev.DSQ
 					}
 				}
 			};
+
+            /*
+             * This will be the new way once I get all of the piping done.
+             * 
+            var link = new DsqLink
+            {
+                Id = id ?? 0,
+                DrugId = drug_id,
+                QuestionId = question_id,
+                EocId = eoc_id,
+                Label = label,
+                Value = value,
+                Date = date,
+                HelpText = help_text
+            };
+
+            ObjectFactory.GetInstance<IDsqService>().UpdateLink(link);
+
+            return new ReturnObject()
+            {
+                Result = link,
+                Redirect = new ReturnRedirectObject()
+                {
+                    Hash = "admin/dsq/edit?id=" + drug_id + "&section-id=" + link.Question.SectionId
+                },
+                Growl = new ReturnGrowlObject()
+                {
+                    Type = "default",
+                    Vars = new ReturnGrowlVarsObject()
+                    {
+                        text = "You have successfully saved this link.", title = "Link Saved"
+                    }
+                }
+            };
+            */
 		}
 
 		[SecurityRole( "view_admin" )]

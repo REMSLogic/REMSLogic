@@ -16,6 +16,5 @@ namespace RemsLogic.Services
         Dictionary<Drug, List<PrescriberEoc>> GetEocsStatus(long profileId, string listType);
 
         IEnumerable<Eoc> GetByDrug(long drugId);
-        void UpdateDsqEoc(long questionId, long drugId, long eocId);
     }
 }

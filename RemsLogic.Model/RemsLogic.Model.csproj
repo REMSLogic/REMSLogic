@@ -43,6 +43,10 @@
     <Compile Include="Drug.cs" />
     <Compile Include="DrugList.cs" />
     <Compile Include="DrugListItem.cs" />
+    <Compile Include="Dsq.cs" />
+    <Compile Include="DsqAnswer.cs" />
+    <Compile Include="DsqLink.cs" />
+    <Compile Include="DsqQuestion.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Eoc.cs" />
     <Compile Include="PrescriberEoc.cs" />

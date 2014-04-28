@@ -106,10 +106,5 @@ namespace RemsLogic.Services
         {
             return _complianceRepo.GetByDrug(drugId);
         }
-
-        public void UpdateDsqEoc(long questionId, long drugId, long eocId)
-        {
-
-        }
     }
 }
