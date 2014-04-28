@@ -33,7 +33,7 @@ namespace RemsLogic.Respositories.Tests
 
             // assert
             results.Should().NotBeNull();
-            results.Count.Should().BeGreaterOrEqualTo(1);
+            results.Count.Should().BeGreaterThan(0);
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace RemsLogic.Respositories.Tests
 
             // assert
             results.Should().NotBeNull();
-            results.Count.Should().Be(9);
+            results.Count.Should().BeGreaterThan(0);
         }
     }
 }
