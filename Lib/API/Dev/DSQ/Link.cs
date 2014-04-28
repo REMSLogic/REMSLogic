@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using Framework.API;
+using RemsLogic.Services;
+using StructureMap;
 
 namespace Lib.API.Dev.DSQ
 {
@@ -10,7 +12,7 @@ namespace Lib.API.Dev.DSQ
 	{
 		[SecurityRole( "view_admin" )]
 		[Method( "Dev/DSQ/Link/Edit" )]
-		public static ReturnObject Edit( HttpContext context, long drug_id, long question_id, string label, string value, DateTime date, string help_text = "", long? id = null )
+		public static ReturnObject Edit( HttpContext context, long drug_id, long question_id, long eoc_id, string label, string value, DateTime date, string help_text = "", long? id = null )
 		{
 			Data.DSQ.Link item;
 
@@ -38,6 +40,10 @@ namespace Lib.API.Dev.DSQ
 			item.Save();
 
 			var q = new Lib.Data.DSQ.Question( item.QuestionID );
+
+            IComplianceService complianceSvc = ObjectFactory.GetInstance<IComplianceService>();
+
+            complianceSvc.UpdateDsqEoc(question_id, drug_id, eoc_id);
 
 			return new ReturnObject()
 			{

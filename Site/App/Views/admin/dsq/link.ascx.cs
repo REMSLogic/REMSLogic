@@ -4,40 +4,66 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Lib.Data.DSQ;
+using RemsLogic.Model;
+using RemsLogic.Services;
+using StructureMap;
 
 namespace Site.App.Views.admin.dsq
 {
-	public partial class link : Lib.Web.AdminControlPage
-	{
-		public Lib.Data.DSQ.Link item;
-		public long SectionID = -1;
+    public partial class link : Lib.Web.AdminControlPage
+    {
+        private readonly IComplianceService _complianceSvc;
 
-		protected void Page_Init(object sender, EventArgs e)
-		{
-			string strID = Request.QueryString["id"];
-			long id;
-			if (string.IsNullOrEmpty(strID) || !long.TryParse(strID, out id))
-				item = new Lib.Data.DSQ.Link();
-			else
-				item = new Lib.Data.DSQ.Link(id);
+        public Link item {get; set;}
+        public long SectionID {get; set;}
+        public List<Eoc> Eocs {get; set;}
 
-			strID = Request.QueryString["drug-id"];
-			if (!string.IsNullOrEmpty(strID) && long.TryParse(strID, out id))
-				item.DrugID = id;
-			else
-				base.RedirectHash("admin/drugs/drugs/list", true, "No drug selected to add a link to.");
+        
+        public link()
+        {
+            _complianceSvc = ObjectFactory.GetInstance<IComplianceService>();
 
-			strID = Request.QueryString["question-id"];
-			if (!string.IsNullOrEmpty(strID) && long.TryParse(strID, out id))
-				item.QuestionID = id;
-			else
-				base.RedirectHash("admin/dsq/edit?id="+item.DrugID, true, "No question selected to add a link to.");
+            SectionID = -1;
+        }
 
-			if (item.QuestionID != 0)
-			{
-				var q = new Lib.Data.DSQ.Question(item.QuestionID);
-				SectionID = q.SectionID;
-			}
-		}
-	}
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            string strId = Request.QueryString["id"];
+            string strDrugId = Request.QueryString["drug-id"];
+            string strQuestionId = Request.QueryString["question-id"];
+
+            long id;
+            long drugId;
+            long questionId;
+
+            item = (String.IsNullOrEmpty(strId) || long.TryParse(strId, out id))
+                ? new Link()
+                : new Link(id);
+
+            if (!string.IsNullOrEmpty(strDrugId) && long.TryParse(strDrugId, out drugId))
+                item.DrugID = drugId;
+            else
+            {
+                RedirectHash("admin/drugs/drugs/list", true, "No drug selected to add a link to.");
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(strQuestionId) && long.TryParse(strQuestionId, out questionId))
+                item.QuestionID = questionId;
+            else
+            {
+                RedirectHash("admin/dsq/edit?id="+item.DrugID, true, "No question selected to add a link to.");
+                return;
+            }
+
+            if (item.QuestionID == 0)
+                return;
+
+            Eocs = _complianceSvc.GetByDrug(drugId).ToList();
+
+            var q = new Question(item.QuestionID);
+            SectionID = q.SectionID;
+        }
+    }
 }
