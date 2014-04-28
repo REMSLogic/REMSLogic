@@ -74,6 +74,7 @@ namespace Lib.API.Dev.DSQ
                 HelpText = help_text
             };
 
+            // a nice and testable method call
             ObjectFactory.GetInstance<IDsqService>().UpdateLink(link);
 
             return new ReturnObject()
