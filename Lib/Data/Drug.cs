@@ -240,6 +240,36 @@ namespace Lib.Data
 			return a.Value;
 		}
 
+		protected bool HasEocAnswer( string eoc_name )
+		{
+			return HasEocAnswer( Eoc.FindByName(eoc_name) );
+		}
+
+		protected bool HasEocAnswer( Eoc eoc )
+		{
+			if( eoc == null || eoc.ID == null )
+				return false;
+
+			return HasEocAnswer( eoc.ID.Value );
+		}
+
+		protected bool HasEocAnswer( long eoc_id )
+		{
+			var qs = DSQ.Question.FindByFieldType( "EOC" );
+
+			foreach( var q in qs )
+			{
+				if( eoc_id.ToString() != q.Answers )
+					continue;
+
+				var a = DSQ.Answer.FindByDrug( this, q );
+				if( a != null && !string.IsNullOrEmpty( a.Value ) && a.Value != "No" )
+					return true;
+			}
+
+			return false;
+		}
+
 		public void DetermineEOC()
 		{
 			if( this.ID == null )
@@ -250,19 +280,19 @@ namespace Lib.Data
 			if( ClassID == 1 || (SystemID != null && SystemID > 0) )
 				eocs.Add( Eoc.FindByName( "etasu" ) );
 
-			if (GetAnswer("facility-enrollment") == "Yes" || GetAnswer("pharmacy-enrollment") == "Yes")
+			if( GetAnswer( "facility-enrollment" ) == "Yes" || GetAnswer( "pharmacy-enrollment" ) == "Yes" || HasEocAnswer( "facility-enrollment" ) || HasEocAnswer( "pharmacy-enrollment" ) )
 				eocs.Add( Eoc.FindByName( "facility-pharmacy-enrollment" ) );
-			if (GetAnswer("patient-enrollment") == "Yes")
+			if( GetAnswer( "patient-enrollment" ) == "Yes" || HasEocAnswer( "patient-enrollment" ) )
 				eocs.Add( Eoc.FindByName( "patient-enrollment" ) );
-			if (GetAnswer("prescriber-enrollment") == "Yes")
+			if( GetAnswer( "prescriber-enrollment" ) == "Yes" || HasEocAnswer( "prescriber-enrollment" ) )
 				eocs.Add( Eoc.FindByName( "prescriber-enrollment" ) );
-			if (GetAnswer("education-training") == "Yes")
+			if( GetAnswer( "education-training" ) == "Yes" || HasEocAnswer( "education-training" ) )
 				eocs.Add( Eoc.FindByName( "education-training" ) );
-			if (GetAnswer("monitoring-management") == "Yes")
+			if( GetAnswer( "monitoring-management" ) == "Yes" || HasEocAnswer( "monitoring-management" ) )
 				eocs.Add( Eoc.FindByName( "monitoring-management" ) );
-			if (GetAnswer("informed-consent") == "Yes")
+			if( GetAnswer( "informed-consent" ) == "Yes" || HasEocAnswer( "informed-consent" ) )
 				eocs.Add( Eoc.FindByName( "informed-consent" ) );
-			if( GetAnswer( "pharmacy-requirements" ) == "Yes" )
+			if( GetAnswer( "pharmacy-requirements" ) == "Yes" || HasEocAnswer( "pharmacy-requirements" ) )
 				eocs.Add( Eoc.FindByName( "pharmacy-requirements" ) );
 
 			//TODO: Add "medication-guide", "forms-documents"

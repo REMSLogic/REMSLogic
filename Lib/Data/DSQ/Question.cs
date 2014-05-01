@@ -79,6 +79,13 @@ namespace Lib.Data.DSQ
 			});
 		}
 
+		public static IList<Question> FindByFieldType( string field_type )
+		{
+			return FindAllBy<Question>( new Dictionary<string, object> {
+				{ "FieldType", field_type }
+			} );
+		}
+
 		[Column]
 		public long SectionID;
 		[Column]
