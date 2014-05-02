@@ -41,7 +41,7 @@
 						</div>--%>
 
 				        <div id="divEoc-filter-avail" class="eoc-filter eoc-filter-avail">
-                            <div class="filter-input">
+                            <div class="filter-input mydruglist-inputwrap">
                                  <input id="available-drugs-filter" type="text" value="" size="50" placeholder="Filter Drugs" />
                                  <a class="eoc-menu-clear-avail clear-btn" onclick="ClearAvailDrugListFilter();" >Clear Filter</a>
                             </div>
@@ -194,7 +194,7 @@
 						</div>--%>
 
 				        <div id="divEoc-filter-my" class="eoc-filter eoc-filter-my">
-                         <div class="filter-input">
+                         <div class="filter-input mydruglist-inputwrap">
                                  <input id="my-drugs-filter" type="text" value="" size="50" placeholder="Filter Drugs">
                                  <a class="eoc-menu-clear-my clear-btn" onclick="ClearMyDrugListFilter();" >Clear Filter</a>
                             </div>
