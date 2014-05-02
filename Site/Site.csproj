@@ -1031,6 +1031,10 @@
       <Project>{badec8ee-e997-4663-b61a-c84972defa5f}</Project>
       <Name>RemsLogic.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RemsLogic.Utilities\RemsLogic.Utilities.csproj">
+      <Project>{34ac8d64-8e20-42dc-b28e-b9ad13c5adaa}</Project>
+      <Name>RemsLogic.Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RemsLogic.Wiring\RemsLogic.Wiring.csproj">
       <Project>{b4bc013b-28b1-4f29-bc84-c7daa1fc4c38}</Project>
       <Name>RemsLogic.Wiring</Name>

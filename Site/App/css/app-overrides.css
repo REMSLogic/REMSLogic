@@ -293,7 +293,7 @@
 {
     position: relative;
 }
-.mydruglist-inputwrap #drugs-filter
+.mydruglist-inputwrap #drugs-filter, .mydruglist-inputwrap #available-drugs-filter, .mydruglist-inputwrap #my-drugs-filter
 {
     width: 100%;
     margin-bottom:10px;
