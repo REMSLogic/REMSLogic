@@ -616,6 +616,18 @@ namespace Lib.Web.Controls
 								writer.WriteEncodedText("Information");
 							}
 							writer.RenderEndTag();
+
+							writer.RenderBeginTag("th");
+							{
+								writer.WriteEncodedText("EOC");
+							}
+							writer.RenderEndTag();
+
+							writer.RenderBeginTag("th");
+							{
+								writer.WriteEncodedText("Required");
+							}
+							writer.RenderEndTag();
 						}
 						writer.RenderEndTag();
 					}
@@ -672,6 +684,18 @@ namespace Lib.Web.Controls
 									writer.RenderBeginTag("td");
 									{
 										writer.WriteEncodedText(link.Value);
+									}
+									writer.RenderEndTag();
+
+									writer.RenderBeginTag("td");
+									{
+										writer.WriteEncodedText(link.HasEoc? "Yes" : "No");
+									}
+									writer.RenderEndTag();
+
+									writer.RenderBeginTag("td");
+									{
+										writer.WriteEncodedText(link.IsRequired? "Yes" : "No");
 									}
 									writer.RenderEndTag();
 								}

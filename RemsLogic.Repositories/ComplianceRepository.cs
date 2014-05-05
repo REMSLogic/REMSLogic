@@ -121,6 +121,8 @@ namespace RemsLogic.Repositories
             return null;
         }
 
+
+
         public Eoc GetEoc(long id)
         {
             const string sql = @"
@@ -148,6 +150,63 @@ namespace RemsLogic.Repositories
             }
 
             return null;
+        }
+
+        public Eoc GetEoc(long drugId, long questionId)
+        {
+            const string sql = @"
+                SELECT 
+                    Eocs.*
+                FROM DSQ_Eocs
+                    INNER JOIN Eocs ON Eocs.ID = DSQ_Eocs.EocId
+    
+                WHERE
+                    DrugID = @DrugId AND
+                    QuestionId = @QuestionId;";
+
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("DrugId", drugId);
+                    command.Parameters.AddWithValue("QuestionId", questionId);
+
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if(reader.Read())
+                            return ReadEoc(reader);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public IEnumerable<Eoc> GetEocs()
+        {
+            const string sql = @"
+                SELECT 
+                    *
+                FROM Eocs
+                ORDER BY DisplayName ASC;";
+
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while(reader.Read())
+                        {
+                            yield return ReadEoc(reader);
+                        }
+                    }
+                }
+            }
         }
 
         public IEnumerable<Eoc> GetByDrug(long drugId)

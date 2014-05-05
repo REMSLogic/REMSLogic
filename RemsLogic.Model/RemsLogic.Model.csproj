@@ -45,6 +45,7 @@
     <Compile Include="DrugListItem.cs" />
     <Compile Include="Dsq.cs" />
     <Compile Include="DsqAnswer.cs" />
+    <Compile Include="DsqEoc.cs" />
     <Compile Include="DsqLink.cs" />
     <Compile Include="DsqQuestion.cs" />
     <Compile Include="Entity.cs" />
