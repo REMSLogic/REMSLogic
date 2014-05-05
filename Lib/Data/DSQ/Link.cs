@@ -36,6 +36,15 @@ namespace Lib.Data.DSQ
 		public string HelpText;
 		[Column]
 		public DateTime? Date;
+        [Column]
+        public long EocId;
+        [Column]
+        public bool IsRequired;
+
+        public bool HasEoc
+        {
+            get {return EocId > 0;}
+        }
 
 		public Drug Drug
 		{ get { return new Drug( DrugID ); } }

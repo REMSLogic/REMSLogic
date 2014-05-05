@@ -4,6 +4,7 @@ namespace RemsLogic.Services
 {
     public interface IDsqService
     {
-        void UpdateLink(DsqLink link);
+        DsqLink GetLink(long id);
+        void SaveLink(DsqLink link);
     }
 }

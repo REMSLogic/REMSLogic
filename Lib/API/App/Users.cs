@@ -9,6 +9,7 @@ using Lib.Systems.Tasks;
 using RemsLogic.Model;
 using RemsLogic.Repositories;
 using RemsLogic.Services;
+using StructureMap;
 using CertificationReminder = Lib.Systems.Tasks.CertificationReminder;
 
 namespace Lib.API.App
@@ -89,12 +90,7 @@ namespace Lib.API.App
 
         private static void RecordCompliance(Data.UserEoc cert)
         {
-            // typically i would have an IoC container setup to take care of all of this
-            string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
-            IDrugRepository drugRepo = new DrugRepository(connectionString);
-            IComplianceRepository complianceRepo = new ComplianceRepository(connectionString);
-
-            ComplianceService complianceService = new ComplianceService(drugRepo, complianceRepo);
+            IComplianceService complianceService = ObjectFactory.GetInstance<IComplianceService>();
 
             PrescriberEoc eoc = complianceService.Find(cert.ProfileID, cert.DrugID, cert.EocID) ?? new PrescriberEoc
                 {

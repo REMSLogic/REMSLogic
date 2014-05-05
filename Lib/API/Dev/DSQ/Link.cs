@@ -11,57 +11,20 @@ namespace Lib.API.Dev.DSQ
 {
 	public class Link : Base
 	{
-		[SecurityRole( "view_admin" )]
-		[Method( "Dev/DSQ/Link/Edit" )]
-		public static ReturnObject Edit( HttpContext context, long drug_id, long question_id, long eoc_id, string label, string value, DateTime date, string help_text = "", long? id = null )
-		{
-			Data.DSQ.Link item;
+        [SecurityRole( "view_admin" )]
+        [Method( "Dev/DSQ/Link/Edit" )]
+        public static ReturnObject Edit( HttpContext context, long drug_id, long question_id, long eoc_id, string label, string value, DateTime date, string help_text = "", long? id = null, string required = "No" )
+        {
+            Data.DSQ.Link item;
 
-			if( help_text != null && help_text.Length >= 450 )
-			{
-				return new ReturnObject {
-					Error = true,
-					Message = "The help text must be less than 450 characters."
-				};
-			}
+            if( help_text != null && help_text.Length >= 450 )
+            {
+                return new ReturnObject {
+                    Error = true,
+                    Message = "The help text must be less than 450 characters."
+                };
+            }
 
-			if( id == null || id <= 0 )
-			{
-				item = new Lib.Data.DSQ.Link();
-				item.DrugID = drug_id;
-				item.QuestionID = question_id;
-			}
-			else
-				item = new Lib.Data.DSQ.Link( id );
-
-			item.Label = label;
-			item.Value = value;
-			item.HelpText = help_text;
-			item.Date = date;
-			item.Save();
-
-			var q = new Lib.Data.DSQ.Question( item.QuestionID );
-
-			return new ReturnObject()
-			{
-				Result = item,
-				Redirect = new ReturnRedirectObject()
-				{
-					Hash = "admin/dsq/edit?id=" + drug_id + "&section-id=" + q.SectionID
-				},
-				Growl = new ReturnGrowlObject()
-				{
-					Type = "default",
-					Vars = new ReturnGrowlVarsObject()
-					{
-						text = "You have successfully saved this link.", title = "Link Saved"
-					}
-				}
-			};
-
-            /*
-             * This will be the new way once I get all of the piping done.
-             * 
             var link = new DsqLink
             {
                 Id = id ?? 0,
@@ -71,11 +34,12 @@ namespace Lib.API.Dev.DSQ
                 Label = label,
                 Value = value,
                 Date = date,
-                HelpText = help_text
+                HelpText = help_text,
+                IsRequired = required.ToLowerInvariant() == "yes"
             };
 
             // a nice and testable method call
-            ObjectFactory.GetInstance<IDsqService>().UpdateLink(link);
+            ObjectFactory.GetInstance<IDsqService>().SaveLink(link);
 
             return new ReturnObject()
             {
@@ -93,8 +57,7 @@ namespace Lib.API.Dev.DSQ
                     }
                 }
             };
-            */
-		}
+        }
 
 		[SecurityRole( "view_admin" )]
 		[Method( "Dev/DSQ/Link/Delete" )]

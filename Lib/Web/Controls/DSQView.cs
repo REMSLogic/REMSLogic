@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using RemsLogic.Model;
 using RemsLogic.Repositories;
 using RemsLogic.Utilities;
+using StructureMap;
 
 namespace Lib.Web.Controls
 {
@@ -136,7 +137,8 @@ namespace Lib.Web.Controls
 				return;
 
             IMarkdownService markdownSvc = new MarkdownService(enableSyntaxHighlighting: true);
-            IComplianceRepository complianceRepo = new ComplianceRepository(ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString);
+            IComplianceRepository complianceRepo = ObjectFactory.GetInstance<IComplianceRepository>();
+            IDsqRepository dsqRepo = ObjectFactory.GetInstance<IDsqRepository>();
 
 			string a = null;
 			if (DrugID != null)
@@ -171,14 +173,12 @@ namespace Lib.Web.Controls
                 return;
             }
 
-            Eoc eocForQ = null;
+            Eoc eocForQ = complianceRepo.GetEoc(DrugID.Value, q.ID.Value);
             bool for_eoc = false;
 
-            if(q.EocId != null)
+            if(eocForQ != null)
             {
-                eocForQ = complianceRepo.GetEoc(q.EocId.Value);
-
-                if(eocForQ != null && eocForQ.AppliesTo.Any(r => Framework.Security.Manager.HasRole(r)))
+                if(eocForQ.AppliesTo.Any(r => Framework.Security.Manager.HasRole(r)))
                 {
                     for_eoc = true;
                 }

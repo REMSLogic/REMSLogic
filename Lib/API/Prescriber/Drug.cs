@@ -8,6 +8,7 @@ using Lib.Systems.Tasks;
 using RemsLogic.Model;
 using RemsLogic.Repositories;
 using RemsLogic.Services;
+using StructureMap;
 using CertificationReminder = Lib.Systems.Tasks.CertificationReminder;
 
 namespace Lib.API.Prescriber
@@ -220,12 +221,7 @@ namespace Lib.API.Prescriber
 
         private static void AddEocs(long profileId, long drugId)
         {
-            // typically i would have an IoC container setup to take care of all of this
-            string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
-            IDrugRepository drugRepo = new DrugRepository(connectionString);
-            IComplianceRepository complianceRepo = new ComplianceRepository(connectionString);
-
-            ComplianceService complianceService = new ComplianceService(drugRepo, complianceRepo);
+            IComplianceService complianceService = ObjectFactory.GetInstance<IComplianceService>();
 
             // this adds the entries into the UserEoc table for all possible eocs for the drug.
             // the date completed is left null
@@ -234,12 +230,7 @@ namespace Lib.API.Prescriber
 
         private static void RecordCompliance(Data.UserEoc cert)
         {
-            // typically i would have an IoC container setup to take care of all of this
-            string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
-            IDrugRepository drugRepo = new DrugRepository(connectionString);
-            IComplianceRepository complianceRepo = new ComplianceRepository(connectionString);
-
-            ComplianceService complianceService = new ComplianceService(drugRepo, complianceRepo);
+            IComplianceService complianceService = ObjectFactory.GetInstance<IComplianceService>();
 
             PrescriberEoc eoc = complianceService.Find(cert.ProfileID, cert.DrugID, cert.EocID) ?? new PrescriberEoc
                 {
@@ -255,13 +246,8 @@ namespace Lib.API.Prescriber
 
         private static void RemoveEocs(long profileId, long drugId)
         {
-            // typically i would have an IoC container setup to take care of all of this
-            string connectionString = ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString;
-            IDrugRepository drugRepo = new DrugRepository(connectionString);
-            IComplianceRepository complianceRepo = new ComplianceRepository(connectionString);
-
-            ComplianceService complianceService = new ComplianceService(drugRepo, complianceRepo);
-
+            IComplianceService complianceService = ObjectFactory.GetInstance<IComplianceService>();
+            
             complianceService.RemoveEocsFromPrescriberProfile(profileId, drugId);
         }
 	}

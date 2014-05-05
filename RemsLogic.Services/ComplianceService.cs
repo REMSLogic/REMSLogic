@@ -102,6 +102,11 @@ namespace RemsLogic.Services
                         select eoc).ToList());
         }
 
+        public IEnumerable<Eoc> GetEocs()
+        {
+            return _complianceRepo.GetEocs();
+        }
+
         public IEnumerable<Eoc> GetByDrug(long drugId)
         {
             return _complianceRepo.GetByDrug(drugId);
