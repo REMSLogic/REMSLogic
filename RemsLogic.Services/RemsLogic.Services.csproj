@@ -46,6 +46,8 @@
     <Compile Include="IComplianceService.cs" />
     <Compile Include="IDrugListService.cs" />
     <Compile Include="IDsqService.cs" />
+    <Compile Include="IOrganizationService.cs" />
+    <Compile Include="OrganizationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
