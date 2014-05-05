@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RemsLogic.Model;
+using RemsLogic.Model.Compliance;
+using RemsLogic.Model.Dsq;
 using RemsLogic.Services;
 using StructureMap;
 

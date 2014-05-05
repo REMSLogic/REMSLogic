@@ -3,7 +3,7 @@ using System.Configuration;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using RemsLogic.Model;
+using RemsLogic.Model.Compliance;
 using RemsLogic.Repositories;
 
 namespace RemsLogic.Respositories.Tests

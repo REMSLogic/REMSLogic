@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Security;
 using System.Web;
 using Framework.API;
 using Lib.Systems.Tasks;
-using RemsLogic.Model;
-using RemsLogic.Repositories;
+using RemsLogic.Model.Compliance;
 using RemsLogic.Services;
 using StructureMap;
 using CertificationReminder = Lib.Systems.Tasks.CertificationReminder;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RemsLogic.Model
+namespace RemsLogic.Model.Dsq
 {
     public class DsqLink : Entity
     {

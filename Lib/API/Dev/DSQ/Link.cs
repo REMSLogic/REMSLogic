@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using Framework.API;
-using RemsLogic.Model;
+using RemsLogic.Model.Dsq;
 using RemsLogic.Services;
 using StructureMap;
 

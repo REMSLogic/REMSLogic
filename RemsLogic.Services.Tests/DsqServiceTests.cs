@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using RemsLogic.Model;
+using RemsLogic.Model.Dsq;
 using RemsLogic.Repositories;
 using Rhino.Mocks;
 

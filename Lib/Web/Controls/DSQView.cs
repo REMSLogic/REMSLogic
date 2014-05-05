@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using RemsLogic.Model;
+using RemsLogic.Model.Compliance;
 using RemsLogic.Repositories;
 using RemsLogic.Utilities;
 using StructureMap;

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using RemsLogic.Model;
+using RemsLogic.Model.Compliance;
 
 namespace RemsLogic.Repositories
 {

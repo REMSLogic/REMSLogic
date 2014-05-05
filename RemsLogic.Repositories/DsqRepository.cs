@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using RemsLogic.Model;
+using RemsLogic.Model.Dsq;
 
 namespace RemsLogic.Repositories
 {
-    public class DsqRepository : Repository<Dsq>, IDsqRepository
+    public class DsqRepository : Repository<Questionnaire>, IDsqRepository
     {
         #region Constructor
         public DsqRepository(string connectionString)

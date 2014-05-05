@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using RemsLogic.Model;
+using RemsLogic.Model.Compliance;
 using RemsLogic.Repositories;
 using RemsLogic.Repositories.ProxyObjects;
 using Rhino.Mocks;

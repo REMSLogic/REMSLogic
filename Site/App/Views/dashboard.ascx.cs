@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using Framework.Security;
-using RemsLogic.Model;
+using RemsLogic.Model.UI;
 using RemsLogic.Repositories;
 
 namespace Site.App.Views

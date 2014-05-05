@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using RemsLogic.Model;
+using RemsLogic.Model.Compliance;
 using RemsLogic.Repositories.ProxyObjects;
 
 namespace RemsLogic.Repositories

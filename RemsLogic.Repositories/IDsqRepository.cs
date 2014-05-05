@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using RemsLogic.Model;
+using RemsLogic.Model.Dsq;
 
 namespace RemsLogic.Repositories
 {
-    public interface IDsqRepository : IRepository<Dsq>
+    public interface IDsqRepository : IRepository<Questionnaire>
     {
         // DSQ_Eocs
         void AddEoc(DsqEoc eoc);

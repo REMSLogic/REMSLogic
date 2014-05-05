@@ -1,4 +1,4 @@
-﻿namespace RemsLogic.Model
+﻿namespace RemsLogic.Model.UI
 {
     public class Widget : Entity
     {

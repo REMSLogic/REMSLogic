@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Web;
 using Framework.API;
-using RemsLogic.Model;
+using RemsLogic.Model.UI;
 using RemsLogic.Repositories;
 
 namespace Lib.API.Common
