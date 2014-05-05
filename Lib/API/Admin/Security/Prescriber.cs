@@ -6,8 +6,8 @@ using Lib.Data;
 
 namespace Lib.API.Admin.Security
 {
-	public class Prescriber : Base
-	{
+    public class Prescriber : Base
+    {
         [SecurityRole("view_admin")]
         [Method("Admin/Security/Prescriber/Edit")]
         public static ReturnObject Edit( HttpContext context, long provider_id, long facility_id, long profile_id, string first_name, string last_name, string email, string phone, 
@@ -124,35 +124,38 @@ namespace Lib.API.Admin.Security
             };
         }
 
-		[SecurityRole("view_admin")]
-		[Method("Admin/Security/Prescriber/Delete")]
-		public static ReturnObject Delete(HttpContext context, long id)
-		{
-			if (id <= 0)
-				return new ReturnObject() { Error = true, Message = "Invalid Prescriber." };
+        [SecurityRole("view_admin")]
+        [Method("Admin/Security/Prescriber/Delete")]
+        public static ReturnObject Delete(HttpContext context, long id)
+        {
+            if (id <= 0)
+                return new ReturnObject() { Error = true, Message = "Invalid Prescriber." };
 
-			var item = new Lib.Data.Prescriber(id);
-			item.Delete();
+            var item = new PrescriberProfile(id);
 
-			return new ReturnObject()
-			{
-				Growl = new ReturnGrowlObject()
-				{
-					Type = "default",
-					Vars = new ReturnGrowlVarsObject()
-					{
-						text = "You have successfully deleted a Prescriber.",
-						title = "Prescriber deleted"
-					}
-				},
-				Actions = new List<ReturnActionObject>()
-				{
-					new ReturnActionObject() {
-						Ele = "#prescribers-table tr[data-id=\""+id.ToString()+"\"]",
-						Type = "remove"
-					}
-				}
-			};
-		}
-	}
+            item.Address.Delete();
+            item.Contact.Delete();
+            item.Delete();
+
+            return new ReturnObject()
+            {
+                Growl = new ReturnGrowlObject()
+                {
+                    Type = "default",
+                    Vars = new ReturnGrowlVarsObject()
+                    {
+                        text = "You have successfully deleted a Prescriber.",
+                        title = "Prescriber deleted"
+                    }
+                },
+                Actions = new List<ReturnActionObject>()
+                {
+                    new ReturnActionObject() {
+                        Ele = "#prescribers-table tr[data-id=\""+id.ToString()+"\"]",
+                        Type = "remove"
+                    }
+                }
+            };
+        }
+    }
 }

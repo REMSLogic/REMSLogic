@@ -147,7 +147,7 @@
                 <tbody>
 				<% foreach( var profile in this.Prescribers ) { %>
                     <tr data-id="<%=profile.ID%>">
-						<td><a href="#admin/security/prescribers/edit?prescriber-profile-id=<%=profile.ID.Value%>&provider-id=<%=Organization.Id%>" class="button">Edit</a> <a href="/api/Admin/Profile/Delete?id=<%=profile.ID%>" class="ajax-button button" data-confirmtext="Are you sure you want to delete this profile?">Delete</a></td>
+						<td><a href="#admin/security/prescribers/edit?prescriber-profile-id=<%=profile.ID.Value%>&provider-id=<%=Organization.Id%>" class="button">Edit</a> <a href="/api/Admin/security/Prescriber/Delete?id=<%=profile.ID%>" class="ajax-button button" data-confirmtext="Are you sure you want to delete this profile?">Delete</a></td>
 						<td><%=profile.Contact.LastName + ", " + profile.Contact.FirstName%></td>
 						<td><%=profile.Contact.Email%></td>
 						<td><%=profile.Prescriber.GetCurrentExpirationDate().ToShortDateString()%></td>
