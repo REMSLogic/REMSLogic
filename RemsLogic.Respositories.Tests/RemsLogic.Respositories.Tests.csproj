@@ -52,6 +52,7 @@
     <Compile Include="DrugRepositoryTests.cs" />
     <Compile Include="DrugListRepositoryTests.cs" />
     <Compile Include="DsqRepositoryTests.cs" />
+    <Compile Include="OrganizationRepositoryTests.cs" />
     <Compile Include="WidgetRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

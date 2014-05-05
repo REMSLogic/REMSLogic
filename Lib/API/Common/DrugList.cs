@@ -1,9 +1,6 @@
 ﻿using Framework.API;
-using Framework.Security;
 using RemsLogic.Model;
-using RemsLogic.Repositories;
 using RemsLogic.Services;
-using System.Configuration;
 using System.Web;
 using StructureMap;
 
@@ -16,7 +13,7 @@ namespace Lib.API.Common
         {
             IDrugListService dlService = ObjectFactory.GetInstance<IDrugListService>();
 
-            User user = Framework.Security.Manager.GetUser();
+            Framework.Security.User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
 
             if (profile != null && profile.ID != null)
@@ -43,7 +40,7 @@ namespace Lib.API.Common
         {
             IDrugListService dlService = ObjectFactory.GetInstance<IDrugListService>();
 
-            User user = Framework.Security.Manager.GetUser();
+            Framework.Security.User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
 
             if (profile != null && profile.ID != null)
@@ -71,7 +68,7 @@ namespace Lib.API.Common
             // MJL - It doesn't appear that this is used?
             IDrugListService dlService = ObjectFactory.GetInstance<IDrugListService>();
 
-            User user = Framework.Security.Manager.GetUser();
+            Framework.Security.User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
 
             if (profile != null && profile.ID != null)
@@ -98,7 +95,7 @@ namespace Lib.API.Common
         {
             IDrugListService dlService = ObjectFactory.GetInstance<IDrugListService>();
 
-            User user = Framework.Security.Manager.GetUser();
+            Framework.Security.User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
 
             if (profile != null && profile.ID != null)

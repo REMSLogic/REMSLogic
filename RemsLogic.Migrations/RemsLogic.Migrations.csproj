@@ -54,6 +54,8 @@
     <Compile Include="Sprint09\Migration002AddSetIdentityAttribute.cs" />
     <Compile Include="Sprint09\Migration003AddDrugEocsTable.cs" />
     <Compile Include="Sprint10\Migration001AddRequiredColumnToDsqlLinks.cs" />
+    <Compile Include="Sprint10\Migration002AddOrganizationTable.cs" />
+    <Compile Include="Sprint10\Migration003AddFacilityTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

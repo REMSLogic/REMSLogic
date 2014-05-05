@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web;
 using Framework.API;
-using Framework.Security;
 using RemsLogic.Model;
 using RemsLogic.Repositories;
 
@@ -15,7 +14,7 @@ namespace Lib.API.Common
         {
             IWidgetRepository widgetRepo = new WidgetRepository(ConfigurationManager.ConnectionStrings["FDARems"].ConnectionString);
 
-            User user = Framework.Security.Manager.GetUser();
+            Framework.Security.User user = Framework.Security.Manager.GetUser();
             WidgetSettings settings = widgetRepo.FindSettingsByUserId(user.ID ?? 0);
 
             if(containerId == 1)
