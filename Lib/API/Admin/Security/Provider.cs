@@ -7,6 +7,10 @@ using System.Text;
 using System.Web;
 using Framework.API;
 using Lib.Data;
+using RemsLogic.Model;
+using RemsLogic.Services;
+using StructureMap;
+using Address = Lib.Data.Address;
 
 namespace Lib.API.Admin.Security
 {
@@ -14,38 +18,49 @@ namespace Lib.API.Admin.Security
 	{
 		[SecurityRole("view_admin")]
 		[Method("Admin/Security/Provider/Edit")]
-		public static ReturnObject Edit(HttpContext context, long id, string name, string facility_size)
+		public static ReturnObject Edit(HttpContext context, long id, string name, string facility_size, string fac_name, string fac_street1, string fac_street2, string fac_city, string fac_state, string fac_zip, string fac_country)
 		{
-			Lib.Data.Provider item = null;
-			if (id > 0)
-				item = new Lib.Data.Provider(id);
-			else
-			{
-				item = new Lib.Data.Provider();
-				item.Created = DateTime.Now;
-			}
+            IOrganizationService orgSvc = ObjectFactory.GetInstance<IOrganizationService>();
 
-			item.Name = name;
-			item.FacilitySize = facility_size;
-			item.Save();
+            Organization org = orgSvc.Get(id) ?? new Organization
+            {
+                PrimaryFacility = new Facility
+                {
+                    Address = new RemsLogic.Model.Address()
+                }
+            };
 
-			return new ReturnObject()
-			{
-				Result = item,
-				Redirect = new ReturnRedirectObject()
-				{
-					Hash = "admin/security/providers/list"
-				},
-				Growl = new ReturnGrowlObject()
-				{
-					Type = "default",
-					Vars = new ReturnGrowlVarsObject()
-					{
-						text = "You have successfully saved this Provider.",
-						title = "Provider Saved"
-					}
-				}
-			};
+            org.Name = name;
+
+            org.PrimaryFacility.Name = fac_name;
+            org.PrimaryFacility.BedSize = facility_size;
+
+            org.PrimaryFacility.Address.Street1 = fac_street1;
+            org.PrimaryFacility.Address.Street2 = fac_street2;
+            org.PrimaryFacility.Address.City = fac_city;
+            org.PrimaryFacility.Address.State = fac_state;
+            org.PrimaryFacility.Address.Zip = fac_zip;
+            org.PrimaryFacility.Address.Country = fac_country;
+
+            orgSvc.Save(org);
+
+            return new ReturnObject()
+            {
+                Result = org,
+                Redirect = new ReturnRedirectObject()
+                {
+                    Hash = "admin/security/providers/list"
+                },
+                Growl = new ReturnGrowlObject
+                {
+                    Type = "default",
+                    Vars = new ReturnGrowlVarsObject
+                    {
+                        text = "You have successfully saved this Organization.",
+                        title = "Organization Saved"
+                    }
+                }
+            };
 		}
 
 		[SecurityRole("view_admin")]

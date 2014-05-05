@@ -17,10 +17,12 @@ namespace RemsLogic.Repositories.ProxyObjects
             set{base.Address = value;}
         }
 
+        /*
         public override Organization Organization
         {
             get{return base.Organization ?? (base.Organization = _orgRepo.Get(OrganizationId));}
             set{base.Organization = value;}
         }
+        */
     }
 }

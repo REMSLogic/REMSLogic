@@ -60,11 +60,8 @@ namespace RemsLogic.Repositories
                 }
             }
 
-            foreach(var facility in model.Facilities)
-            {
-                facility.OrganizationId = model.Id;
-                SaveFacility(facility);
-            }
+            model.PrimaryFacility.OrganizationId = model.Id;
+            SaveFacility(model.PrimaryFacility);
         }
 
         public override Organization Get(long id)
@@ -88,6 +85,31 @@ namespace RemsLogic.Repositories
                         return reader.Read()
                             ? ReadOrganization(reader)
                             : null;
+                    }
+                }
+            }  
+        }
+
+        public override IEnumerable<Organization> GetAll()
+        {
+            const string sql = @"
+                SELECT 
+                    *
+                FROM Organizations
+                ORDER BY Name ASC;";
+
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while(reader.Read())
+                        {
+                            yield return ReadOrganization(reader);
+                        }
                     }
                 }
             }  

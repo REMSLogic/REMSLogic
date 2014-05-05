@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using Lib.Data;
+using RemsLogic.Model;
+using RemsLogic.Services;
+using StructureMap;
 
 namespace Site.App.Views.admin.security.providers
 {
     public partial class edit : Lib.Web.AdminControlPage
     {
-        public Provider Provider {get ;set;}
-        public IList<ProviderUser> AdministrativeUsers {get; set;}
+        private readonly IOrganizationService _orgSvc;
+
+        public Organization Organization {get; set;}
         public IList<PrescriberProfile> Prescribers {get; set;}
         public IList<PrescriberProfile> PendingInvites {get; set;}
-        public IList<ProviderFacility> Facilities {get; set;}
 
+        public edit()
+        {
+            _orgSvc = ObjectFactory.GetInstance<IOrganizationService>();
+        }
+        
         protected void Page_Init(object sender, EventArgs e)
         {
             string strId = Request.QueryString["id"];
@@ -19,19 +27,22 @@ namespace Site.App.Views.admin.security.providers
 
             if (string.IsNullOrEmpty(strId) || !long.TryParse(strId, out id))
             {
-                Provider = new Provider();
-                AdministrativeUsers = new List<ProviderUser>();
+                Organization = new Organization();
+                Organization.PrimaryFacility = new Facility();
+                Organization.PrimaryFacility.Address = new RemsLogic.Model.Address();
+
                 Prescribers = new List<PrescriberProfile>();
                 PendingInvites = new List<PrescriberProfile>();
-                Facilities = new List<ProviderFacility>();
             }
             else
             {
-                Provider = new Provider(id);
-                AdministrativeUsers = ProviderUser.FindByProvider(Provider);
-                Prescribers = PrescriberProfile.FindByProvider(Provider);
-                PendingInvites = PrescriberProfile.FindPendingInvitesByProvider(Provider);
-                Facilities = ProviderFacility.FindByProvider(Provider);
+                Organization = _orgSvc.Get(id);
+
+                //Prescribers = PrescriberProfile.FindByProvider(Provider);
+                //PendingInvites = PrescriberProfile.FindPendingInvitesByProvider(Provider);
+
+                Prescribers = new List<PrescriberProfile>();
+                PendingInvites = new List<PrescriberProfile>();
             }
         }
     }

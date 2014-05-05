@@ -1,56 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using RemsLogic.Model;
+using RemsLogic.Services;
+using StructureMap;
 
 namespace Site.App.Views.hcos.facilities
 {
-	public partial class edit : Lib.Web.AppControlPage
-	{
-		public Lib.Data.ProviderFacility item;
-		public Lib.Data.Address address;
-		public long ProviderID;
+    public partial class edit : Lib.Web.AppControlPage
+    {
+        private readonly IOrganizationService _orgSvc;
 
-		protected void Page_Init(object sender, EventArgs e)
-		{
-			string strID = Request.QueryString["id"];
-			string strPID = Request.QueryString["provider-id"];
-			long id;
+        public long OrganizationId {get; set;}
+        public Facility Facility {get; set;}
 
-			// TODO: Once actual roles are in and setup, uncomment the role checks in this function - TJM 12/04/2013
-			/* RequireAnyRole("hco_facility_view_all", "hco_facility_view_mine"); */
+        public edit()
+        {
+            _orgSvc = ObjectFactory.GetInstance<IOrganizationService>();
+        }
 
-			if (string.IsNullOrEmpty(strID) || !long.TryParse(strID, out id))
-			{
-				if (string.IsNullOrEmpty(strPID) || !long.TryParse(strPID, out this.ProviderID))
-				{
-					this.RedirectBack(true, "Invalid provider ID");
-					return;
-				}
-				/*else if (!HasRole("hco_facility_view_all") && !Lib.Systems.UserInfo.HasProvider(this.ProviderID))
-				{
-					this.RedirectBack(true, "Invalid provider ID");
-					return;
-				}*/
+        protected void Page_Init(object sender, EventArgs e)
+        {
 
-				item = new Lib.Data.ProviderFacility();
-				address = new Lib.Data.Address();
-			}
-			else
-			{
-				item = new Lib.Data.ProviderFacility(id);
-				address = new Lib.Data.Address(item.AddressID);
+            long facilityId = long.Parse(Request.QueryString["id"]);
+            long orgId = long.Parse(Request.QueryString["provider-id"]);
 
-				/*if (!HasRole("hco_facility_view_all") && !Lib.Systems.UserInfo.HasProvider(item.ProviderID))
-				{
-					this.RedirectBack(true, "Invalid provider ID");
-					return;
-				}*/
-
-				this.ProviderID = item.ProviderID;
-			}
-		}
-	}
+            OrganizationId = orgId;
+            Facility = _orgSvc.GetFacility(facilityId) ??
+                new Facility
+                {
+                    OrganizationId = orgId,
+                    Address = new Address()
+                };
+        }
+    }
 }

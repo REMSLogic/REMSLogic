@@ -11,7 +11,7 @@ namespace RemsLogic.Model
         public string BedSize {get; set; }
 
         #region Navigation Properties
-        public virtual Organization Organization {get; set;}
+        //public virtual Organization Organization {get; set;}
         public virtual Address Address {get; set;}
         public virtual List<User> Users {get; set;}
         public virtual List<Prescriber> Prescribers {get; set;}
