@@ -38,11 +38,8 @@ namespace Site.App.Views.admin.security.providers
             {
                 Organization = _orgSvc.Get(id);
 
-                //Prescribers = PrescriberProfile.FindByProvider(Provider);
-                //PendingInvites = PrescriberProfile.FindPendingInvitesByProvider(Provider);
-
-                Prescribers = new List<PrescriberProfile>();
-                PendingInvites = new List<PrescriberProfile>();
+                Prescribers = PrescriberProfile.FindByProvider(id);
+                PendingInvites = PrescriberProfile.FindPendingInvitesByProvider(id);
             }
         }
     }

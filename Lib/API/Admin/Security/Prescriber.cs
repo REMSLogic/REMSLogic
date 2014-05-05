@@ -1,121 +1,128 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Web;
 using Framework.API;
+using Lib.Data;
 
 namespace Lib.API.Admin.Security
 {
 	public class Prescriber : Base
 	{
-		[SecurityRole("view_admin")]
-		[Method("Admin/Security/Prescriber/Edit")]
-		public static ReturnObject Edit(HttpContext context, long id, string first_name, string last_name, string email, string phone, string npiid, string username, string street, string city, string state, string zip, string street_2 = "", string password = "", string confirm_password = "")
-		{
-			Lib.Data.UserProfile profile = null;
-			Lib.Data.Prescriber item = null;
-			Lib.Data.Address address = null;
-			Lib.Data.Contact contact = null;
-			Framework.Security.User user = null;
+        [SecurityRole("view_admin")]
+        [Method("Admin/Security/Prescriber/Edit")]
+        public static ReturnObject Edit( HttpContext context, long provider_id, long facility_id, long profile_id, string first_name, string last_name, string email, string phone, 
+            string street_1, string city, string state, string zip, string npi, string state_id, long issuer, long speciality, long prescriber_type, string username, string password, string confirm_password, string street_2 = null, string fax = null)
+        {
+            UserProfile userProfile;
+            PrescriberProfile prescriberProfile;
+            Data.Prescriber prescriber;
+            Address address;
+            Contact contact;
 
-			if (id > 0)
-			{
-				item = new Lib.Data.Prescriber(id);
-				profile = item.Profile;
-				user = profile.User;
-				address = profile.PrimaryAddress;
-				contact = profile.PrimaryContact;
-			}
-			else
-			{
-				profile = new Lib.Data.UserProfile();
-				profile.Created = DateTime.Now;
-				item = new Lib.Data.Prescriber();
-				contact = new Lib.Data.Contact();
-				user = new Framework.Security.User();
-				address = new Lib.Data.Address();
-			}
+            Framework.Security.User user;
 
-			if (!user.ID.HasValue && string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirm_password))
-			{
-				return new ReturnObject()
-				{
-					Error = true,
-					StatusCode = 200,
-					Message = "If you are creating a new prescriber, you must enter a password."
-				};
-			}
+            if (profile_id > 0)
+            {
+                prescriberProfile = new PrescriberProfile(profile_id);
+                prescriber = prescriberProfile.Prescriber;
+                userProfile = prescriber.Profile;
+                user = userProfile.User;
+                address = userProfile.PrimaryAddress;
+                contact = userProfile.PrimaryContact;
+            }
+            else
+            {
+                userProfile = new UserProfile();
+                userProfile.Created = DateTime.Now;
+                prescriberProfile = new PrescriberProfile();
+                prescriber = new Data.Prescriber();
+                contact = new Contact();
+                user = new Framework.Security.User();
+                address = new Address();
+            }
 
-			if (!string.IsNullOrEmpty(password) )
-			{
-				if (password != confirm_password)
-				{
-					return new ReturnObject()
-					{
-						Error = true,
-						StatusCode = 200,
-						Message = "The passwords you entered do no match."
-					};
-				}
-				else
-				{
-					user.PasswordSalt = Framework.Security.Manager.GetRandomSalt();
-					user.Password = Framework.Security.Hash.GetSHA512(password + user.PasswordSalt);
-				}
-			}
+            if (!user.ID.HasValue && string.IsNullOrEmpty(password))
+            {
+                return new ReturnObject()
+                {
+                    Error = true,
+                    StatusCode = 200,
+                    Message = "If you are creating a new prescriber, you must enter a password."
+                };
+            }
 
-			user.Username = username;
-			user.Email = email;
-			user.Save();
+            if (!string.IsNullOrEmpty(password) )
+            {
+                if (password != confirm_password)
+                {
+                    return new ReturnObject()
+                    {
+                        Error = true,
+                        StatusCode = 200,
+                        Message = "The passwords you entered do no match."
+                    };
+                }
+                else
+                {
+                    user.PasswordSalt = Framework.Security.Manager.GetRandomSalt();
+                    user.Password = Framework.Security.Hash.GetSHA512(password + user.PasswordSalt);
+                }
+            }
 
-			profile.UserID = user.ID.Value;
-			//TODO: FIXME
-			profile.UserTypeID = 0;
-			
-			contact.Email = email;
-			contact.Phone = phone;
-			contact.FirstName = first_name;
-			contact.LastName = last_name;
-			contact.Save();
+            user.Username = username;
+            user.Email = email;
+            user.Save();
 
-			address.Street1 = street;
-			address.Street2 = street_2;
-			address.City = city;
-			address.State = state;
-			address.Zip = zip;
-			address.Country = "United States";
-			address.Save();
+            contact.Email = email;
+            contact.Phone = phone;
+            contact.FirstName = first_name;
+            contact.LastName = last_name;
+            contact.Save();
 
-			profile.UserID = user.ID.Value;
-			profile.PrimaryAddressID = address.ID.Value;
-			profile.PrimaryContactID = contact.ID.Value;
-			profile.Save();
+            address.Street1 = street_1;
+            address.Street2 = street_2;
+            address.City = city;
+            address.State = state;
+            address.Zip = zip;
+            address.Country = "United States";
+            address.Save();
 
-			item.ProfileID = profile.ID.Value;
-			//TODO: FIXME
-			item.SpecialityID = 0;
-			item.NpiId = npiid;
-			item.Save();
+            userProfile.UserID = user.ID.Value;
+            userProfile.UserTypeID = 0;
+            userProfile.PrimaryAddressID = address.ID.Value;
+            userProfile.PrimaryContactID = contact.ID.Value;
+            userProfile.Save();
 
-			return new ReturnObject()
-			{
-				Result = item,
-				Redirect = new ReturnRedirectObject()
-				{
-					Hash = "admin/prescribers/list"
-				},
-				Growl = new ReturnGrowlObject()
-				{
-					Type = "default",
-					Vars = new ReturnGrowlVarsObject()
-					{
-						text = "You have successfully saved this Prescriber.",
-						title = "Prescriber Saved"
-					}
-				}
-			};
-		}
+            prescriber.ProfileID = userProfile.ID.Value;
+            prescriber.SpecialityID = speciality;
+            prescriber.NpiId = npi;
+            prescriber.StateId = state_id;
+            prescriber.StateIdIssuer = issuer;
+            prescriber.Save();
+
+            prescriberProfile.PrescriberID = prescriber.ID;
+            prescriberProfile.ProviderID = provider_id;
+            prescriberProfile.AddressID = address.ID.Value;
+            prescriberProfile.ContactID = contact.ID.Value;
+            prescriberProfile.PrescriberTypeID = prescriber_type;
+            prescriberProfile.PrimaryFacilityID = facility_id;
+            prescriberProfile.Expires = DateTime.Now.AddYears(1);
+            prescriberProfile.Save();
+
+            return new ReturnObject()
+            {
+                Result = prescriber,
+                Growl = new ReturnGrowlObject()
+                {
+                    Type = "default",
+                    Vars = new ReturnGrowlVarsObject()
+                    {
+                        text = "You have successfully saved this Prescriber.",
+                        title = "Prescriber Saved"
+                    }
+                }
+            };
+        }
 
 		[SecurityRole("view_admin")]
 		[Method("Admin/Security/Prescriber/Delete")]
