@@ -57,6 +57,18 @@
 					</select>
 				</div>
             </div>
+            
+            <div class="clearfix">
+                <label for="form-facility-id" class="form-label">Primary Facility <em>*</em></label>
+                <div class="form-input">
+                    <select id="form-facility-id" name="facility-id" required="required">
+                        <option value="">Please Select</option>
+                        <% foreach( var f in Organization.Facilities ) { %>
+                        <option value="<%=f.Id%>"<%=((ProviderUser.PrimaryFacilityID == f.Id) ? " selected=\"selected\"" : "") %>><%=f.Name %></option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
 
 			<div class="clearfix">
                 <label for="form-password" class="form-label">New Password<% if( !User.ID.HasValue ) { %> <em>*</em><% } %></label>

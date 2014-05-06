@@ -10,7 +10,7 @@ namespace Lib.API.Admin.Security
 	{
         [SecurityRole("view_admin")]
         [Method("Admin/Security/ProviderUser/Edit")]
-        public static ReturnObject Edit(HttpContext context, long provider_user_id, long organization_id, string user_type, string username, string password, string email, string first_name, string last_name, string street, string city, string state, string zip, string street_2 = null, string phone = null)
+        public static ReturnObject Edit(HttpContext context, long provider_user_id, long organization_id, long facility_id, string user_type, string username, string password, string email, string first_name, string last_name, string street, string city, string state, string zip, string street_2 = null, string phone = null)
         {
             Lib.Data.Provider provider;
             Lib.Data.ProviderUser providerUser;
@@ -104,6 +104,7 @@ namespace Lib.API.Admin.Security
             providerUser.ProviderID = provider.ID.Value;
             providerUser.OrganizationID = organization_id;
             providerUser.ProviderUserType = user_type;
+            providerUser.PrimaryFacilityID = facility_id;
             providerUser.Save();
 
             return new ReturnObject()

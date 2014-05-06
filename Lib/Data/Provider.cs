@@ -92,14 +92,14 @@ namespace Lib.Data
                 FROM PrescriberProfiles
                     LEFT JOIN Prescribers ON [PrescriberProfiles].[PrescriberID] = [Prescribers].[ID]
                 WHERE 
-                    [PrescriberProfiles].[ProviderID] = @OrganizationId AND 
+                    [PrescriberProfiles].[PrimaryFacilityID] = @FacilityId AND 
                     [PrescriberProfiles].[PrescriberID] IS NOT NULL
                 ORDER BY 
                     [Prescribers].[ID] DESC;";
 
             return db.ExecuteQuery<Prescriber>(sql, new []
             {
-                new Parameter("OrganizationId", providerUser.OrganizationID)
+                new Parameter("FacilityId", providerUser.PrimaryFacilityID)
             });
         }
 

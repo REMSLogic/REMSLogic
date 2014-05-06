@@ -140,6 +140,7 @@
                 <thead>
                     <tr>
                         <th></th>
+                        <th>Facility</th>
 						<th>Name</th>
                         <th>Phone</th>
 						<th>Email</th>
@@ -151,6 +152,7 @@
 				%>
                     <tr data-id="<%=user.ID%>">
 						<td><a href="#admin/security/providers/edit-user?provider-user-id=<%=user.ID%>&organization-id=<%=Organization.Id%>" class="button">Edit</a> <a href="/api/Admin/Security/ProviderUser/Delete?id=<%=user.ID%>" class="ajax-button button" data-confirmtext="Are you sure you want to delete this user?">Delete</a></td>
+                        <td><%=user.Facility.Name%></td>
 						<td><%=contact.LastName + ", " + contact.FirstName%></td>
 						<td><%=contact.Phone%></td>
 						<td><%=contact.Email%></td>
