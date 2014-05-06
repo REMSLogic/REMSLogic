@@ -1,4 +1,4 @@
-﻿namespace RemsLogic.Model
+﻿namespace RemsLogic.Model.Dsq
 {
     public class DsqAnswer : Entity
     {

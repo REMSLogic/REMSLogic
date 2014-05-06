@@ -2,7 +2,7 @@
 using System.Configuration;
 using FluentAssertions;
 using NUnit.Framework;
-using RemsLogic.Model;
+using RemsLogic.Model.Dsq;
 using RemsLogic.Repositories;
 
 namespace RemsLogic.Respositories.Tests

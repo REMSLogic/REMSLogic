@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RemsLogic.Model;
+using RemsLogic.Model.Compliance;
 using RemsLogic.Repositories;
 
 namespace RemsLogic.Services

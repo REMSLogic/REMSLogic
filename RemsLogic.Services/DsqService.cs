@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using RemsLogic.Model;
+using RemsLogic.Model.Dsq;
 using RemsLogic.Repositories;
 
 namespace RemsLogic.Services

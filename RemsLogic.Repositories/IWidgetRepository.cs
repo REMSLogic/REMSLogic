@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using RemsLogic.Model;
+using RemsLogic.Model.UI;
 
 namespace RemsLogic.Repositories
 {

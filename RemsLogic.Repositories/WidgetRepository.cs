@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using RemsLogic.Model;
+using RemsLogic.Model.UI;
 
 namespace RemsLogic.Repositories
 {

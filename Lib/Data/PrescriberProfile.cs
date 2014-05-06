@@ -22,6 +22,15 @@ namespace Lib.Data
 			}, new[] { "-Expires" } );
 		}
 
+		public static IList<PrescriberProfile> FindByProvider(long providerId)
+		{
+			return FindAllBy<PrescriberProfile>( new Dictionary<string, object> {
+				{ "ProviderID", providerId },
+				{ "PrescriberID", SpecialValue.IsNotNull },
+                { "Deleted", false },
+			}, new[] { "-Expires" } );
+		}
+
 		public static PrescriberProfile FindByPrescriberAndProvider( Prescriber p, Provider pro )
 		{
 			return FindFirstBy<PrescriberProfile>( new Dictionary<string, object> {
@@ -30,10 +39,26 @@ namespace Lib.Data
 			}, new[] { "-Expires" } );
 		}
 
+        public static PrescriberProfile FindByPrescriberAndProvider( Prescriber p, long providerId )
+        {
+            return FindFirstBy<PrescriberProfile>( new Dictionary<string, object> {
+                { "ProviderID",providerId },
+                { "PrescriberID", p.ID.Value }
+            }, new[] { "-Expires" } );
+        }
+
         public static IList<PrescriberProfile> FindPendingInvitesByProvider(Provider provider)
         {
             return FindAllBy<PrescriberProfile>( new Dictionary<string, object> {
                 { "ProviderID", provider.ID.Value },
+                { "PrescriberId", SpecialValue.IsNull },
+            }, new[] { "-Expires" } );
+        }
+
+        public static IList<PrescriberProfile> FindPendingInvitesByProvider(long providerId)
+        {
+            return FindAllBy<PrescriberProfile>( new Dictionary<string, object> {
+                { "ProviderID", providerId },
                 { "PrescriberId", SpecialValue.IsNull },
             }, new[] { "-Expires" } );
         }

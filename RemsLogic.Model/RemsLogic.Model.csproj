@@ -40,22 +40,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Address.cs" />
     <Compile Include="Drug.cs" />
     <Compile Include="DrugList.cs" />
     <Compile Include="DrugListItem.cs" />
-    <Compile Include="Dsq.cs" />
-    <Compile Include="DsqAnswer.cs" />
-    <Compile Include="DsqEoc.cs" />
-    <Compile Include="DsqLink.cs" />
-    <Compile Include="DsqQuestion.cs" />
+    <Compile Include="Dsq\Questionnaire.cs" />
+    <Compile Include="Dsq\DsqAnswer.cs" />
+    <Compile Include="Dsq\DsqEoc.cs" />
+    <Compile Include="Dsq\DsqLink.cs" />
+    <Compile Include="Dsq\DsqQuestion.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="Eoc.cs" />
-    <Compile Include="PrescriberEoc.cs" />
+    <Compile Include="Compliance\Eoc.cs" />
+    <Compile Include="Facility.cs" />
+    <Compile Include="Organization.cs" />
+    <Compile Include="Prescriber.cs" />
+    <Compile Include="Compliance\PrescriberEoc.cs" />
     <Compile Include="IEntity.cs" />
-    <Compile Include="PrescriberEocLogEntry.cs" />
-    <Compile Include="Widget.cs" />
+    <Compile Include="Compliance\PrescriberEocLogEntry.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UI\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WidgetSettings.cs" />
+    <Compile Include="UI\WidgetSettings.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

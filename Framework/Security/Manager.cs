@@ -48,6 +48,15 @@ namespace Framework.Security
 			return true;
 		}
 
+		public static bool SetPassword(User u, string newPassword)
+		{
+			u.PasswordSalt = GetRandomSalt();
+			u.Password = Hash.GetHash( newPassword + u.PasswordSalt, Config.Manager.Framework.Security.Authentication.HashingMethod ?? "sha512", Encoding.UTF8, "hex" );
+			u.Save();
+
+			return true;
+		}
+
 		public static bool Login(User u)
 		{
 			if (u == null || !u.ID.HasValue)

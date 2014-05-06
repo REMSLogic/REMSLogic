@@ -2,110 +2,125 @@
 using System.Collections.Generic;
 using System.Web;
 using Framework.API;
+using Lib.Data;
 
 namespace Lib.API.Admin.Security
 {
 	public class ProviderUser : Base
 	{
-		[SecurityRole("view_admin")]
-		[Method("Admin/Security/ProviderUser/Edit")]
-		public static ReturnObject Edit(HttpContext context, long id, long parent_id, string user_type, string username, string password, string email, string first_name, string last_name, string street, string city, string state, string zip, string company = null, string street_2 = null, string phone = null)
-		{
-			Lib.Data.ProviderUser item = null;
-			Lib.Data.Provider provider = new Data.Provider(parent_id);
-			Lib.Data.UserProfile profile = null;
-			Lib.Data.Contact contact = null;
-			Lib.Data.Address address = null;
-			Framework.Security.User user = null;
+        [SecurityRole("view_admin")]
+        [Method("Admin/Security/ProviderUser/Edit")]
+        public static ReturnObject Edit(HttpContext context, long provider_user_id, long organization_id, long facility_id, string user_type, string username, string password, string email, string first_name, string last_name, string street, string city, string state, string zip, string street_2 = null, string phone = null)
+        {
+            Lib.Data.Provider provider;
+            Lib.Data.ProviderUser providerUser;
 
-			if (id > 0)
-			{
-				item = new Lib.Data.ProviderUser(id);
-				profile = item.Profile;
-				user = profile.User;
-				contact = profile.PrimaryContact;
-				address = profile.PrimaryAddress;
-			}
-			else
-			{
-				item = new Lib.Data.ProviderUser();
-				profile = new Data.UserProfile();
-				profile.Created = DateTime.Now;
-				contact = new Data.Contact();
-				address = new Data.Address();
+            UserProfile userProfile;
+            Contact contact;
+            Address address;
 
-				string error = "";
-				user = Framework.Security.Manager.CreateUser(username, password, email, out error);
+            Framework.Security.User user;
 
-				user.AddGroup(Framework.Security.Group.FindByName("users"));
-				user.AddGroup(Framework.Security.Group.FindByName("providers"));
+            if (provider_user_id > 0)
+            {
+                providerUser = new Lib.Data.ProviderUser(provider_user_id);
+                provider = providerUser.Provider;
+                userProfile = providerUser.Profile;
+                user = userProfile.User;
+                contact = userProfile.PrimaryContact;
+                address = userProfile.PrimaryAddress;
 
-				if (!string.IsNullOrEmpty(error))
-				{
-					return new ReturnObject()
-					{
-						Error = true,
-						StatusCode = 200,
-						Message = error
-					};
-				}
-			}
+                user.Username = username;
+                user.Save();
 
-			if (user_type != "technical" && user_type != "administrative")
-			{
-				return new ReturnObject()
-				{
-					Error = true,
-					StatusCode = 200,
-					Message = "Invalid user type."
-				};
-			}
+                Framework.Security.Manager.SetPassword(user, password);
+            }
+            else
+            {
+                provider = new Lib.Data.Provider();
+                providerUser = new Lib.Data.ProviderUser();
+                userProfile = new Data.UserProfile();
+                userProfile.Created = DateTime.Now;
+                contact = new Data.Contact();
+                address = new Data.Address();
 
-			address.Street1 = street;
-			address.Street2 = street_2;
-			address.City = city;
-			address.State = state;
-			address.Zip = zip;
-			address.Country = "United States";
-			address.Save();
+                string error = "";
+                user = Framework.Security.Manager.CreateUser(username, password, email, out error);
 
-			contact.Email = email;
-			contact.FirstName = first_name;
-			contact.LastName = last_name;
-			contact.Phone = phone;
-			contact.Save();
+                user.AddGroup(Framework.Security.Group.FindByName("users"));
+                user.AddGroup(Framework.Security.Group.FindByName("providers"));
 
-			var ut = Lib.Data.UserType.FindByName("provider");
+                if (!string.IsNullOrEmpty(error))
+                {
+                    return new ReturnObject()
+                    {
+                        Error = true,
+                        StatusCode = 200,
+                        Message = error
+                    };
+                }
+            }
 
-			profile.UserTypeID = ut.ID.Value;
-			profile.UserID = user.ID.Value;
-			profile.PrimaryAddressID = address.ID.Value;
-			profile.PrimaryContactID = contact.ID.Value;
-			profile.Save();
+            if (user_type != "technical" && user_type != "administrative")
+            {
+                return new ReturnObject()
+                {
+                    Error = true,
+                    StatusCode = 200,
+                    Message = "Invalid user type."
+                };
+            }
 
-			item.ProfileID = profile.ID.Value;
-			item.ProviderID = provider.ID.Value;
-			item.ProviderUserType = user_type;
-			item.Save();
+            address.Street1 = street;
+            address.Street2 = street_2;
+            address.City = city;
+            address.State = state;
+            address.Zip = zip;
+            address.Country = "United States";
+            address.Save();
 
-			return new ReturnObject()
-			{
-				Result = item,
-				Redirect = new ReturnRedirectObject()
-				{
-					Hash = "admin/security/providers/list"
-				},
-				Growl = new ReturnGrowlObject()
-				{
-					Type = "default",
-					Vars = new ReturnGrowlVarsObject()
-					{
-						text = "You have successfully saved this provider user.",
-						title = "Provider User Saved"
-					}
-				}
-			};
-		}
+            contact.Email = email;
+            contact.FirstName = first_name;
+            contact.LastName = last_name;
+            contact.Phone = phone;
+            contact.Save();
+
+            provider.AddressID = address.ID;
+            provider.PrimaryContactID = contact.ID;
+            provider.Created = DateTime.Now;
+            provider.FacilitySize = String.Empty;
+            provider.Name = string.Empty;
+            provider.Save();
+
+            var ut = Lib.Data.UserType.FindByName("provider");
+
+            userProfile.UserTypeID = ut.ID.Value;
+            userProfile.UserID = user.ID.Value;
+            userProfile.PrimaryAddressID = address.ID.Value;
+            userProfile.PrimaryContactID = contact.ID.Value;
+            userProfile.Save();
+
+            providerUser.ProfileID = userProfile.ID.Value;
+            providerUser.ProviderID = provider.ID.Value;
+            providerUser.OrganizationID = organization_id;
+            providerUser.ProviderUserType = user_type;
+            providerUser.PrimaryFacilityID = facility_id;
+            providerUser.Save();
+
+            return new ReturnObject()
+            {
+                Result = providerUser,
+                Growl = new ReturnGrowlObject()
+                {
+                    Type = "default",
+                    Vars = new ReturnGrowlVarsObject()
+                    {
+                        text = "You have successfully saved this provider user.",
+                        title = "Provider User Saved"
+                    }
+                }
+            };
+        }
 
 		[SecurityRole("view_admin")]
 		[Method("Admin/Security/ProviderUser/Delete")]

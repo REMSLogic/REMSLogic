@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using Framework.Data;
+using RemsLogic.Model;
+using RemsLogic.Services;
+using StructureMap;
 
 namespace Lib.Data
 {
@@ -25,6 +27,13 @@ namespace Lib.Data
 		{
 			return FindAllBy<ProviderUser>( new Dictionary<string, object> {
 				{ "ProviderID", provider_id }
+			}, new[] { "+ProviderUserType", "+ProfileID" } );
+		}
+
+		public static IList<ProviderUser> FindByOrganization(long organization_id)
+		{
+			return FindAllBy<ProviderUser>( new Dictionary<string, object> {
+				{ "OrganizationId", organization_id }
 			}, new[] { "+ProviderUserType", "+ProfileID" } );
 		}
 
@@ -70,6 +79,8 @@ namespace Lib.Data
 		public long ProfileID;
 		[Column]
 		public long ProviderID;
+        [Column]
+        public long OrganizationID;
 		[Column]
 		public string ProviderUserType;
 		[Column]
@@ -97,16 +108,11 @@ namespace Lib.Data
 				return this._cacheProvider;
 			}
 		}
-		private ProviderFacility _cacheFacility = null;
-		public ProviderFacility Facility
+        private Facility _facility;
+		public Facility Facility
 		{
-			get
-			{
-				if (this._cacheFacility == null)
-					this._cacheFacility = new ProviderFacility(this.PrimaryFacilityID);
-
-				return this._cacheFacility;
-			}
+            get{return _facility ?? (_facility = LoadFacility(PrimaryFacilityID.Value));}
+            set{_facility = value;}
 		}
 
 		public ProviderUser(long? id = null) : base(id)
@@ -156,5 +162,12 @@ namespace Lib.Data
 
 			tbl.Delete(this.table.DB.Delim("UserID", DelimType.Column) + " = @uid AND " + this.table.DB.Delim("FacilityID", DelimType.Column) + " = @fid", new Parameter[] { new Parameter("uid", this.ID.Value), new Parameter("fid", item.ID.Value) });
 		}
+
+        private Facility LoadFacility(long facilityId)
+        {
+            return ObjectFactory
+                .GetInstance<IOrganizationService>()
+                .GetFacility(facilityId);
+        }
 	}
 }

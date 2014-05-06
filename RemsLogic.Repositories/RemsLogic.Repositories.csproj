@@ -48,9 +48,13 @@
     <Compile Include="DrugListRepository.cs" />
     <Compile Include="IDrugListRepository.cs" />
     <Compile Include="IDsqRepository.cs" />
+    <Compile Include="IOrganizationRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IWidgetRepository.cs" />
+    <Compile Include="OrganizationRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProxyObjects\FacilityProxy.cs" />
+    <Compile Include="ProxyObjects\OrganizationProxy.cs" />
     <Compile Include="ProxyObjects\PrescriberEocProxy.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="WidgetRepository.cs" />

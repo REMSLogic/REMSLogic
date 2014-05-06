@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RemsLogic.Model
+namespace RemsLogic.Model.Compliance
 {
     public class Eoc : Entity
     {

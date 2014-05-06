@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RemsLogic.Model
+namespace RemsLogic.Model.Compliance
 {
     public class PrescriberEoc : Entity
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using Framework.Security;
-using RemsLogic.Model;
+using RemsLogic.Model.UI;
 using RemsLogic.Repositories;
 
 namespace Site.App.Views
@@ -21,7 +21,7 @@ namespace Site.App.Views
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            User user = Manager.GetUser();
+            Framework.Security.User user = Manager.GetUser();
 
             IEnumerable<Widget> widgets = LoadWidgetsByRole().ToList();
             WidgetSettings settings = _widgetRepo.FindSettingsByUserId(user.ID ?? 0);

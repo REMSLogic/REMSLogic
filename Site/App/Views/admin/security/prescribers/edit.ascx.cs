@@ -1,40 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Lib.Data;
+using RemsLogic.Model;
+using RemsLogic.Services;
+using StructureMap;
+using Prescriber = Lib.Data.Prescriber;
 
 namespace Site.App.Views.admin.security.prescribers
 {
-	public partial class edit : Lib.Web.AdminControlPage
-	{
-		public Lib.Data.Prescriber item;
-		public Lib.Data.UserProfile profile;
-		public Lib.Data.Contact contact;
-		public Framework.Security.User user;
-		public Lib.Data.Address address;
+    public partial class edit : Lib.Web.AdminControlPage
+    {
+        #region Member Variables
+        private readonly IOrganizationService _orgSvc;
+        #endregion
 
-		protected void Page_Init(object sender, EventArgs e)
-		{
-			string strID = Request.QueryString["id"];
-			long id;
-			if (string.IsNullOrEmpty(strID) || !long.TryParse(strID, out id))
-			{
-				item = new Lib.Data.Prescriber();
-				profile = new Lib.Data.UserProfile();
-				contact = new Lib.Data.Contact();
-				user = new Framework.Security.User();
-				address = new Lib.Data.Address();
-			}
-			else
-			{
-				item = new Lib.Data.Prescriber(id);
-				profile = item.Profile;
-				user = new Framework.Security.User(profile.UserID);
-				address = new Lib.Data.Address(profile.PrimaryAddressID);
-				contact = new Lib.Data.Contact(profile.PrimaryContactID);
-			}
-		}
-	}
+        #region Properties
+        public List<Facility> Facilities {get; set;}
+        public IList<State> States {get; set;}
+        public IList<Speciality> Specialities {get; set;}
+        public IList<PrescriberType> PrescriberTypes {get; set;}
+
+        public long ProviderId {get ;set;}
+        public Prescriber Prescriber {get; set;}
+        public PrescriberProfile PrescriberProfile {get; set;}
+        public long SpecialityId {get; set;}
+        public long TypeId {get; set;}
+        #endregion
+
+        #region Constructor
+        public edit()
+        {
+            _orgSvc = ObjectFactory.GetInstance<IOrganizationService>();
+        }
+        #endregion
+
+        #region Page Event Handlers
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            long prescriberProfileId = long.Parse(Request.QueryString["prescriber-profile-id"]);
+            ProviderId = long.Parse(Request.QueryString["provider-id"]);
+
+            Organization org = _orgSvc.Get(ProviderId);
+            Facilities = org.Facilities;
+            States = State.FindAll();
+            Specialities = Speciality.FindAll();
+            PrescriberTypes = PrescriberType.FindAll();
+
+            PrescriberProfile = new PrescriberProfile(prescriberProfileId);
+            Prescriber = PrescriberProfile.Prescriber;
+            SpecialityId = Prescriber.SpecialityID ?? 0;
+            TypeId = PrescriberProfile.PrescriberTypeID ?? 0;
+        }
+        #endregion
+    }
 }

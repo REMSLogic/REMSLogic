@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RemsLogic.Model
+namespace RemsLogic.Model.Compliance
 {
     public class PrescriberEocLogEntry : Entity
     {

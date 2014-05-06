@@ -202,7 +202,7 @@
                             <ul>
 								<li><a href="#admin/security/users/list" title="Users"><img src="/App/images/navicons/111.png" alt=""/><span>Users</span></a></li>
 								<li><a href="#admin/security/prescribers/list" title="Prescribers"><img src="/App/images/navicons/63.png" alt=""/><span>Prescribers</span></a></li>
-								<li><a href="#admin/security/providers/list" title="Providers"><img src="/App/images/navicons/77.png" alt=""/><span>HealthCare Providers</span></a></li>
+								<li><a href="#admin/security/providers/list" title="Providers"><img src="/App/images/navicons/77.png" alt=""/><span>Health Care Organizations</span></a></li>
 								<li><a href="#admin/drugs/companies/list" title="Drug Companies"><img src="/App/images/navicons/159.png" alt=""/><span>Drug Companies</span></a></li>
 								<li><a href="#admin/security/us-fda/list" title="US FDA Officials"><img src="/App/images/navicons/167.png" alt=""/><span>US FDA Officials</span></a></li>
 							</ul>
