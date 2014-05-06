@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using RemsLogic.Model.Dsq;
 using RemsLogic.Repositories;
@@ -37,6 +38,7 @@ namespace RemsLogic.Services.Tests
         {
             // Arrange
             _dsqRepo.Expect(x => x.SaveLink(_link));
+            _dsqRepo.Expect(x => x.GetLinks(0,0)).IgnoreArguments().Return(new List<DsqLink>());
 
             // Act
             _dsqService.SaveLink(_link);
