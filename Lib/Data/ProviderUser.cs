@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using Framework.Data;
 
@@ -25,6 +24,13 @@ namespace Lib.Data
 		{
 			return FindAllBy<ProviderUser>( new Dictionary<string, object> {
 				{ "ProviderID", provider_id }
+			}, new[] { "+ProviderUserType", "+ProfileID" } );
+		}
+
+		public static IList<ProviderUser> FindByOrganization(long organization_id)
+		{
+			return FindAllBy<ProviderUser>( new Dictionary<string, object> {
+				{ "OrganizationId", organization_id }
 			}, new[] { "+ProviderUserType", "+ProfileID" } );
 		}
 
@@ -70,6 +76,8 @@ namespace Lib.Data
 		public long ProfileID;
 		[Column]
 		public long ProviderID;
+        [Column]
+        public long OrganizationID;
 		[Column]
 		public string ProviderUserType;
 		[Column]

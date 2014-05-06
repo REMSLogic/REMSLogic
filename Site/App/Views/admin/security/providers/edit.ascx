@@ -132,6 +132,34 @@
                 </tbody>
             </table>
         </div>
+        
+		<a href="#admin/security/providers/edit-user?provider-user-id=0&organization-id=<%=Organization.Id%>" class="button" style="float: right; margin-top: 10px; margin-bottom: 10px;">Add User</a>
+		<h2>Administrative Users</h2>
+		<div class="clearfix">
+            <table class="display provider-edit-dt">
+                <thead>
+                    <tr>
+                        <th></th>
+						<th>Name</th>
+                        <th>Phone</th>
+						<th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+				<%foreach( var user in AdministrativeUsers ) {
+					var contact = user.Profile.PrimaryContact;
+				%>
+                    <tr data-id="<%=user.ID%>">
+						<td><a href="#admin/security/providers/edit-user?provider-user-id=<%=user.ID%>&organization-id=<%=Organization.Id%>" class="button">Edit</a> <a href="/api/Admin/Security/ProviderUser/Delete?id=<%=user.ID%>" class="ajax-button button" data-confirmtext="Are you sure you want to delete this user?">Delete</a></td>
+						<td><%=contact.LastName + ", " + contact.FirstName%></td>
+						<td><%=contact.Phone%></td>
+						<td><%=contact.Email%></td>
+                    </tr>
+				<% } %>
+                </tbody>
+            </table>
+        </div>
+
 		<a href="#admin/security/prescribers/edit?prescriber-profile-id=0&provider-id=<%=Organization.Id%>" class="button" style="float: right; margin-top: 10px; margin-bottom: 10px;">Add Prescribers</a>
 		<h2>Prescribers</h2>
 		<div class="clearfix">

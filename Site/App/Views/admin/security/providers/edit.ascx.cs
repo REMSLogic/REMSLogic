@@ -12,6 +12,7 @@ namespace Site.App.Views.admin.security.providers
         private readonly IOrganizationService _orgSvc;
 
         public Organization Organization {get; set;}
+        public IList<ProviderUser> AdministrativeUsers {get; set;}
         public IList<PrescriberProfile> Prescribers {get; set;}
         public IList<PrescriberProfile> PendingInvites {get; set;}
 
@@ -31,6 +32,7 @@ namespace Site.App.Views.admin.security.providers
                 Organization.PrimaryFacility = new Facility();
                 Organization.PrimaryFacility.Address = new RemsLogic.Model.Address();
 
+                AdministrativeUsers = new List<ProviderUser>();
                 Prescribers = new List<PrescriberProfile>();
                 PendingInvites = new List<PrescriberProfile>();
             }
@@ -38,6 +40,7 @@ namespace Site.App.Views.admin.security.providers
             {
                 Organization = _orgSvc.Get(id);
 
+                AdministrativeUsers = ProviderUser.FindByOrganization(id);
                 Prescribers = PrescriberProfile.FindByProvider(id);
                 PendingInvites = PrescriberProfile.FindPendingInvitesByProvider(id);
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Lib.Data;
 
 namespace Site.App.Views.provider.prescribers
@@ -9,6 +10,7 @@ namespace Site.App.Views.provider.prescribers
         public Prescriber Prescriber;
         public PrescriberProfile PrescriberProfile;
         public Provider Provider;
+        public ProviderUser ProviderUser;
         public IList<Drug> Drugs;
         public IList<ProviderFacility> ProviderFacilities;
         public IList<ProviderFacility> PrescriberFacilities;
@@ -30,7 +32,8 @@ namespace Site.App.Views.provider.prescribers
                 Prescriber = new Prescriber( id );
 
             Provider = Lib.Systems.Security.GetCurrentProvider();
-            PrescriberProfile = PrescriberProfile.FindByPrescriberAndProvider(Prescriber, Provider);
+            ProviderUser = ProviderUser.FindByProvider(Provider.ID.Value).First();
+            PrescriberProfile = PrescriberProfile.FindByPrescriberAndProvider(Prescriber, ProviderUser.OrganizationID);
             ProviderFacilities = ProviderFacility.FindByProvider(Provider);
             States = State.FindAll();
             Specialities = Speciality.FindAll();

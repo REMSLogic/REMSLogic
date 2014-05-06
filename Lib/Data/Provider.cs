@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Framework.Data;
 
 namespace Lib.Data
@@ -81,21 +82,26 @@ namespace Lib.Data
 		public Provider(IDataRecord row) : base(row )
 		{ }
 
-		public IList<Prescriber> GetPrescribers()
-		{
-			var db = Framework.Data.Database.Get("FDARems");
-			string sql = "SELECT " + db.DelimTable("Prescribers") + ".* " +
-							" FROM " + db.DelimTable("PrescriberProfiles") +
-							" LEFT JOIN " + db.DelimTable("Prescribers") +
-								" ON [PrescriberProfiles].[PrescriberID] = [Prescribers].[ID] " +
-							" WHERE [PrescriberProfiles].[ProviderID] = @id AND [PrescriberProfiles].[PrescriberID] IS NOT NULL " +
-							" ORDER BY [Prescribers].[ID] DESC";
+        public IList<Prescriber> GetPrescribers()
+        {
+            Database db = Database.Get("FDARems");
+            ProviderUser providerUser = ProviderUser.FindByProvider(ID.Value).First();
 
-			var ps = new List<Parameter>();
-			ps.Add(new Parameter("id", this.ID.Value));
+            const string sql =  @"
+                SELECT Prescribers.*
+                FROM PrescriberProfiles
+                    LEFT JOIN Prescribers ON [PrescriberProfiles].[PrescriberID] = [Prescribers].[ID]
+                WHERE 
+                    [PrescriberProfiles].[ProviderID] = @OrganizationId AND 
+                    [PrescriberProfiles].[PrescriberID] IS NOT NULL
+                ORDER BY 
+                    [Prescribers].[ID] DESC;";
 
-			return db.ExecuteQuery<Prescriber>(sql, ps.ToArray());
-		}
+            return db.ExecuteQuery<Prescriber>(sql, new []
+            {
+                new Parameter("OrganizationId", providerUser.OrganizationID)
+            });
+        }
 
 		public int GetNumPrescribers()
 		{
@@ -122,35 +128,5 @@ namespace Lib.Data
 
 			return db.ExecuteScalar<int>( sql, ps.ToArray() );
 		}
-
-		/*public int GetNumEnrolledDrugs()
-		{
-			var db = Framework.Data.Database.Get("FDARems");
-			string sql = "SELECT COUNT(1) " +
-							" FROM " + db.DelimTable("PrescriberDrugs") +
-							" LEFT JOIN " + db.DelimTable("PrescriberProfiles") +
-								" ON [PrescriberDrugs].[PrescriberID] = [PrescriberDrugs].[PrescriberID] " +
-							" WHERE [PrescriberProfiles].[ProviderID] = @id";
-
-			var ps = new List<Parameter>();
-			ps.Add(new Parameter("id", this.ID.Value));
-
-			return db.ExecuteScalar<int>(sql, ps.ToArray());
-		}
-
-		public int GetNumUncertifiedDrugs()
-		{
-			var db = Framework.Data.Database.Get("FDARems");
-			string sql = "SELECT COUNT(1) " +
-							" FROM " + db.DelimTable("PrescriberDrugs") +
-							" LEFT JOIN " + db.DelimTable("PrescriberProfiles") +
-								" ON [PrescriberDrugs].[PrescriberID] = [PrescriberDrugs].[PrescriberID] " +
-							" WHERE [PrescriberProfiles].[ProviderID] = @id AND [PrescriberDrugs].[DateCertified] IS NULL";
-
-			var ps = new List<Parameter>();
-			ps.Add(new Parameter("id", this.ID.Value));
-
-			return db.ExecuteScalar<int>(sql, ps.ToArray());
-		}*/
 	}
 }
