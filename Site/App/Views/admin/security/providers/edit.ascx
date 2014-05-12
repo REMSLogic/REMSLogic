@@ -43,8 +43,8 @@
                 <%} %>
             </div>
             
+            <h2 style="margin-top: 36px;">Primary Facility</h2>
             <div class="form" style="<%=(Organization.Id > 0)? "display: none;" : ""%>">
-                <h2 style="margin-top: 36px;">Primary Facility</h2>
                 <div class="clearfix">
                     <label for="form-name" class="form-label">Name <em>*</em></label>
                     <div class="form-input"><input type="text" id="form-fac-name" name="fac-name" required="required" placeholder="Enter the Name" value="<%=Organization.PrimaryFacility.Name%>" /></div>
