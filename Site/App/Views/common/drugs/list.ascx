@@ -46,7 +46,7 @@
 <link rel="stylesheet" media="screen" href="/App/js/lib/datatables/css/vpad.css" />
 <script type="text/javascript" src="/App/js/lib/datatables/js/jquery.dataTables.js"></script>
 <script type="text/javascript">
-    $(window).bind('content-loaded', function () {
+    $(window).bind('page-animation-completed', function () {
 
         $(".remove-icon").click(function () {
             $doc = $(this);
@@ -190,8 +190,8 @@
             </div>
 			<div class="eoc-filter-item">
                 <img src="/App/images/icons/EDUCRT.png" alt="Education/Certification" data-eoc="education-training" />
-                <p class="label">EDUCATION &amp;</p>
-                <p class="label">CERTIFICATION</p>
+                <p class="label">PRESCRIBER</p>
+                <p class="label">EDUCATION</p>
             </div>
 			<div class="eoc-filter-item">
                 <img src="/App/images/icons/MON.png" alt="Monitoring" data-eoc="monitoring-management" />

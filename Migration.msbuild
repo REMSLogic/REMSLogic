@@ -15,6 +15,9 @@
         <LaptopConnectionString>
             Data Source=localhost\MSSQLSERVER2012;Initial Catalog=devfdarems;User Id=devfdarems;Password=devfdarems;
         </LaptopConnectionString>
+		<AaronConnectionString>
+			Data Source=localhost\SQL2014;Initial Catalog=devfdarems;Trusted_Connection=True;
+		</AaronConnectionString>
     </PropertyGroup>
 
     <UsingTask
@@ -45,6 +48,15 @@
         <!-- Important: Target must be your Migrations assembly name, not your dll file name -->
         <Migrate Database="SqlServer2008"
                  Connection="$(LaptopConnectionString)"
+                 Target="RemsLogic.Migrations" />
+    </Target>
+	
+	<Target Name="MigrateAaron">
+        <Message Text="Starting FluentMigrator migration" />
+
+        <!-- Important: Target must be your Migrations assembly name, not your dll file name -->
+        <Migrate Database="SqlServer2012"
+                 Connection="$(AaronConnectionString)"
                  Target="RemsLogic.Migrations" />
     </Target>
 </Project>

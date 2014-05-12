@@ -19,7 +19,7 @@
 					</header>
 					<div class="filter">
 				        <div id="divEoc-filter-avail" class="eoc-filter eoc-filter-avail">
-                            <div class="filter-input">
+                            <div class="filter-input mydruglist-inputwrap">
                                  <input id="available-drugs-filter" type="text" value="" size="50" placeholder="Filter Drugs" />
                                  <a class="eoc-menu-clear-avail clear-btn" onclick="ClearAvailDrugListFilter();" >Clear Filter</a>
                             </div>
@@ -46,8 +46,8 @@
                             </div>
 					        <div class="eoc-filter-item">
                                 <img src="/App/images/icons/EDUCRT.png" alt="Education/Certification" data-eoc="education-training" />
-                                <p class="label">EDUCATION &amp;</p>
-                                <p class="label">CERTIFICATION</p>
+                                <p class="label">PRESCRIBER</p>
+                                <p class="label">EDUCATION</p>
                             </div>
 					        <div class="eoc-filter-item">
                                 <img src="/App/images/icons/MON.png" alt="Monitoring" data-eoc="monitoring-management" />
@@ -100,7 +100,7 @@
 					</header>
 					<div class="filter">
 				        <div id="divEoc-filter-my" class="eoc-filter eoc-filter-my">
-                         <div class="filter-input">
+                         <div class="filter-input mydruglist-inputwrap">
                                  <input id="my-drugs-filter" type="text" value="" size="50" placeholder="Filter Drugs">
                                  <a class="eoc-menu-clear-my clear-btn" onclick="ClearMyDrugListFilter();" >Clear Filter</a>
                             </div>
@@ -127,8 +127,8 @@
                             </div>
 					        <div class="eoc-filter-item">
                                 <img src="/App/images/icons/EDUCRT.png" alt="Education/Certification" data-eoc="education-training" />
-                                <p class="label">EDUCATION &amp;</p>
-                                <p class="label">CERTIFICATION</p>
+                                <p class="label">PRESCRIBER</p>
+                                <p class="label">EDUCATION</p>
                             </div>
 					        <div class="eoc-filter-item">
                                 <img src="/App/images/icons/MON.png" alt="Monitoring" data-eoc="monitoring-management" />

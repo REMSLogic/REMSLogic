@@ -1,6 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="dashboard.ascx.cs" Inherits="Site.App.Views.dashboard" %>
-<% if (Framework.Security.Manager.HasRole("view_provider", true) || Framework.Security.Manager.HasRole("view_admin", true))
-   { %>
+<% if (Framework.Security.Manager.HasRole("view_provider", true) || Framework.Security.Manager.HasRole("view_admin", true)) { %>
 <!-- jQplot SETUP -->
 <!--[if lt IE 9]>
 <script type="text/javascript" src="/js/lib/jqplot/excanvas.js"></script>
@@ -12,66 +11,17 @@
 <script type="text/javascript" src="/App/js/lib/jqplot/plugins/jqplot.barRenderer.min.js"></script>
 <script type="text/javascript" src="/App/js/lib/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
 <script type="text/javascript" src="/App/js/lib/jqplot/plugins/jqplot.pointLabels.min.js"></script>
+<script type="text/javascript" src="/App/js/views/prescriber/drugs/select.js"></script>
 <!-- jQplot CSS -->
 <link rel="stylesheet" media="screen" href="/App/js/lib/jqplot/jquery.jqplot.min.css" />
 <!-- jQplot CSS END -->
-<script type="text/javascript">
-    $(window).bind('content-loaded', function () {
-        $('.fac-filter img').click(function () {
-            $(this).toggleClass('off');
-            UpdateDrugListFilter();
-        }).each(function () {
-            $(this).addClass('off');
-        });
-
-        $('#drugs-filter').keyup(function () {
-            UpdateDrugListFilter();
-        });
-    });
-
-    function UpdateDrugListFilter() {
-        var v = $('#drugs-filter').val().toLowerCase();
-
-        $('#fac-drug-list-widget li').show().each(function () {
-            var $this = $(this);
-
-            var drug = $('span.name', $this);
-
-            if (drug.html().toLowerCase().indexOf(v) == -1)
-                $this.hide();
-        });
-
-        $('.fac-filter img:not(.off)').each(function () {
-            $('#fac-drug-list-widget li:not([data-' + $(this).attr('data-eoc') + '])').hide();
-        });
-    }
-
-    function ClearDrugListFilter() {
-        $('.fac-filter img').each(function () { $(this).addClass('off'); });
-        $('#drugs-filter').val('');
-        UpdateDrugListFilter();
-    }
-</script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("span.compliance-red").parent().css("border-left", "3px solid red");
-        $("span.compliance-yellow").parent().css("border-left", "3px solid #FAA61A");
-        $("span.compliance-green").parent().css("border-left", "3px solid green");
-        // this is fixing the hover event on ipad
-        $('.hover').bind('touchstart touchend', function (e) {
-            e.preventDefault();
-            $(this).toggleClass('hover_effect');
-        });
-    })
-</script>
-<% }
-   else if (Framework.Security.Manager.HasRole("view_prescriber", true))
-   { %>
+<% } else if (Framework.Security.Manager.HasRole("view_prescriber", true)) { %>
 <link rel="stylesheet" media="screen" href="/App/css/jquery.radialProgressBar.css" />
 <script type="text/javascript" src="/App/js/lib/jquery.radialProgressBar.js"></script>
-<script type="text/javascript" src="/App/js/views/prescriber/drugs/select.js"></script>
+<script type="text/javascript" src="/App/js/views/common/drugs/select.js"></script>
+<% } %>
 <script type="text/javascript">
-    $(window).bind('content-loaded', function () {
+    $(window).bind('page-animation-completed', function () {
         $('.eoc-filter img').click(function () {
             $(this).toggleClass('off');
             UpdateMyDrugListFilter();
@@ -121,7 +71,7 @@
         });
     })
 </script>
-<% } %>
+
 <h1 class="page-title">
     Dashboard</h1>
 <!--

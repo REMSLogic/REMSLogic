@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MyDrugList.ascx.cs" Inherits="Site.App.Controls.Widgets.MyDrugList" %>
 
 <script type="text/javascript">
-    $(window).bind('content-loaded', function () {
+    $(window).bind('page-animation-completed', function () {
         $(".compliance-expand").click(function () {
             $btn = $(this);
             $detail = $(eval('com' + $btn.attr('id').toString().substring(3)));
@@ -81,19 +81,27 @@
         </div>
         <div class="eoc-filter-item">
             <img src="/App/images/icons/EDUCRT.png" alt="Education/Certification" data-eoc="education-training" />
-            <p class="label">EDUCATION &amp;</p>
-            <p class="label">CERTIFICATION</p>
+            <p class="label">PRESCRIBER</p>
+            <p class="label">EDUCATION</p>
         </div>
         <div class="eoc-filter-item">
             <img src="/App/images/icons/MON.png" alt="Monitoring" data-eoc="monitoring-management" />
             <p class="label">MONITORING</p>
             <p class="label">&nbsp;</p>
         </div>
-        <div class="eoc-filter-item">
-            <img src="/App/images/icons/MG.png" alt="Medication Guide" data-eoc="medication-guide" />
-            <p class="label">MEDICATION</p>
-            <p class="label">GUIDE</p>
-        </div>
+        <% if (Framework.Security.Manager.HasRole("view_prescriber", true)){ %>
+            <div class="eoc-filter-item">
+                <img src="/App/images/icons/EOC-Nursing_Education.png" alt="Nursing Education" data-eoc="nursing-education" />
+                <p class="label">NURSING</p>
+                <p class="label">EDUCATION</p>
+            </div>
+         <% } else { %>
+            <div class="eoc-filter-item">
+                <img src="/App/images/icons/MG.png" alt="Medication Guide" data-eoc="medication-guide" />
+                <p class="label">MEDICATION</p>
+                <p class="label">GUIDE</p>
+            </div>
+        <% } %>
         <div class="eoc-filter-item">
             <img src="/App/images/icons/IC.png" alt="Informed Consent" data-eoc="informed-consent" />
             <p class="label">INFORMED</p>
@@ -104,11 +112,19 @@
             <p class="label">FORMS &amp;</p>
             <p class="label">DOCUMENTS</p>
         </div>
-        <div class="eoc-filter-item">
-            <img src="/App/images/icons/PR.png" alt="Pharmacy Requirements" data-eoc="pharmacy-requirements" />
-            <p class="label">PHARMACY</p>
-            <p class="label">REQUIREMENTS</p>
-        </div>
+        <% if (Framework.Security.Manager.HasRole("view_prescriber", true)){ %>
+            <div class="eoc-filter-item">
+                <img src="/App/images/icons/EOC-Patient_Education.png" alt="Patient Education" data-eoc="patient-education" />
+                <p class="label">PATIENT</p>
+                <p class="label">EDUCATION</p>
+            </div>
+        <% } else { %>
+            <div class="eoc-filter-item">
+                <img src="/App/images/icons/PR.png" alt="Pharmacy Requirements" data-eoc="pharmacy-requirements" />
+                <p class="label">PHARMACY</p>
+                <p class="label">REQUIREMENTS</p>
+            </div>
+        <% } %>
     </div>
 
     <%--

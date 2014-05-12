@@ -3,7 +3,7 @@
 <link rel="stylesheet" media="screen" href="/App/js/lib/datatables/css/vpad.css" />
 <script type="text/javascript" src="/App/js/lib/datatables/js/jquery.dataTables.js"></script>
 <script type="text/javascript">
-    $(window).bind('content-loaded', function () {
+    $(window).bind('page-animation-completed', function () {
         $('#drugs-table').dataTable({
             "sPaginationType": "full_numbers",
             "bStateSave": true,
@@ -159,8 +159,8 @@
             </div>
 			<div class="eoc-filter-item">
                 <img src="/App/images/icons/EDUCRT.png" alt="Education/Certification" data-eoc="education-training" />
-                <p class="label">EDUCATION &amp;</p>
-                <p class="label">CERTIFICATION</p>
+                <p class="label">PRESCRIBER</p>
+                <p class="label">EDUCATION</p>
             </div>
 			<div class="eoc-filter-item">
                 <img src="/App/images/icons/MON.png" alt="Monitoring" data-eoc="monitoring-management" />
@@ -168,9 +168,9 @@
                 <p class="label">&nbsp;</p>
             </div>
 			<div class="eoc-filter-item">
-                <img src="/App/images/icons/MG.png" alt="Medication Guide" data-eoc="medication-guide" />
-                <p class="label">MEDICATION</p>
-                <p class="label">GUIDE</p>
+                <img src="/App/images/icons/EOC-Nursing_Education.png" alt="Nursing Education" data-eoc="nursing-education" />
+                <p class="label">NURSING</p>
+                <p class="label">EDUCATION</p>
             </div>
 			<div class="eoc-filter-item">
                 <img src="/App/images/icons/IC.png" alt="Informed Consent" data-eoc="informed-consent" />
@@ -183,9 +183,9 @@
                 <p class="label">DOCUMENTS</p>
             </div>
 			<div class="eoc-filter-item">
-                <img src="/App/images/icons/PR.png" alt="Pharmacy Requirements" data-eoc="pharmacy-requirements" />
-                <p class="label">PHARMACY</p>
-                <p class="label">REQUIREMENTS</p>
+                <img src="/App/images/icons/EOC-Patient_Education.png" alt="Patient Education" data-eoc="patient-education" />
+                <p class="label">PATIENT</p>
+                <p class="label">EDUCATION</p>
             </div>
 		</div>
 
