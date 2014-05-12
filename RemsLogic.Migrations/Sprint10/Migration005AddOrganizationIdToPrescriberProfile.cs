@@ -8,7 +8,7 @@ namespace RemsLogic.Migrations.Sprint10
     {
         public override void Up()
         {
-            Alter.Table("PrescriberProfile")
+            Alter.Table("PrescriberProfiles")
                 .AddColumn("OrganizationId").AsInt64().NotNullable().WithDefaultValue(0);
         }
 
