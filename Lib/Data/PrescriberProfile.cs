@@ -103,7 +103,8 @@ namespace Lib.Data
         public static IList<PrescriberProfile> FindByOrganization(long organization_id)
         {
             return FindAllBy<PrescriberProfile>( new Dictionary<string, object> {
-                { "OrganizatioNID", organization_id }
+                { "OrganizatioNID", organization_id },
+                { "PrescriberId", SpecialValue.IsNotNull }
             }, new[] { "-Expires" } );
         }
 
