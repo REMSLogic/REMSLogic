@@ -66,6 +66,14 @@ namespace Lib.Data
             }, new[] { "-Expires" } );
         }
 
+        public static IList<PrescriberProfile> FindPendingInvitesByOrganization(long organizationId)
+        {
+            return FindAllBy<PrescriberProfile>( new Dictionary<string, object> {
+                { "OrganizationId", organizationId },
+                { "PrescriberId", SpecialValue.IsNull },
+            }, new[] { "-Expires" } );
+        }
+
 		public static IList<PrescriberProfile> FindByPrescriber(Prescriber p)
 		{
 			return FindAllBy<PrescriberProfile>( new Dictionary<string, object> {

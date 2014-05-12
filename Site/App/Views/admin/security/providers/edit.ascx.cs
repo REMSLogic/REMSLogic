@@ -42,7 +42,7 @@ namespace Site.App.Views.admin.security.providers
 
                 AdministrativeUsers = ProviderUser.FindByOrganization(id);
                 Prescribers = PrescriberProfile.FindByOrganization(id);
-                PendingInvites = PrescriberProfile.FindPendingInvitesByProvider(id);
+                PendingInvites = PrescriberProfile.FindPendingInvitesByOrganization(id);
             }
         }
     }
