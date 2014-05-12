@@ -117,6 +117,7 @@ namespace Lib.API.Admin.Security
             prescriberProfile.PrescriberTypeID = prescriber_type;
             prescriberProfile.PrimaryFacilityID = facility_id;
             prescriberProfile.Expires = DateTime.Now.AddYears(1);
+            prescriberProfile.OrganizationId = provider_id;
             prescriberProfile.Save();
 
             return new ReturnObject()
