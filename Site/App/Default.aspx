@@ -162,7 +162,7 @@
                     </h1>
                     <div class="clearfix" id="searchform">
                         <div class="searchcontainer">
-                            <div class="searchbox" onclick="$(this).find('input').focus();">
+                            <div class="searchbox">
                                 <input type="text" name="q" id="q" autocomplete="off" placeholder="Search...">
                             </div>
                             <input type="button" value="Cancel" />
@@ -453,7 +453,7 @@
 	            $('#searchform .search_results').hide();
 	            $('#searchform .searchbox').find('input[type=text]').val('');
 	            $('#searchform .search_results').html('');
-	            $('#wrapper > section > aside > nav > ul.drilldownMenu').fadeIn();
+	            $('#wrapper > section > aside > nav > ul').fadeIn();
 	            $('.searchbox', $(this).parent()).animate({ marginRight: 0 }).next().fadeOut();
 	        });
 	    });

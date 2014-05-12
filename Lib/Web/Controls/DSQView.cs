@@ -438,6 +438,9 @@ namespace Lib.Web.Controls
 						writer.AddAttribute( "class", "link-list-text" );
 						writer.RenderBeginTag( "a" );
 						{
+                            if(answer.IsRequired)
+                                writer.WriteEncodedText("REQUIRED - ");
+
 							writer.WriteEncodedText( answer.Label );
 						}
 						writer.RenderEndTag();
@@ -452,6 +455,9 @@ namespace Lib.Web.Controls
 						writer.AddAttribute( "class", "link-list-text" );
 						writer.RenderBeginTag( "span" );
 						{
+                            if(answer.IsRequired)
+                                writer.WriteEncodedText("REQUIRED - ");
+
 							writer.WriteEncodedText( ans );
 						}
 						writer.RenderEndTag();

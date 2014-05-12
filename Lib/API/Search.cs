@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Web;
+﻿using System.Web;
 using Framework.API;
 
 namespace Lib.API
 {
 	public class Search : Base
 	{
-		[SecurityRole("view_dashboard")]
 		[Method("Search/DoSearch")]
 		public static ReturnObject DoSearch(HttpContext context, string q)
 		{
@@ -88,7 +83,6 @@ namespace Lib.API
 			return null;
 		}
 
-		[SecurityRole("view_dashboard")]
 		[Method("Search/Suggest")]
 		public static ReturnObject Suggest(HttpContext context, string q, string target)
 		{
