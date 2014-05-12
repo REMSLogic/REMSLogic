@@ -14,8 +14,8 @@ namespace RemsLogic.Repositories
         Eoc GetEoc(long drugId, long questionId);
         
         IEnumerable<Eoc> GetEocs();
-        IEnumerable<Eoc> GetByDrug(long drugId);
-        IEnumerable<Eoc> GetByDrugAndRole(long drugId, string p);
+        IEnumerable<Eoc> GetByDrug(long drugId, bool requiredOnly = false);
+        IEnumerable<Eoc> GetByDrugAndRole(long drugId, string role, bool requiredOnly = false);
         IEnumerable<PrescriberEoc> GetByPrescriberProfile(long profileId);
 
         IEnumerable<PrescriberEocLogEntry> GetComplianceLog(long prescriberEocID);

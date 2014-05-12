@@ -5,5 +5,6 @@
         public long DrugId {get; set;}
         public long QuestionId {get; set;}
         public long EocId {get; set;}
+        public bool IsRequired {get; set;}
     }
 }

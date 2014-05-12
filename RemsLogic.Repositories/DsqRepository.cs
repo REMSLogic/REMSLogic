@@ -19,10 +19,10 @@ namespace RemsLogic.Repositories
         {
             const string sql = @"
                 INSERT INTO DSQ_Eocs
-                    (DrugId, EocId, QuestionId)
+                    (DrugId, EocId, QuestionId, IsRequired)
                 OUTPUT INSERTED.Id
                 VALUES 
-                    (@DrugId, @EocId, @QuestionId);";
+                    (@DrugId, @EocId, @QuestionId, @IsRequired);";
 
             using(SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -34,7 +34,8 @@ namespace RemsLogic.Repositories
                         {
                             new SqlParameter("DrugId", eoc.DrugId),
                             new SqlParameter("QuestionId", eoc.QuestionId),
-                            new SqlParameter("EocId", eoc.EocId)
+                            new SqlParameter("EocId", eoc.EocId),
+                            new SqlParameter("IsRequired", eoc.IsRequired)
                         });
 
                     eoc.Id = (long)command.ExecuteScalar();
@@ -178,7 +179,8 @@ namespace RemsLogic.Repositories
                 Id = (long)reader["Id"],
                 DrugId = (long)reader["DrugId"],
                 QuestionId = (long)reader["QuestionId"],
-                EocId = (long)reader["EocId"]
+                EocId = (long)reader["EocId"],
+                IsRequired = (bool)reader["IsRequired"]
             };
         }
 

@@ -44,7 +44,7 @@ namespace RemsLogic.Services
         public void AddEocsToPrescriberProfile(long profileId, long drugId)
         {
             // first, load all of the EOCs for the given drug
-            List<Eoc> eocs = _complianceRepo.GetByDrugAndRole(drugId, "view_prescriber").ToList();
+            List<Eoc> eocs = _complianceRepo.GetByDrugAndRole(drugId, "view_prescriber", true).ToList();
 
             // now make sure that the presriber has the requirment setup correctly
             foreach(Eoc eoc in eocs)

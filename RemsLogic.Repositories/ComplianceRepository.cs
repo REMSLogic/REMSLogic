@@ -209,16 +209,17 @@ namespace RemsLogic.Repositories
             }
         }
 
-        public IEnumerable<Eoc> GetByDrug(long drugId)
+        public IEnumerable<Eoc> GetByDrug(long drugId, bool requiredOnly = false)
         {
-            const string sql = @"
-                SELECT 
-                    Eocs.*
-                FROM DSQ_Eocs
-                    INNER JOIN Eocs ON Eocs.ID = DSQ_Eocs.EocId
-    
+            string sql = @"
+                SELECT DISTINCT
+                    DSQ_Links.IsRequired, Eocs.*
+                FROM DSQ_Links
+                    INNER JOIN Eocs ON Eocs.ID = DSQ_Links.EocId
                 WHERE
-                    DrugID = @DrugId;";
+                    DrugID = @DrugId ";
+
+            sql += requiredOnly? "AND DSQ_Links.IsRequired = 1;" : ";";
 
             using(SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -239,17 +240,18 @@ namespace RemsLogic.Repositories
             }
         }
 
-        public IEnumerable<Eoc> GetByDrugAndRole(long drugId, string role)
+        public IEnumerable<Eoc> GetByDrugAndRole(long drugId, string role, bool requiredOnly = false)
         {
-            const string sql = @"
-                SELECT 
-                    Eocs.*
-                FROM DSQ_Eocs
-                    INNER JOIN Eocs ON Eocs.ID = DSQ_Eocs.EocId
-    
+            string sql = @"
+                SELECT DISTINCT
+                    DSQ_Links.IsRequired, Eocs.*
+                FROM DSQ_Links
+                    INNER JOIN Eocs ON Eocs.ID = DSQ_Links.EocId
                 WHERE
                     DrugID = @DrugId AND
-                    Eocs.Roles LIKE @Role;";
+                    Eocs.Roles LIKE @Role ";
+
+            sql += requiredOnly? "AND DSQ_Links.IsRequired = 1;" : ";";
 
             using(SqlConnection connection = new SqlConnection(ConnectionString))
             {
