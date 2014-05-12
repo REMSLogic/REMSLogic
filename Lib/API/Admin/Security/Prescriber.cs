@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using Framework.API;
+using Framework.Security;
 using Lib.Data;
 
 namespace Lib.API.Admin.Security
@@ -72,6 +74,14 @@ namespace Lib.API.Admin.Security
             user.Username = username;
             user.Email = email;
             user.Save();
+
+            IList<Framework.Security.Group> userGroups = user.GetGroups();
+
+            if(!userGroups.Any(x => x.ID == 2))
+                user.AddGroup(new Framework.Security.Group(2));
+
+            if(!userGroups.Any(x => x.ID == 3))
+                user.AddGroup(new Framework.Security.Group(3));
 
             contact.Email = email;
             contact.Phone = phone;

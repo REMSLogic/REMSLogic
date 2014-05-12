@@ -7,6 +7,7 @@ namespace RemsLogic.Services
     {
         // organizations
         void Save(Organization organization);
+        void Delete(long id);
         Organization Get(long id);
         IEnumerable<Organization> GetAll();
 

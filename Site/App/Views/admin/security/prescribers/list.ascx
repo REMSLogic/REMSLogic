@@ -25,22 +25,15 @@
                         <th>Name</th> 
 						<th>Email</th>
 						<th>Phone</th>
-						<th>Created</th>
                     </tr> 
                 </thead> 
                 <tbody>
-				<%
-					foreach( var item in this.Prescribers )
-					{
-						var p = item.Profile;
-						var c = p.PrimaryContact;
-				%>
+				<%foreach( var profile in PrescriberProfiles ){%>
                     <tr>
-						<td><a href="#admin/security/prescribers/edit?id=<%=item.ID%>" class="button">Edit</a></td>
-						<td><%=c.Name%></td>
-						<td><%=c.Email%></td>
-						<td><%=c.Phone%></td>
-						<td><%=p.Created.ToShortDateString()%></td>
+						<td><a href="#admin/security/prescribers/edit?prescriber-profile-id=<%=profile.ID.Value%>&provider-id=<%=profile.OrganizationId%>" class="button">Edit</a></td>
+						<td><%=profile.Contact.Name%></td>
+						<td><%=profile.Contact.Email%></td>
+						<td><%=profile.Contact.Phone%></td>
                     </tr>
 				<% } %>
                 </tbody>

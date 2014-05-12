@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Web;
 using Framework.API;
@@ -42,18 +40,18 @@ namespace Lib.API.App
 
         [SecurityRole("view_app")]
         [Method("App/Stats/Compliance")]
-        public static ReturnObject Compliance(HttpContext context, long providerId, DateTime min_date, DateTime max_date)
+        public static ReturnObject Compliance(HttpContext context, long facilityId)
         {
-            Data.Provider provider = new Data.Provider(providerId);
             StringBuilder json = new StringBuilder();
 
             SetupResponseForJson(context);
 
-            int prescriberCount = Data.PrescriberProfile.FindByProvider(provider).Count();
-
             // Prescriber Enrollment
-            int ncPrescriber = new NonCompliantPrescriberEnrollment().Run(providerId);
-            float ncPrescriberPct = ((float)ncPrescriber/(float)prescriberCount)*100.0F;
+            float ncPrescriber = new NonCompliantPrescriberEnrollment().Run(facilityId);
+            float tPrescriber = new TotalPrescriberEnrollment().Run(facilityId);
+            float ncPrescriberPct = tPrescriber > 0.0F
+                ? (ncPrescriber/tPrescriber)*100.0F
+                : 0.0F;
 
             if(ncPrescriberPct > 100)
                 ncPrescriberPct = 100F;
@@ -61,8 +59,11 @@ namespace Lib.API.App
             float cPrescriberPct = 100F-ncPrescriberPct;
 
             // Patient Enrollment
-            int ncPatient = new NonCompliantPatientEnrollment().Run(providerId);
-            float ncPatientPct = ((float)ncPatient/(float)prescriberCount)*100.0F;
+            float ncPatient = new NonCompliantPatientEnrollment().Run(facilityId);
+            float tPatient = new TotalPatientEnrollment().Run(facilityId);
+            float ncPatientPct = tPatient > 0.0F
+                ? (ncPatient/tPatient)*100.0F
+                : 0.0F;
 
             if(ncPatientPct > 100F)
                 ncPatientPct = 100F;
@@ -70,8 +71,11 @@ namespace Lib.API.App
             float cPatientPct = 100F-ncPatientPct;
 
             // Education
-            int ncEnrollment = new NonCompliantEducation().Run(providerId);
-            float ncEducationPct = ((float)ncEnrollment/(float)prescriberCount)*100F;
+            float ncEducation = new NonCompliantEducation().Run(facilityId);
+            float tEducation = new TotalEducation().Run(facilityId);
+            float ncEducationPct = tEducation > 0.0F
+                ? (ncEducation/tEducation)*100F
+                : 0.0F;
 
             if(ncEducationPct > 100F)
                 ncEducationPct = 100F;

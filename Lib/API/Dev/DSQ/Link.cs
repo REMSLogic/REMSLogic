@@ -40,13 +40,14 @@ namespace Lib.API.Dev.DSQ
 
             // a nice and testable method call
             ObjectFactory.GetInstance<IDsqService>().SaveLink(link);
+            Lib.Data.DSQ.Question question = new Lib.Data.DSQ.Question(link.QuestionId);
 
             return new ReturnObject()
             {
                 Result = link,
                 Redirect = new ReturnRedirectObject()
                 {
-                    Hash = "admin/dsq/edit?id=" + drug_id + "&section-id=" + link.Question.SectionId
+                    Hash = "admin/dsq/edit?id=" + drug_id + "&section-id=" + question.SectionID
                 },
                 Growl = new ReturnGrowlObject()
                 {

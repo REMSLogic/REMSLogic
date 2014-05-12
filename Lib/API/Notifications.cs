@@ -70,6 +70,7 @@ namespace Lib.API
                         break;
 
                     case NotificationRecipient.Type.Facility:
+                        /*
                         IList<PrescriberProfile> prescriberProfiles = PrescriberProfile.FindByFacility(nr.Id);
                         IList<ProviderUser> providerUsers = ProviderUser.FindByFacility(nr.Id);
 
@@ -94,6 +95,9 @@ namespace Lib.API
                             users.Add(providerUser.Profile.User);
                         }
                         break;
+                        */
+
+                        throw new NotImplementedException();
                 }
             }
 

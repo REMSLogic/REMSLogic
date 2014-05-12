@@ -143,7 +143,8 @@
 <div class="container_12 clearfix leading">
     <div class="grid_12">
 		<a class="button back-button" href="#" style="margin-bottom: 10px;">Back</a>
-
+        
+        <h2><%=item.Name%></h2>
 		<section class="collapsible portlet leading">
 			<header>
 				<h2>Filter</h2> 

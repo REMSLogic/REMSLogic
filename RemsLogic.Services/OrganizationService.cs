@@ -24,6 +24,11 @@ namespace RemsLogic.Services
             _orgRepo.Save(organization);
         }
 
+        public void Delete(long id)
+        {
+            _orgRepo.Delete(id);
+        }
+
         public Organization Get(long id)
         {
             return _orgRepo.Get(id);

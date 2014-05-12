@@ -61,50 +61,52 @@ namespace Lib.API.Admin.Security
                     }
                 }
             };
-		}
+        }
 
-		[SecurityRole("view_admin")]
-		[Method("Admin/Security/Provider/Delete")]
-		public static ReturnObject Delete(HttpContext context, long id)
-		{
-			if (id <= 0)
-				return new ReturnObject() { Error = true, Message = "Invalid Provider." };
+        [SecurityRole("view_admin")]
+        [Method("Admin/Security/Provider/Delete")]
+        public static ReturnObject Delete(HttpContext context, long id)
+        {
+            if (id <= 0)
+                return new ReturnObject() { Error = true, Message = "Invalid Organization." };
 
-			var item = new Lib.Data.Provider(id);
-			item.Delete();
+            IOrganizationService orgSvc = ObjectFactory.GetInstance<IOrganizationService>();
 
-			return new ReturnObject()
-			{
-				Growl = new ReturnGrowlObject()
-				{
-					Type = "default",
-					Vars = new ReturnGrowlVarsObject()
-					{
-						text = "You have successfully deleted a provider.",
-						title = "Provider deleted"
-					}
-				},
-				Actions = new List<ReturnActionObject>()
-				{
-					new ReturnActionObject() {
-						Ele = "#providers-table tr[data-id=\""+id.ToString()+"\"]",
-						Type = "remove"
-					}
-				}
-			};
-		}
+            orgSvc.Delete(id);
+
+            return new ReturnObject()
+            {
+                Growl = new ReturnGrowlObject()
+                {
+                    Type = "default",
+                    Vars = new ReturnGrowlVarsObject()
+                    {
+                        text = "You have successfully deleted a provider.",
+                        title = "Provider deleted"
+                    }
+                },
+                Actions = new List<ReturnActionObject>()
+                {
+                    new ReturnActionObject() {
+                        Ele = "#providers-table tr[data-id=\""+id.ToString()+"\"]",
+                        Type = "remove"
+                    }
+                }
+            };
+        }
 
 		[SecurityRole( "view_admin" )]
 		[Method( "Admin/Security/Provider/UploadPrescribers" )]
 		public static ReturnObject UploadPrescribers( HttpContext context, long id )
 		{
 			if( id <= 0 )
-				return new ReturnObject() { Error = true, Message = "Invalid Provider." };
+				return new ReturnObject() { Error = true, Message = "Invalid Organization." };
 
-			var item = new Lib.Data.Provider( id );
+            IOrganizationService orgSvc = ObjectFactory.GetInstance<IOrganizationService>();
+			Organization organization = orgSvc.Get(id);
 
-			if( item.ID == null )
-				return new ReturnObject() { Error = true, Message = "Invalid Provider." };
+			if(organization == null)
+				return new ReturnObject() { Error = true, Message = "Invalid Organization." };
 
 			if( context.Request.Files.Count <= 0 || context.Request.Files["prescribers-csv"] == null )
 				return new ReturnObject() { Error = true, Message = "Invalid Upload." };
@@ -134,6 +136,22 @@ namespace Lib.API.Admin.Security
 
 			foreach( var row in rows )
 			{
+                var curRow = row;
+                Facility facility = (
+                    from f in organization.Facilities
+                    where String.Equals(f.Name, curRow.FacilityName, StringComparison.InvariantCultureIgnoreCase)
+                    select f).FirstOrDefault();
+
+                if(facility == null)
+                {
+                    return new ReturnObject
+                    {
+                        Error = true,
+                        StatusCode = 200,
+                        Message = "Unknown facilty name."
+                    };
+                }
+
 				var contact = new Data.Contact();
 				contact.FirstName = row.FirstName;
 				contact.LastName = row.LastName;
@@ -153,28 +171,19 @@ namespace Lib.API.Admin.Security
 
 				var profile = new Data.PrescriberProfile();
 				profile.Guid = Guid.NewGuid();
-				profile.ProviderID = id;
+				profile.ProviderID = organization.Id;
 				profile.ContactID = contact.ID.Value;
 				profile.AddressID = address.ID.Value;
 				profile.Expires = DateTime.Now.AddYears( 1 );
+                profile.PrimaryFacilityID = facility.Id;
+                profile.OrganizationId = organization.Id;
 				profile.Deleted = false;
 				profile.Save();
-
-				var pu = Systems.Security.GetCurrentProviderUser();
-
-				if( pu != null && pu.PrimaryFacilityID != null && pu.PrimaryFacilityID > 0 )
-				{
-					var facility = new Data.ProviderFacility( pu.PrimaryFacilityID );
-
-					profile.AddFacility( facility );
-					profile.PrimaryFacilityID = facility.ID;
-					profile.Save();
-				}
 
 				var data = new Dictionary<string, object> {
 					{"Token", profile.Guid},
 					{"Year", DateTime.Now.Year.ToString(CultureInfo.InvariantCulture)},
-                    {"Message", String.Format("{0} has invited you to join REMS Logic.  Please follow the link below to setup your prescriber profile.", item.Name)},
+                    {"Message", String.Format("{0} has invited you to join REMS Logic.  Please follow the link below to setup your prescriber profile.", organization.Name)},
 					{"EmailAddress", contact.Email}
 				};
 
@@ -188,10 +197,6 @@ namespace Lib.API.Admin.Security
 			}
 
 			return new ReturnObject() {
-                Redirect = new ReturnRedirectObject()
-				{
-					Hash = "admin/security/providers/edit?id="+id
-				},
 				Growl = new ReturnGrowlObject() {
 					Type = "default",
 					Vars = new ReturnGrowlVarsObject() {
@@ -204,6 +209,9 @@ namespace Lib.API.Admin.Security
 
 		private class PresciberCsv
 		{
+            // Orgnization info
+            public string FacilityName {get; set;}
+
 			// Contact info
 			public string FirstName {get; set;}
 			public string LastName {get; set;}
@@ -224,6 +232,8 @@ namespace Lib.API.Admin.Security
 		{
 			public override void CreateMap()
 			{
+                Map(m => m.FacilityName).Name("fac", "facility", "facname");
+
 				Map( m => m.FirstName ).Name( "first name", "firstname", "f name", "fname" );
 				Map( m => m.LastName ).Name( "last name", "lastname", "l name", "lname" );
 				Map( m => m.Email ).Name( "email" );
@@ -244,12 +254,13 @@ namespace Lib.API.Admin.Security
         public static ReturnObject UploadFacilities( HttpContext context, long id )
         {
             if( id <= 0 )
-                return new ReturnObject() { Error = true, Message = "Invalid Provider." };
+                return new ReturnObject() { Error = true, Message = "Invalid Organization." };
 
-            var item = new Data.Provider( id );
+            IOrganizationService orgSvc = ObjectFactory.GetInstance<IOrganizationService>();
+            Organization organization = orgSvc.Get(id);
 
-            if( item.ID == null )
-                return new ReturnObject { Error = true, Message = "Invalid Provider." };
+            if(organization == null)
+                return new ReturnObject { Error = true, Message = "Invalid Organization." };
 
             if( context.Request.Files.Count <= 0 || context.Request.Files["facilities-csv"] == null )
                 return new ReturnObject { Error = true, Message = "Invalid Upload." };
@@ -279,29 +290,27 @@ namespace Lib.API.Admin.Security
 
             foreach( var row in rows )
             {
-                var address = new Address();
-                address.Street1 = row.Street1;
-                address.Street2 = row.Street2;
-                address.City = row.City;
-                address.State = row.State;
-                address.Zip = row.Zip;
-                address.Country = row.Country;
-                address.Save();
+                var facility = new Facility
+                {
+                    OrganizationId = id,
+                    Name = row.Name,
+                    BedSize = row.BedSize,
+                    Address = new RemsLogic.Model.Address
+                    {
+                        Street1 = row.Street1,
+                        Street2 = row.Street2,
+                        City = row.City,
+                        State = row.State,
+                        Zip = row.Zip,
+                        Country = row.Country
+                    }
+                };
 
-                var facility = new ProviderFacility();
-                facility.ProviderID = id;
-                facility.Name = row.Name;
-                facility.AddressID = address.ID.Value;
-                facility.Save();
-
+                orgSvc.SaveFacility(facility);
                 count++;
             }
 
             return new ReturnObject {
-                Redirect = new ReturnRedirectObject()
-                {
-                    Hash = "admin/security/providers/edit?id="+id
-                },
                 Growl = new ReturnGrowlObject() {
                     Type = "default",
                     Vars = new ReturnGrowlVarsObject() {
@@ -315,6 +324,7 @@ namespace Lib.API.Admin.Security
         private class FacilityCsv
         {
             public string Name {get; set;}
+            public string BedSize {get; set;}
             public string Street1 {get; set;}
             public string Street2 {get; set;}
             public string City {get; set;}
@@ -328,6 +338,7 @@ namespace Lib.API.Admin.Security
             public override void CreateMap()
             {
                 Map( m => m.Name ).Name( "name", "facility", "facility", "fname");
+                Map( m => m.BedSize ).Name("bedsize", "bed size", "bsize");
                 Map( m => m.Street1 ).Name( "street 1", "street1", "address1", "address 1" );
                 Map( m => m.Street2 ).Name( "street 2", "street2", "address2", "address 2" );
                 Map( m => m.City ).Name( "city" );
@@ -342,12 +353,13 @@ namespace Lib.API.Admin.Security
         public static ReturnObject UploadUsers( HttpContext context, long id )
         {
             if( id <= 0 )
-                return new ReturnObject() { Error = true, Message = "Invalid Provider." };
+                return new ReturnObject() { Error = true, Message = "Invalid Organization." };
 
-            var item = new Data.Provider( id );
+            IOrganizationService orgSvc = ObjectFactory.GetInstance<IOrganizationService>();
+            Organization organization = orgSvc.Get(id);
 
-            if( item.ID == null )
-                return new ReturnObject { Error = true, Message = "Invalid Provider." };
+            if(organization == null)
+                return new ReturnObject { Error = true, Message = "Invalid Organization." };
 
             if( context.Request.Files.Count <= 0 || context.Request.Files["users-csv"] == null )
                 return new ReturnObject { Error = true, Message = "Invalid Upload." };
@@ -409,6 +421,22 @@ namespace Lib.API.Admin.Security
                     };
                 }
 
+                var curRow = row;
+                Facility facility = (
+                    from f in organization.Facilities
+                    where String.Equals(f.Name, curRow.FacilityName, StringComparison.InvariantCultureIgnoreCase)
+                    select f).FirstOrDefault();
+
+                if(facility == null)
+                {
+                    return new ReturnObject
+                    {
+                        Error = true,
+                        StatusCode = 200,
+                        Message = "Unknown facilty name."
+                    };
+                }
+
                 address.Street1 = row.Street1;
                 address.Street2 = row.Street2;
                 address.City = row.City;
@@ -434,16 +462,14 @@ namespace Lib.API.Admin.Security
                 providerUser.ProfileID = profile.ID.Value;
                 providerUser.ProviderID = id;
                 providerUser.ProviderUserType = row.UserType;
+                providerUser.OrganizationID = id;
+                providerUser.PrimaryFacilityID = facility.Id;
                 providerUser.Save();
 
                 count++;
             }
 
             return new ReturnObject {
-                Redirect = new ReturnRedirectObject()
-                {
-                    Hash = "admin/security/providers/edit?id="+id
-                },
                 Growl = new ReturnGrowlObject() {
                     Type = "default",
                     Vars = new ReturnGrowlVarsObject() {
@@ -456,6 +482,7 @@ namespace Lib.API.Admin.Security
 
         private class UserCsv
         {
+            public string FacilityName {get; set;}
             public string FirstName {get; set;}
             public string LastName {get; set;}
             public string Email {get; set;}
@@ -475,6 +502,7 @@ namespace Lib.API.Admin.Security
         {
             public override void CreateMap()
             {
+                Map(m => m.FacilityName).Name("fac", "facility", "facname");
                 Map(m => m.FirstName).Name( "first name", "firstname", "f name", "fname" );
                 Map(m => m.LastName).Name( "last name", "lastname", "l name", "lname" );
                 Map(m => m.Email).Name( "email" );

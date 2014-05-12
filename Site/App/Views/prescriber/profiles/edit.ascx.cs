@@ -34,7 +34,7 @@ namespace Site.App.Views.prescriber.profiles
             Address = PrescriberProfile.Address;
             Contact = PrescriberProfile.Contact;
             Provider = PrescriberProfile.Provider;
-            Facility = PrescriberProfile.Facility;
+            //Facility = PrescriberProfile.Facility;
             PrescriberTypes = PrescriberType.FindAll();
 
             TypeId = PrescriberProfile.PrescriberTypeID ?? 0;

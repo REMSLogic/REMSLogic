@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using Framework.Data;
+using RemsLogic.Model;
+using RemsLogic.Services;
+using StructureMap;
 
 namespace Lib.Data
 {
@@ -72,26 +75,29 @@ namespace Lib.Data
 
 		public static IList<PrescriberProfile> FindByFacility(ProviderFacility p)
 		{
+            /*
 			if (p == null || !p.ID.HasValue)
 				return new List<PrescriberProfile>();
 
 			return FindByFacility(p.ID.Value);
+            */
+
+            throw new NotImplementedException();
 		}
 
-		public static IList<PrescriberProfile> FindByFacility(long facility_id)
-		{
-			var db = Database.Get("FDARems");
-			string sql = "SELECT " + db.DelimTable("PrescriberProfiles") + ".* " +
-							" FROM " + db.DelimTable("PrescriberProfileFacilities") +
-								" RIGHT JOIN " + db.DelimTable("PrescriberProfiles") +
-									" ON " + db.DelimTable("PrescriberProfileFacilities") + "." + db.DelimColumn("ProfileID") + " = " + db.DelimTable("PrescriberProfiles") + "." + db.DelimColumn("ID") +
-							" WHERE " + db.DelimTable("PrescriberProfileFacilities") + "." + db.DelimColumn("FacilityID") + " = @id";
+        public static IList<PrescriberProfile> FindByFacility(long facility_id)
+        {
+            return FindAllBy<PrescriberProfile>( new Dictionary<string, object> {
+                { "PrimaryFacilityID", facility_id }
+            }, new[] { "-Expires" } );
+        }
 
-			var ps = new List<Parameter>();
-			ps.Add(new Parameter("id", facility_id));
-
-			return db.ExecuteQuery<PrescriberProfile>(sql, ps.ToArray());
-		}
+        public static IList<PrescriberProfile> FindByOrganization(long organization_id)
+        {
+            return FindAllBy<PrescriberProfile>( new Dictionary<string, object> {
+                { "OrganizatioNID", organization_id }
+            }, new[] { "-Expires" } );
+        }
 
         public static PrescriberProfile FindByToken(string token)
         {
@@ -124,6 +130,8 @@ namespace Lib.Data
 		public DateTime Expires;
 		[Column]
 		public bool Deleted;
+        [Column]
+        public long OrganizationId;
 
 		private Prescriber _cachePrescriber = null;
 		public Prescriber Prescriber
@@ -150,19 +158,11 @@ namespace Lib.Data
 				return this._cacheProvider;
 			}
 		}
-		private ProviderFacility _cacheFacility = null;
-		public ProviderFacility Facility
+        private Facility _facility;
+		public Facility Facility
 		{
-			get
-			{
-				if( this.PrimaryFacilityID == null )
-					return null;
-
-				if (this._cacheFacility == null)
-					this._cacheFacility = new ProviderFacility(this.PrimaryFacilityID);
-
-				return this._cacheFacility;
-			}
+            get{return _facility ?? (_facility = LoadFacility(PrimaryFacilityID.Value));}
+            set{_facility = value;}
 		}
 		private Contact _cacheContact = null;
 		public Contact Contact
@@ -243,5 +243,12 @@ namespace Lib.Data
 
 			tbl.Delete(this.table.DB.Delim("ProfileID", DelimType.Column) + " = @pid AND " + this.table.DB.Delim("FacilityID", DelimType.Column) + " = @fid", new Parameter[] { new Parameter("pid", this.ID.Value), new Parameter("fid", item.ID.Value) });
 		}
+
+        private Facility LoadFacility(long facilityId)
+        {
+            return ObjectFactory
+                .GetInstance<IOrganizationService>()
+                .GetFacility(facilityId);
+        }
     }
 }

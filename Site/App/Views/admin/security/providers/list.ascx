@@ -35,7 +35,10 @@
                 <tbody>
                 <%foreach(var item in Organizations){%>
                     <tr>
-                        <td><a href="#admin/security/providers/edit?id=<%=item.Id%>" class="button">Edit</a></td>
+                        <td>
+                            <a href="#admin/security/providers/edit?id=<%=item.Id%>" class="button">Edit</a>
+                            <a href="/api/admin/security/provider/delete?id=<%=item.Id%>" class="ajax-button button" data-confirmtext="Are you sure you want to delete this organization?">Delete</a>
+                        </td>
                         <td><%=item.Name%></td>
                         <td>N/A</td>
                         <td>N/A</td>

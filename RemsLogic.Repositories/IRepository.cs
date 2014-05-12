@@ -13,7 +13,7 @@ namespace RemsLogic.Repositories
         TModel Get(long id);
 
         void Save(TModel model);
-        void Delete(TModel model);
+        void Delete(long id);
 
         IEnumerable<TModel> GetAll();
 

@@ -64,6 +64,26 @@ namespace RemsLogic.Repositories
             SaveFacility(model.PrimaryFacility);
         }
 
+        public override void Delete(long id)
+        {
+            const string sql = @"
+                UPDATE Organizations SET
+                    Deleted = 1
+                WHERE
+                    Id = @Id;";
+
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("Id", id);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
         public override Organization Get(long id)
         {
             const string sql = @"
@@ -96,6 +116,7 @@ namespace RemsLogic.Repositories
                 SELECT 
                     *
                 FROM Organizations
+                WHERE Deleted = 0
                 ORDER BY Name ASC;";
 
             using(SqlConnection connection = new SqlConnection(ConnectionString))

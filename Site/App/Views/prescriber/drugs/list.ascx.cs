@@ -1,4 +1,6 @@
-﻿using RemsLogic.Model;
+﻿using System.Text;
+using RemsLogic.Model;
+using RemsLogic.Model.Compliance;
 using RemsLogic.Services;
 using System;
 using StructureMap;
@@ -8,12 +10,14 @@ namespace Site.App.Views.prescriber.drugs
     public partial class list : Lib.Web.AppControlPage
     {
         private readonly IDrugListService _drugListSvc;
+        private readonly IComplianceService _complianceSvc;
 
         public DrugList Drugs;
 
         public list()
         {
             _drugListSvc = ObjectFactory.GetInstance<IDrugListService>();
+            _complianceSvc = ObjectFactory.GetInstance<IComplianceService>();
         }
 
         protected void Page_Init(object sender, EventArgs e)
@@ -25,20 +29,14 @@ namespace Site.App.Views.prescriber.drugs
 
         public string GetEOCData(Lib.Data.Drug d)
         {
-            var ret = "";
+            StringBuilder eocData = new StringBuilder();
 
-            if (d.HasEoc("etasu")) ret += " data-etasu=\"1\"";
-            if (d.HasEoc("facility-pharmacy-enrollment")) ret += " data-facility-pharmacy-enrollment=\"1\"";
-            if (d.HasEoc("patient-enrollment")) ret += " data-patient-enrollment=\"1\"";
-            if (d.HasEoc("prescriber-enrollment")) ret += " data-prescriber-enrollment=\"1\"";
-            if (d.HasEoc("education-training")) ret += " data-education-training=\"1\"";
-            if (d.HasEoc("monitoring-management")) ret += " data-monitoring-management=\"1\"";
-            if (d.HasEoc("medication-guide")) ret += " data-medication-guide=\"1\"";
-            if (d.HasEoc("informed-consent")) ret += " data-informed-consent=\"1\"";
-            if (d.HasEoc("forms-documents")) ret += " data-forms-documents=\"1\"";
-            if (d.HasEoc("pharmacy-requirements")) ret += " data-pharmacy-requirements=\"1\"";
+            foreach(Eoc eoc in _complianceSvc.GetByDrug(d.ID ?? 0))
+            {
+                eocData.Append(String.Format("data-{0}=\"1\" ", eoc.Name));
+            }
 
-            return ret;
+            return eocData.ToString();
         }
     }
 }

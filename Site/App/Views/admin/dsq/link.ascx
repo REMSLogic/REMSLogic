@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="link.ascx.cs" Inherits="Site.App.Views.admin.dsq.link" %>
 <%@ Import Namespace="RemsLogic.Model" %>
+<%@ Import Namespace="RemsLogic.Model.Compliance" %>
 
 <script type="text/javascript">
     $(window).bind('content-loaded', function () {

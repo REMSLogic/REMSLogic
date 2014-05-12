@@ -31,7 +31,7 @@ namespace RemsLogic.Repositories
             throw new NotImplementedException();
         }
 
-        public virtual void Delete(TModel model)
+        public virtual void Delete(long id)
         {
             throw new NotImplementedException();
         }

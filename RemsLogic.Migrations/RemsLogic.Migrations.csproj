@@ -57,6 +57,8 @@
     <Compile Include="Sprint10\Migration002AddOrganizationTable.cs" />
     <Compile Include="Sprint10\Migration003AddFacilityTable.cs" />
     <Compile Include="Sprint10\Migration004AddOrganizationIdToProviderUser.cs" />
+    <Compile Include="Sprint10\Migration005AddOrganizationIdToPrescriberProfile.cs" />
+    <Compile Include="Sprint10\Migration006AddDeletedToOrganization.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

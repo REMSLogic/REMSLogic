@@ -150,7 +150,8 @@
             <div class="clearfix">
                 <label for="form-username" class="form-label">Username</label>
                 <div class="form-input">
-                    <input type="text" id="form-username" name="username" placeholder="Enter Username" />
+                    <input type="text" id="form-username" name="username" placeholder="Enter Username"
+                        value="<%=User.Username%>"  />
                 </div>
             </div>
             

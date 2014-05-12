@@ -25,6 +25,7 @@ namespace Site.App.Views.admin.security.prescribers
         public PrescriberProfile PrescriberProfile {get; set;}
         public long SpecialityId {get; set;}
         public long TypeId {get; set;}
+        public Framework.Security.User User {get; set;}
         #endregion
 
         #region Constructor
@@ -50,6 +51,9 @@ namespace Site.App.Views.admin.security.prescribers
             Prescriber = PrescriberProfile.Prescriber;
             SpecialityId = Prescriber.SpecialityID ?? 0;
             TypeId = PrescriberProfile.PrescriberTypeID ?? 0;
+
+            UserProfile userProfile = new UserProfile(Prescriber.ProfileID);
+            User = userProfile.User;
         }
         #endregion
     }

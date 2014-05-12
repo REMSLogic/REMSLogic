@@ -145,6 +145,9 @@
     <Compile Include="Queries\NonCompliantEducation.cs" />
     <Compile Include="Queries\NonCompliantPatientEnrollment.cs" />
     <Compile Include="Queries\NonCompliantPrescriberEnrollment.cs" />
+    <Compile Include="Queries\TotalEducation.cs" />
+    <Compile Include="Queries\TotalPatientEnrollment.cs" />
+    <Compile Include="Queries\TotalPrescriberEnrollment.cs" />
     <Compile Include="Systems\Activity\ActivityService.cs" />
     <Compile Include="Systems\Drugs.cs" />
     <Compile Include="Systems\EOC.cs" />

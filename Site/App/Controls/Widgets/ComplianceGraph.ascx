@@ -12,9 +12,7 @@
             type: 'GET',
             dataType: 'json',
             data: {
-                providerId: <%=ProviderId%>,
-                min_date: "<%=DateTime.Now.AddDays(-7).Date%>",
-                max_date: "<%=DateTime.Now.Date%>" 
+                facilityId: <%=FacilityId%>
             }
         }).done(function (response) {
             displayComplianceGraph(response.compliant, response.nonCompliant);

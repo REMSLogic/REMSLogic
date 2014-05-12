@@ -1,19 +1,22 @@
 ﻿using System;
+using System.Linq;
+using Lib.Data;
 using Lib.Systems;
 
 namespace Site.App.Controls.Widgets
 {
     public partial class ComplianceGraph : System.Web.UI.UserControl
     {
-        public long ProviderId {get; set;}
+        public long FacilityId {get; set;}
 
         protected void Page_Init(object sender, EventArgs e)
         {
-			var provider = Security.GetCurrentProvider();
-			if( provider == null )
-				ProviderId = 0;
-			else
-				ProviderId = provider.ID ?? 0;
+            Provider provider = Security.GetCurrentProvider();
+            ProviderUser providerUser = ProviderUser.FindByProvider(provider).First();
+
+            FacilityId = (provider != null)
+                ? providerUser.PrimaryFacilityID ?? 0
+                : 0;
         }
     }
 }
