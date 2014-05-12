@@ -1060,6 +1060,8 @@
     <Content Include="App\css\Fonts\fontawesome-webfont.svg" />
     <Content Include="App\css\jquery.radialProgressBar.css" />
     <Content Include="App\images\dashboard-icon.png" />
+    <Content Include="App\images\icons\EOC-Nursing_Education.png" />
+    <Content Include="App\images\icons\EOC-Patient_Education.png" />
     <Content Include="App\images\icons\quickLink.png" />
     <Content Include="App\images\rems-updated-logo.png" />
     <Content Include="App\images\Warning_Arrow_Down.png" />
