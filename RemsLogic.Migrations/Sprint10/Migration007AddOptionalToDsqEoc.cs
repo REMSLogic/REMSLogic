@@ -3,7 +3,7 @@ using FluentMigrator;
 
 namespace RemsLogic.Migrations.Sprint10
 {
-    [Migration(201405120347)]
+    [Migration(201405121034)]
     public class Migration007AddOptionalToDsqEoc : Migration
     {
         public override void Up()
