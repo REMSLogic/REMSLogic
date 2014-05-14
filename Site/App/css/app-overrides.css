@@ -702,3 +702,58 @@ div.main-content-header
     text-align: center;
     margin-top: 16px;
 }
+
+span.edit-question-button 
+{
+    margin-right: 8px;
+    display: inline-block;
+    width: 32px;
+    background-color: #666666;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    user-select: none;
+    -ms-user-select: none;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+    span.edit-question-button:hover 
+    {
+        background-color: #999999;
+    }
+
+#dsq-editor 
+{
+    position: fixed;
+    width: 500px;
+    left: 50%;
+    top: 50%;
+    margin-left: -250px;
+    margin-top: -40px;
+    z-index: 10000;
+    display: none;
+    padding: 12px;
+
+    background-color: #CCCCCC;
+    border: 1px solid #333333;
+}
+
+    #dsq-editor input[type="text"] 
+    {
+        width: 442px;
+        margin-left: 8px;
+    }
+
+    #dsq-editor div.controls 
+    {
+        text-align: right;
+        padding-top: 8px;
+    }
+
+        #dsq-editor div.controls input[type="button"]
+        {
+            margin-left: 8px;
+        }

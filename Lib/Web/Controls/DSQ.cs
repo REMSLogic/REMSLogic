@@ -188,7 +188,15 @@ namespace Lib.Web.Controls
 			writer.AddAttribute( "for", "form-q-" + q.ID.Value.ToString() );
 			writer.RenderBeginTag( "label" );
 
-			writer.WriteEncodedText( q.Text );
+            writer.AddAttribute("class", "edit-question-button");
+            writer.AddAttribute("data-id", q.ID.Value.ToString());
+            writer.RenderBeginTag("span");
+            writer.WriteEncodedText("Edit");
+            writer.RenderEndTag();
+
+            writer.RenderBeginTag("span");
+            writer.WriteEncodedText( q.Text );
+            writer.RenderEndTag();
 
 			if( q.Required )
 			{
@@ -582,11 +590,17 @@ namespace Lib.Web.Controls
 				}
 				writer.RenderEndTag();
 
-				writer.RenderBeginTag("h2");
-				{
-					writer.WriteEncodedText((for_eoc ? "Information" : q.Text));
-				}
-				writer.RenderEndTag();
+                writer.RenderBeginTag("h2");
+                    writer.AddAttribute("class", "edit-question-button");
+                    writer.AddAttribute("data-id", q.ID.Value.ToString());
+                    writer.RenderBeginTag("span");
+                    writer.WriteEncodedText("Edit");
+                    writer.RenderEndTag();
+
+                    writer.RenderBeginTag("span");
+                    writer.WriteEncodedText((for_eoc ? "Information" : q.Text));
+                    writer.RenderEndTag();
+                writer.RenderEndTag();
 
 				writer.AddAttribute("id", "form-q-" + q.ID.Value);
 				writer.AddAttribute("class", "display dsq-links-table");
