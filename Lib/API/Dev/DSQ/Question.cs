@@ -35,6 +35,23 @@ namespace Lib.API.Dev.DSQ
 			return new ReturnObject() { Result = item, Redirect = new ReturnRedirectObject() { Hash = "dev/dsq/questions/list" }, Growl = new ReturnGrowlObject() { Type = "default", Vars = new ReturnGrowlVarsObject() { text = "You have successfully saved this question.", title = "Question Saved" } } };
 		}
 
+        [Method("Dev/DSQ/Question/Update")]
+        public static ReturnObject Update(HttpContext context, long id, string text)
+        {
+            var item = new Data.DSQ.Question(id);
+    
+            item.Text = text;
+            item.Save();
+
+            SetupResponseForJson(context);
+
+            context.Response.Write(String.Format("{{\"id\":{0},\"text\":\"{1}\"}}", id, text));
+            context.Response.End();
+            return null;
+
+            //return new ReturnObject() { Result = item, Redirect = new ReturnRedirectObject() { Hash = "dev/dsq/questions/list" }, Growl = new ReturnGrowlObject() { Type = "default", Vars = new ReturnGrowlVarsObject() { text = "You have successfully saved this question.", title = "Question Saved" } } };
+        }
+
 		[SecurityRole("view_dev")]
 		[Method("Dev/DSQ/Question/Delete")]
 		public static ReturnObject Delete(HttpContext context, long id)
@@ -65,5 +82,25 @@ namespace Lib.API.Dev.DSQ
 				}
 			};
 		}
-	}
+
+        #region Utility Methods
+        private static void SetupResponseForJson(HttpContext context)
+        {
+            context.Response.Clear();
+            context.Response.ContentType = "application/json";
+
+            context.Response.ClearHeaders();
+            context.Response.AppendHeader("Cache-Control", "no-cache"); //HTTP 1.1
+            context.Response.AppendHeader("Cache-Control", "private"); // HTTP 1.1
+            context.Response.AppendHeader("Cache-Control", "no-store"); // HTTP 1.1
+            context.Response.AppendHeader("Cache-Control", "must-revalidate"); // HTTP 1.1
+            context.Response.AppendHeader("Cache-Control", "max-stale=0"); // HTTP 1.1 
+            context.Response.AppendHeader("Cache-Control", "post-check=0"); // HTTP 1.1 
+            context.Response.AppendHeader("Cache-Control", "pre-check=0"); // HTTP 1.1 
+            context.Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.1 
+            context.Response.AppendHeader("Keep-Alive", "timeout=3, max=993"); // HTTP 1.1 
+            context.Response.AppendHeader("Expires", "Mon, 26 Jul 1997 05:00:00 GMT"); // HTTP 1.1
+        }
+        #endregion
+    }
 }

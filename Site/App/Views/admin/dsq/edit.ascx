@@ -4,8 +4,9 @@
 <link rel="stylesheet" media="screen" href="/App/js/lib/datatables/css/vpad.css" />
 <script type="text/javascript" src="/App/js/lib/datatables/js/jquery.dataTables.js"></script> 
 <script type="text/javascript" src="/App/js/jquery.autogrowtextarea.js"></script>
+<script type="text/javascript" src="/App/js/remslogic.dsq.editor.js"></script>
 <script type="text/javascript">
-	var default_section = <%=(this.SectionIndex >= 0) ? this.SectionIndex.ToString() : "null" %>;
+    var default_section = <%=(this.SectionIndex >= 0) ? this.SectionIndex.ToString() : "null" %>;
 </script>
 <script type="text/javascript" src="/App/js/dsq.js"></script>
 
@@ -58,3 +59,21 @@
     <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>Please enter a message describing why these changes are being denied:</p>
 	<textarea id="modal-deny-message" name="message" rows="5" cols="34"></textarea>
 </div>
+
+
+<script type="text/javascript">
+    $(window).bind('page-animation-completed', function () {
+        var editor = new REMSLogic.DSQEditor($);
+
+        var $editButtons = $('.edit-question-button');
+
+        $editButtons.click(function(){
+            var $this = $(this);
+
+            var questionId = $this.data('id');
+            var questionText = $this.siblings().text();
+
+            editor.display(questionId, questionText);
+        });
+    });
+</script>

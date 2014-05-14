@@ -1070,6 +1070,7 @@
     <Content Include="App\images\Warning_Red_Exclimation.png" />
     <Content Include="App\images\Warning_Yellow_Exclimation.png" />
     <Content Include="App\js\lib\jquery.radialProgressBar.js" />
+    <Content Include="App\js\remslogic.dsq.editor.js" />
     <Content Include="App\js\views\common\drugs\select.js" />
     <Content Include="App\Locked.aspx" />
     <Content Include="App\css\cupertino\images\animated-overlay.gif" />
