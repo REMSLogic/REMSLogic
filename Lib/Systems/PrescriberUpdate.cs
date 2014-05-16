@@ -27,8 +27,6 @@ namespace Lib.Systems
 				if( profile.ProviderID == null )
 					continue;
 
-				var provider = profile.Provider;
-				
 				var name = prescriber.Profile.PrimaryContact.Name;
 				var drug_name = drug.GenericName;
 				string msg = name + " has added the generic drug "+drug_name+" to their list of prescribed drugs.";
@@ -36,7 +34,7 @@ namespace Lib.Systems
 
 				var pu = new Data.PrescriberUpdate();
 				pu.PrescriberID = prescriber.ID.Value;
-                pu.ProviderID = provider.ID;
+                pu.ProviderID = profile.ProviderID;
 				pu.DrugID = drug.ID.Value;
                 pu.Message = msg;
                 pu.Type = type;
@@ -54,8 +52,6 @@ namespace Lib.Systems
                 if (profile.ProviderID == null)
                     continue;
 
-                var provider = profile.Provider;
-
                 var name = prescriber.Profile.PrimaryContact.Name;
                 var drug_name = drug.GenericName;
                 string msg = name + " has removed the generic drug " + drug_name + " from their list of prescribed drugs.";
@@ -63,7 +59,7 @@ namespace Lib.Systems
 
                 var pu = new Data.PrescriberUpdate();
                 pu.PrescriberID = prescriber.ID.Value;
-                pu.ProviderID = provider.ID;
+                pu.ProviderID = profile.ProviderID;
                 pu.DrugID = drug.ID.Value;
                 pu.Message = msg;
                 pu.DateCreated = DateTime.Now;
@@ -81,8 +77,6 @@ namespace Lib.Systems
                 if (profile.ProviderID == null)
                     continue;
 
-                var provider = profile.Provider;
-
                 var name = prescriber.Profile.PrimaryContact.Name;
                 var drug_name = drug.GenericName;
                 string msg = name + " has marked that they are certified to prescribe the generic drug " + drug_name + ".";
@@ -90,7 +84,7 @@ namespace Lib.Systems
 
                 var pu = new Data.PrescriberUpdate();
                 pu.PrescriberID = prescriber.ID.Value;
-                pu.ProviderID = provider.ID;
+                pu.ProviderID = profile.ProviderID;
                 pu.DrugID = drug.ID.Value;
                 pu.Message = msg;
                 pu.DateCreated = DateTime.Now;
