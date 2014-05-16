@@ -60,6 +60,7 @@
     <Compile Include="Sprint10\Migration005AddOrganizationIdToPrescriberProfile.cs" />
     <Compile Include="Sprint10\Migration006AddDeletedToOrganization.cs" />
     <Compile Include="Sprint10\Migration007AddOptionalToDsqEoc.cs" />
+    <Compile Include="Sprint11\Migration001AddPrereqToEocLink.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

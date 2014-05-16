@@ -200,7 +200,8 @@ namespace RemsLogic.Repositories
                     ? (DateTime)reader["Date"]
                     : (DateTime?)null,
                 IsRequired = (bool)reader["IsRequired"],
-                EocId = (long)reader["EocId"]
+                EocId = (long)reader["EocId"],
+                HasPrereq = (bool)reader["HasPrereq"]
             };
         }
         #endregion
