@@ -1,13 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.UI;
-using Framework.Security;
 using Lib.Data;
+using RemsLogic.Model;
+using RemsLogic.Repositories;
+using StructureMap;
+using Address = Lib.Data.Address;
+using Prescriber = Lib.Data.Prescriber;
+using User = Framework.Security.User;
 
 namespace Site.App.Views.prescriber.wizards
 {
     public partial class RegistrationWizard : UserControl
     {
+        #region Member Variables
+        private readonly IOrganizationRepository _orgRepo;
+        #endregion
+
         #region Properties
         public PrescriberProfile PrescriberProfile {get; set;}
         public Address Address {get; set;}
@@ -17,7 +26,15 @@ namespace Site.App.Views.prescriber.wizards
         public IList<PrescriberType> PrescriberTypes {get; set;}
         public IList<Speciality> Specialities {get; set;}
         public IList<State> States {get; set;}
-        public IList<ProviderFacility> Facilities {get; set;}
+        
+        public IEnumerable<Facility> Facilities {get; set;}
+        #endregion
+
+        #region Constructors
+        public RegistrationWizard()
+        {
+            _orgRepo = ObjectFactory.GetInstance<IOrganizationRepository>();
+        }
         #endregion
 
         #region Page Event Handlers
@@ -33,7 +50,7 @@ namespace Site.App.Views.prescriber.wizards
                 Facility = profile.Facility;
             */
 
-            Facilities = ProviderFacility.FindByProvider(profile.ProviderID ?? 0);
+            Facilities = _orgRepo.GetOrganizationFacilities(profile.OrganizationId);
 
             // allow the user to go through the process again.
             if(reset)

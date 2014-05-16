@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="registration-wizard.ascx.cs" Inherits="Site.App.Views.prescriber.wizards.RegistrationWizard" %>
 <%@ Import Namespace="Lib.Data" %>
+<%@ Import Namespace="RemsLogic.Model" %>
 
 <script type="text/javascript" src="/App/js/passwordStrengthMeter.js"></script>
 <script type="text/javascript" src="/App/js/jquery.tools.min.js"></script>
@@ -114,8 +115,8 @@
                                     <label class="form-label">Name</label>
                                     <div class="form-input">
                                         <select id="form-facility-id" name="facility-id" required="required" >
-                                        <%foreach(ProviderFacility f in Facilities){%>
-                                            <option value="<%=f.ID%>"><%=f.Name%></option>
+                                        <%foreach(Facility f in Facilities){%>
+                                            <option value="<%=f.Id%>"><%=f.Name%></option>
                                         <%}%>
                                         </select>
                                     </div>
