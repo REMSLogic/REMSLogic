@@ -13,7 +13,7 @@
             Data Source=localhost;Initial Catalog=devfdarems;User Id=devfdarems;Password=5m3R!5m3R;
         </ProdConnectionString>
         <LaptopConnectionString>
-            Data Source=localhost\MSSQLSERVER2012;Initial Catalog=devfdarems;User Id=devfdarems;Password=devfdarems;
+            Data Source=localhost\MSSQLSERVER2012;Initial Catalog=remslogic_test;User Id=devfdarems;Password=devfdarems;
         </LaptopConnectionString>
 		<AaronConnectionString>
 			Data Source=localhost\SQL2014;Initial Catalog=devfdarems;Trusted_Connection=True;
