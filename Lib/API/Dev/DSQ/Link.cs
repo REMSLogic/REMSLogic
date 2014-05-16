@@ -13,7 +13,7 @@ namespace Lib.API.Dev.DSQ
 	{
         [SecurityRole( "view_admin" )]
         [Method( "Dev/DSQ/Link/Edit" )]
-        public static ReturnObject Edit( HttpContext context, long drug_id, long question_id, long eoc_id, string label, string value, DateTime date, string help_text = "", long? id = null, string required = "No" )
+        public static ReturnObject Edit( HttpContext context, long drug_id, long question_id, long eoc_id, string label, string value, DateTime date, string help_text = "", long? id = null, string required = "No", string prereq = "No" )
         {
             Data.DSQ.Link item;
 
@@ -35,7 +35,8 @@ namespace Lib.API.Dev.DSQ
                 Value = value,
                 Date = date,
                 HelpText = help_text,
-                IsRequired = required.ToLowerInvariant() == "yes"
+                IsRequired = required.ToLowerInvariant() == "yes",
+                HasPrereq = prereq.ToLowerInvariant() == "yes"
             };
 
             // a nice and testable method call
