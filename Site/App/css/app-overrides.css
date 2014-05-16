@@ -725,6 +725,12 @@ span.edit-question-button
         background-color: #999999;
     }
 
+span.form-label-hidden-question 
+{
+    font-style: italic;
+    color: #999999;
+}
+
 #dsq-editor 
 {
     position: fixed;
@@ -741,10 +747,19 @@ span.edit-question-button
     border: 1px solid #333333;
 }
 
-    #dsq-editor input[type="text"] 
+    #dsq-editor label 
     {
-        width: 442px;
-        margin-left: 8px;
+        width: 15%;
+        margin: 0;
+        display: inline-block;
+    }
+
+    #dsq-editor input[type="text"],
+    #dsq-editor select
+    {
+        width: 85%;
+        margin-bottom: 8px;
+        border: 1px solid #333333;
     }
 
     #dsq-editor div.controls 

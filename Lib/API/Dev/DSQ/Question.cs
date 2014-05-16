@@ -36,11 +36,12 @@ namespace Lib.API.Dev.DSQ
 		}
 
         [Method("Dev/DSQ/Question/Update")]
-        public static ReturnObject Update(HttpContext context, long id, string text)
+        public static ReturnObject Update(HttpContext context, long id, string text, string viewMode)
         {
             var item = new Data.DSQ.Question(id);
     
             item.Text = text;
+            item.HideFromView = (viewMode.ToLowerInvariant() == "hide");
             item.Save();
 
             SetupResponseForJson(context);
