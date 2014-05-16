@@ -123,10 +123,10 @@ namespace RemsLogic.Repositories
         {
             const string insertSql = @"
                 INSERT INTO DSQ_Links
-                    (DrugID, QuestionID, Label, Value, HelpText, Date, EocId, IsRequired)
+                    (DrugID, QuestionID, Label, Value, HelpText, Date, EocId, IsRequired, HasPrereq)
                 OUTPUT INSERTED.Id
                 VALUES
-                    (@DrugId, @QuestionId, @Label, @Value, @HelpText, @Date, @EocId, @IsRequired);";
+                    (@DrugId, @QuestionId, @Label, @Value, @HelpText, @Date, @EocId, @IsRequired, @HasPrereq);";
 
             const string updateSql = @"
                 UPDATE DSQ_Links SET
@@ -137,7 +137,8 @@ namespace RemsLogic.Repositories
                     HelpText = @HelpText,
                     Date = @Date,
                     EocId = @EocId,
-                    IsRequired = @IsRequired
+                    IsRequired = @IsRequired,
+                    HasPrereq = @HasPrereq
                 WHERE
                     Id = @Id;";
 
@@ -156,7 +157,8 @@ namespace RemsLogic.Repositories
                             new SqlParameter("HelpText", link.HelpText),
                             new SqlParameter("Date", link.Date),
                             new SqlParameter("EocId", link.EocId),
-                            new SqlParameter("IsRequired", link.IsRequired)
+                            new SqlParameter("IsRequired", link.IsRequired),
+                            new SqlParameter("HasPrereq", link.HasPrereq)
                         });
 
                     if(link.Id != 0)
@@ -200,7 +202,8 @@ namespace RemsLogic.Repositories
                     ? (DateTime)reader["Date"]
                     : (DateTime?)null,
                 IsRequired = (bool)reader["IsRequired"],
-                EocId = (long)reader["EocId"]
+                EocId = (long)reader["EocId"],
+                HasPrereq = (bool)reader["HasPrereq"]
             };
         }
         #endregion

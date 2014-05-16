@@ -70,7 +70,7 @@
 
             <div class="clearfix">
                 <label for="form-help-text" class="form-label">Date <em>*</em></label>
-                <div class="form-input"><input type="date" id="form-date" name="date" required="required" m placeholder="Enter the last updated date of the link" value="<%=(Link.Date == null) ? DateTime.Now.ToShortDateString() : Link.Date.Value.ToShortDateString()%>" /></div>
+                <div class="form-input"><input type="date" id="form-date" name="date" required="required" m placeholder="Enter the last updated date of the link" value="<%=(Link.Date == null) ? DateTime.Now.ToString("yyyy-MM-dd") : Link.Date.Value.ToString("yyyy-MM-dd")%>" /></div>
             </div>
 
             <div class="clearfix" id="form-value-holder">
@@ -105,6 +105,16 @@
                     <select id="form-required" name="required">
                         <option value="No">No</option>
                         <option value="Yes" <%=Link.IsRequired? "selected=\"selected\"" : String.Empty %>>Yes</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="clearfix">
+                <label for="form-prereq" class="form-label">Has Prerequisite <em>*</em></label>
+                <div class="form-input">
+                    <select id="form-prereq" name="prereq">
+                        <option value="No">No</option>
+                        <option value="Yes" <%=Link.HasPrereq? "selected=\"selected\"" : String.Empty %>>Yes</option>
                     </select>
                 </div>
             </div>
