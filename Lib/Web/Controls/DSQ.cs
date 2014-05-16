@@ -194,6 +194,9 @@ namespace Lib.Web.Controls
             writer.WriteEncodedText("Edit");
             writer.RenderEndTag();
 
+            if(q.HideFromView)
+                writer.AddAttribute("class", "form-label-hidden-question");
+
             writer.RenderBeginTag("span");
             writer.WriteEncodedText( q.Text );
             writer.RenderEndTag();
