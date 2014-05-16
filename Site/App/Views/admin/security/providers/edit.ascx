@@ -73,9 +73,9 @@
                 </div>
             
                 <div class="clearfix">
-                    <label for="form-name" class="form-label">Street 2 <em>*</em></label>
+                    <label for="form-name" class="form-label">Street 2</label>
                     <div class="form-input">
-                        <input type="text" id="form-fac-street2" name="fac-street2" required="required" placeholder="Street 2" 
+                        <input type="text" id="form-fac-street2" name="fac-street2" placeholder="Street 2" 
                             value="<%=Organization.PrimaryFacility.Address.Street2%>" />
                     </div>
                 </div>
