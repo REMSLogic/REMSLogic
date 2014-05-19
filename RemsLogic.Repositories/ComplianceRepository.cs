@@ -213,7 +213,7 @@ namespace RemsLogic.Repositories
         {
             string sql = @"
                 SELECT DISTINCT
-                    DSQ_Links.IsRequired, DSQ_Link.HasPrereq, Eocs.*
+                    DSQ_Links.IsRequired, DSQ_Links.HasPrereq, Eocs.*
                 FROM DSQ_Links
                     INNER JOIN Eocs ON Eocs.ID = DSQ_Links.EocId
                 WHERE
