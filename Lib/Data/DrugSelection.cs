@@ -142,7 +142,8 @@ namespace Lib.Data
             sql.Append("    INNER JOIN Drugs ON DrugSelections.DrugId = Drugs.ID ");
             sql.Append("WHERE ");
             sql.Append("    PrescriberID = "+db.DelimParameter("PrescriberId")+" AND ");
-            sql.Append("    Drugs.Updated > DrugSelections.DateRecorded; ");
+            sql.Append("    Drugs.Updated > DrugSelections.DateRecorded AND ");
+            sql.Append("    Drugs.Active = 1 ");
 
             var ps = new List<Parameter>();
             ps.Add(new Parameter("PrescriberId", prescriber.ID));
