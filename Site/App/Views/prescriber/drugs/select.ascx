@@ -25,56 +25,18 @@
                                  <a class="eoc-menu-clear-avail clear-btn" onclick="ClearAvailDrugListFilter();" >Clear Filter</a>
                             </div>
                             <div style="clear:both;"></div>
-                            <div class="eoc-filter-item">
-                                <img src="/App/images/icons/ETASU.png" alt="ETASU" data-eoc="etasu" />
-                                <p class="label">ETASU</p>
-                                <p class="label">&nbsp;</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/FP EN.png" alt="Facility/Pharmacy Enrollment" data-eoc="facility-pharmacy-enrollment" />
-                                <p class="label">FACILITY</p>
-                                <p class="label">ENROLLMENT</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/PAEN.png" alt="Patient Enrollment" data-eoc="patient-enrollment" />
-                                <p class="label">PATIENT</p>
-                                <p class="label">ENROLLMENT</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/PREN.png" alt="Prescriber Enrollment" data-eoc="prescriber-enrollment" />
-                                <p class="label">PRESCRIBER</p>
-                                <p class="label">ENROLLMENT</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/EDUCRT.png" alt="Education/Certification" data-eoc="education-training" />
-                                <p class="label">PRESCRIBER</p>
-                                <p class="label">EDUCATION</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/MON.png" alt="Monitoring" data-eoc="monitoring-management" />
-                                <p class="label">MONITORING</p>
-                                <p class="label">&nbsp;</p>
-                            </div>
-                            <div class="eoc-filter-item">
-                                <img src="/App/images/icons/EOC-Nursing_Education.png" alt="Nursing Education" data-eoc="nursing-education" />
-                                <p class="label">NURSING</p>
-                                <p class="label">EDUCATION</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/IC.png" alt="Informed Consent" data-eoc="informed-consent" />
-                                <p class="label">INFORMED</p>
-                                <p class="label">CONSENT</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/FD.png" alt="Forms and Documents" data-eoc="forms-documents" />
-                                <p class="label">FORMS &amp;</p>
-                                <p class="label">DOCUMENTS</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/EOC-Patient_Education.png" alt="Patient Education" data-eoc="patient-education" />
-                                <p class="label">PATIENT</p>
-                                <p class="label">EDUCATION</p>
-                            </div>
+
+                            <%foreach(var eoc in Eocs){
+                                if(DisplayEoc(eoc)){%>
+                                <div class="eoc-filter-item">
+                                    <img src="<%=eoc.LargeIcon%>" alt="<%=eoc.DisplayName %>" data-eoc="<%=eoc.Name %>" />
+                                    <%
+                                        var words = eoc.ShortDisplayName.ToUpperInvariant().Split(' ');
+                                        var result = String.Join("", words.Select(x => String.Format("<p class=\"label\">{0}</p>", x)));
+                                    %>
+                                    <%=result%>
+                                </div>
+                            <%}} %>
 				        </div>
 					</div>
                     <br />
@@ -106,56 +68,17 @@
                                  <a class="eoc-menu-clear-my clear-btn" onclick="ClearMyDrugListFilter();" >Clear Filter</a>
                             </div>
 
-                            <div class="eoc-filter-item">
-                                <img src="/App/images/icons/ETASU.png" alt="ETASU" data-eoc="etasu" />
-                                <p class="label">ETASU</p>
-                                <p class="label">&nbsp;</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/FP EN.png" alt="Facility/Pharmacy Enrollment" data-eoc="facility-pharmacy-enrollment" />
-                                <p class="label">FACILITY</p>
-                                <p class="label">ENROLLMENT</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/PAEN.png" alt="Patient Enrollment" data-eoc="patient-enrollment" />
-                                <p class="label">PATIENT</p>
-                                <p class="label">ENROLLMENT</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/PREN.png" alt="Prescriber Enrollment" data-eoc="prescriber-enrollment" />
-                                <p class="label">PRESCRIBER</p>
-                                <p class="label">ENROLLMENT</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/EDUCRT.png" alt="Education/Certification" data-eoc="education-training" />
-                                <p class="label">PRESCRIBER</p>
-                                <p class="label">EDUCATION</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/MON.png" alt="Monitoring" data-eoc="monitoring-management" />
-                                <p class="label">MONITORING</p>
-                                <p class="label">&nbsp;</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/EOC-Nursing_Education.png" alt="Nursing Education" data-eoc="nursing-education" />
-                                <p class="label">NURSING</p>
-                                <p class="label">EDUCATION</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/IC.png" alt="Informed Consent" data-eoc="informed-consent" />
-                                <p class="label">INFORMED</p>
-                                <p class="label">CONSENT</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/FD.png" alt="Forms and Documents" data-eoc="forms-documents" />
-                                <p class="label">FORMS &amp;</p>
-                                <p class="label">DOCUMENTS</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/App/images/icons/EOC-Patient_Education.png" alt="Patient Education" data-eoc="patient-education" />
-                                <p class="label">PATIENT</p>
-                                <p class="label">EDUCATION</p>
-                            </div>
+                            <%foreach(var eoc in Eocs){
+                                if(DisplayEoc(eoc)){%>
+                                <div class="eoc-filter-item">
+                                    <img src="<%=eoc.LargeIcon%>" alt="<%=eoc.DisplayName %>" data-eoc="<%=eoc.Name %>" />
+                                    <%
+                                        var words = eoc.ShortDisplayName.ToUpperInvariant().Split(' ');
+                                        var result = String.Join("", words.Select(x => String.Format("<p class=\"label\">{0}</p>", x)));
+                                    %>
+                                    <%=result%>
+                                </div>
+                            <%}} %>
 				        </div>
 					</div>
                     <br />

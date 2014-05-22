@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using RemsLogic.Model;
 using RemsLogic.Model.Compliance;
 using RemsLogic.Services;
@@ -13,6 +15,7 @@ namespace Site.App.Views.prescriber.drugs
         private readonly IComplianceService _complianceSvc;
 
         public DrugList Drugs;
+        public List<Eoc> Eocs {get; set;}
 
         public list()
         {
@@ -25,6 +28,7 @@ namespace Site.App.Views.prescriber.drugs
             //Drugs = Lib.Systems.Lists.GetMyDrugs();
             long profileId = Lib.Systems.Security.GetCurrentProfile().ID.Value;
             Drugs = _drugListSvc.GetDrugListByProfileId(profileId, DrugListType.MyDrugs);
+            Eocs = _complianceSvc.GetEocs().ToList();
         }
 
         public string GetEOCData(Lib.Data.Drug d)
@@ -38,5 +42,12 @@ namespace Site.App.Views.prescriber.drugs
 
             return eocData.ToString();
         }
+
+        #region Utilty Methods
+        public bool DisplayEoc(Eoc eoc)
+        {
+            return eoc.AppliesTo.Any(role => Framework.Security.Manager.HasRole(role));
+        }
+        #endregion
     }
 }
