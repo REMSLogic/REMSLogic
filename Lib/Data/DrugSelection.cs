@@ -98,6 +98,7 @@ namespace Lib.Data
         public static IList<Data.Drug> GetDrugsWithUpdates(Data.Prescriber prescriber)
         {
             Database db = Database.Get("FDARems");
+            /*
             StringBuilder sql = new StringBuilder();
 
             sql.Append("SELECT Drugs.* ");
@@ -107,11 +108,28 @@ namespace Lib.Data
             sql.Append("    PrescriberID = "+db.DelimParameter("PrescriberId")+" AND ");
             sql.Append("    Drugs.Updated > DrugSelections.DateRecorded AND ");
             sql.Append("    Drugs.Active = 1;");
+            */
+
+            const string sql = @"
+                SELECT *
+                FROM Drugs
+                WHERE Drugs.ID IN (
+                    SELECT
+	                    DISTINCT Drugs.ID
+
+                    FROM DrugSelections 
+                        INNER JOIN DrugVersions ON DrugVersions.DrugID = DrugSelections.DrugId
+                        INNER JOIN Drugs ON Drugs.ID = DrugSelections.DrugID
+                    WHERE 
+                        PrescriberID = @PrescriberId AND 
+                        Drugs.Updated > DrugSelections.DateRecorded AND 
+                        DrugVersions.Status = 'Approved' AND
+                        Drugs.Active = 1)";
 
             var ps = new List<Parameter>();
             ps.Add(new Parameter("PrescriberId", prescriber.ID));
 
-            return db.ExecuteQuery<Drug>(sql.ToString(), ps.ToArray());
+            return db.ExecuteQuery<Drug>(sql, ps.ToArray());
         }
 
         public static bool HasDrugsWithNoSelection(Prescriber prescriber)
@@ -136,6 +154,7 @@ namespace Lib.Data
         public static bool HasDrugsWithUpdates(Data.Prescriber prescriber)
         {
             Database db = Database.Get("FDARems");
+            /*
             StringBuilder sql = new StringBuilder();
 
             sql.Append("SELECT COUNT(*) ");
@@ -145,11 +164,25 @@ namespace Lib.Data
             sql.Append("    PrescriberID = "+db.DelimParameter("PrescriberId")+" AND ");
             sql.Append("    Drugs.Updated > DrugSelections.DateRecorded AND ");
             sql.Append("    Drugs.Active = 1;");
+            */
+
+            const string sql = @"
+                SELECT
+	                COUNT(DISTINCT DrugSelections.DrugID)
+
+                FROM DrugSelections 
+                    INNER JOIN DrugVersions ON DrugVersions.DrugID = DrugSelections.DrugId
+                    INNER JOIN Drugs ON Drugs.ID = DrugSelections.DrugID
+                WHERE 
+                    PrescriberID = @PrescriberId AND 
+                    DrugVersions.Updated > DrugSelections.DateRecorded AND 
+                    DrugVersions.Status = 'Approved' AND
+                    Drugs.Active = 1;";            
 
             var ps = new List<Parameter>();
             ps.Add(new Parameter("PrescriberId", prescriber.ID));
 
-            return ( db.ExecuteScalar<int>(sql.ToString(), ps.ToArray()) > 0);
+            return ( db.ExecuteScalar<int>(sql, ps.ToArray()) > 0);
         }
         #endregion
     }

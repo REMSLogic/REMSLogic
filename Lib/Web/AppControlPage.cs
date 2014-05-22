@@ -20,7 +20,7 @@ namespace Lib.Web
 
 		protected override void OnInit(EventArgs e)
 		{
-			RequireRole( "view_app" );
+			//RequireRole( "view_app" );
 
 			base.OnInit( e );
 
