@@ -15,6 +15,7 @@ namespace Site.App.Views.prescriber.drugs
         public IList<Lib.Data.Drug> Drugs;
         public IList<Lib.Data.Drug> AvailableDrugs;
         public IList<Lib.Data.Drug> SelectedDrugs;
+        public List<Eoc> Eocs {get; set;}
 
         public select()
         {
@@ -46,6 +47,7 @@ namespace Site.App.Views.prescriber.drugs
             }
             SelectedDrugs = SelectedDrugs.OrderBy(l => l.GenericName).ToList();
             AvailableDrugs = AvailableDrugs.OrderBy(l => l.GenericName).ToList();
+            Eocs = _complianceSvc.GetEocs().ToList();
         }
 
         public string GetEOCData(Lib.Data.Drug d)
@@ -59,5 +61,12 @@ namespace Site.App.Views.prescriber.drugs
 
             return eocData.ToString();
         }
+
+        #region Utilty Methods
+        public bool DisplayEoc(Eoc eoc)
+        {
+            return eoc.AppliesTo.Any(role => Framework.Security.Manager.HasRole(role));
+        }
+        #endregion
     }
 }

@@ -190,7 +190,7 @@ namespace RemsLogic.Repositories
                 SELECT 
                     *
                 FROM Eocs
-                ORDER BY DisplayName ASC;";
+                ORDER BY DisplayOrder ASC;";
 
             using(SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -339,6 +339,9 @@ namespace RemsLogic.Repositories
                 Id = (long)reader["ID"],
                 Name = (string)reader["Name"],
                 DisplayName = (string)reader["DisplayName"],
+                ShortDisplayName = (string)reader["ShortDisplayName"],
+                LargeIcon = (string)reader["LargeIcon"],
+                SmallIcon = (string)reader["SmallIcon"],
                 AppliesTo = reader["Roles"] != DBNull.Value
                     ? ((string)reader["Roles"]).Split(new []{'|'}, StringSplitOptions.RemoveEmptyEntries)
                         .ToList()

@@ -61,9 +61,16 @@
     <Compile Include="Sprint10\Migration006AddDeletedToOrganization.cs" />
     <Compile Include="Sprint10\Migration007AddOptionalToDsqEoc.cs" />
     <Compile Include="Sprint11\Migration001AddPrereqToEocLink.cs" />
+    <Compile Include="Sprint12\Migration001AddColumnsToEocTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RemsLogic.Model\RemsLogic.Model.csproj">
+      <Project>{40e89cf0-7a46-4049-bfa2-61cac8e3d7a2}</Project>
+      <Name>RemsLogic.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">

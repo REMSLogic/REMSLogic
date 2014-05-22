@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using RemsLogic.Model;
 using RemsLogic.Model.Compliance;
@@ -12,10 +14,17 @@ namespace Site.App.Controls.Widgets
         private readonly IComplianceService _complianceSvc;
         private readonly IDrugListService _drugListSvc;
 
+        public List<Eoc> Eocs {get; set;}
+
         public MyDrugList()
         {
             _complianceSvc = ObjectFactory.GetInstance<IComplianceService>();
             _drugListSvc = ObjectFactory.GetInstance<IDrugListService>();
+        }
+
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            Eocs = _complianceSvc.GetEocs().ToList();
         }
 
         public DrugList GetDrugList()
@@ -36,5 +45,12 @@ namespace Site.App.Controls.Widgets
 
             return eocData.ToString();
         }
+
+        #region Utilty Methods
+        public bool DisplayEoc(Eoc eoc)
+        {
+            return eoc.AppliesTo.Any(role => Framework.Security.Manager.HasRole(role));
+        }
+        #endregion
     }
 }
