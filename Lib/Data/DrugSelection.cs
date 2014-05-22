@@ -135,7 +135,6 @@ namespace Lib.Data
         public static bool HasDrugsWithNoSelection(Prescriber prescriber)
         {
             Database db = Database.Get("FDARems");
-            /*
             StringBuilder sql = new StringBuilder();
 
             sql.Append("SELECT COUNT(*) ");
@@ -145,6 +144,26 @@ namespace Lib.Data
             sql.Append("     FROM "+db.DelimTable("DrugSelections")+" ");
             sql.Append("     WHERE "+db.DelimTable("DrugSelections")+"."+db.DelimColumn("PrescriberID")+" = "+db.DelimParameter("PrescriberId")+") AND ");
             sql.Append("    "+db.DelimTable("Drugs")+"."+db.DelimColumn("Active")+" = 1;");
+
+            var ps = new List<Parameter>();
+            ps.Add(new Parameter("PrescriberId", prescriber.ID));
+
+            return (db.ExecuteScalar<int>(sql.ToString(), ps.ToArray()) > 0);
+        }
+
+        public static bool HasDrugsWithUpdates(Data.Prescriber prescriber)
+        {
+            Database db = Database.Get("FDARems");
+            /*
+            StringBuilder sql = new StringBuilder();
+
+            sql.Append("SELECT COUNT(*) ");
+            sql.Append("FROM DrugSelections ");
+            sql.Append("    INNER JOIN Drugs ON DrugSelections.DrugId = Drugs.ID ");
+            sql.Append("WHERE ");
+            sql.Append("    PrescriberID = "+db.DelimParameter("PrescriberId")+" AND ");
+            sql.Append("    Drugs.Updated > DrugSelections.DateRecorded AND ");
+            sql.Append("    Drugs.Active = 1;");
             */
 
             const string sql = @"
@@ -158,31 +177,12 @@ namespace Lib.Data
                     PrescriberID = @PrescriberId AND 
                     DrugVersions.Updated > DrugSelections.DateRecorded AND 
                     DrugVersions.Status = 'Approved' AND
-                    Drugs.Active = 1;";
+                    Drugs.Active = 1;";            
 
             var ps = new List<Parameter>();
             ps.Add(new Parameter("PrescriberId", prescriber.ID));
 
-            return (db.ExecuteScalar<int>(sql, ps.ToArray()) > 0);
-        }
-
-        public static bool HasDrugsWithUpdates(Data.Prescriber prescriber)
-        {
-            Database db = Database.Get("FDARems");
-            StringBuilder sql = new StringBuilder();
-
-            sql.Append("SELECT COUNT(*) ");
-            sql.Append("FROM DrugSelections ");
-            sql.Append("    INNER JOIN Drugs ON DrugSelections.DrugId = Drugs.ID ");
-            sql.Append("WHERE ");
-            sql.Append("    PrescriberID = "+db.DelimParameter("PrescriberId")+" AND ");
-            sql.Append("    Drugs.Updated > DrugSelections.DateRecorded AND ");
-            sql.Append("    Drugs.Active = 1;");
-
-            var ps = new List<Parameter>();
-            ps.Add(new Parameter("PrescriberId", prescriber.ID));
-
-            return ( db.ExecuteScalar<int>(sql.ToString(), ps.ToArray()) > 0);
+            return ( db.ExecuteScalar<int>(sql, ps.ToArray()) > 0);
         }
         #endregion
     }

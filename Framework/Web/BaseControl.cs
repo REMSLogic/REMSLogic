@@ -16,6 +16,7 @@ namespace Framework.Web
 
 		protected void SendJson(API.ReturnObject o)
 		{
+            Response.Clear();
 			Response.ContentType = "application/json";
 			Response.StatusCode = o.StatusCode;
 			Response.Write(Newtonsoft.Json.JsonConvert.SerializeObject(o));
@@ -31,7 +32,7 @@ namespace Framework.Web
 
 		protected void RedirectHash(string hash, bool error = false, string msg = "")
 		{
-			SendJson(new API.ReturnObject() { Error = error, Message = msg, Redirect = new API.ReturnRedirectObject() { Hash = hash } });
+			SendJson(new API.ReturnObject() { Error = error, StatusCode = 200, Message = msg, Redirect = new API.ReturnRedirectObject() { Hash = hash } });
 		}
 
 		protected void RedirectUrl(string url, bool error = false, string msg = "")
