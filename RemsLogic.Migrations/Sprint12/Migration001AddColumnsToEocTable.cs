@@ -102,6 +102,7 @@ namespace RemsLogic.Migrations.Sprint12
                     DisplayOrder = 1
                 }).Where(new {Id = 8});
 
+            /*
             Update.Table("Eocs")
                 .Set(new {
                     Name = "nursing-education", 
@@ -145,6 +146,7 @@ namespace RemsLogic.Migrations.Sprint12
                     SmallIcon = "small icon",
                     DisplayOrder = 11
                 }).Where(new {Id = 12});
+            */
         }
 
         public override void Down()
