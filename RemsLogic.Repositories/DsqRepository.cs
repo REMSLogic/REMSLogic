@@ -123,10 +123,10 @@ namespace RemsLogic.Repositories
         {
             const string insertSql = @"
                 INSERT INTO DSQ_Links
-                    (DrugID, QuestionID, Label, Value, HelpText, Date, EocId, IsRequired, HasPrereq)
+                    (DrugID, QuestionID, Label, Value, HelpText, Date, EocId, IsRequired, HasPrereq, LinkType)
                 OUTPUT INSERTED.Id
                 VALUES
-                    (@DrugId, @QuestionId, @Label, @Value, @HelpText, @Date, @EocId, @IsRequired, @HasPrereq);";
+                    (@DrugId, @QuestionId, @Label, @Value, @HelpText, @Date, @EocId, @IsRequired, @HasPrereq, @LinkType);";
 
             const string updateSql = @"
                 UPDATE DSQ_Links SET
@@ -138,7 +138,8 @@ namespace RemsLogic.Repositories
                     Date = @Date,
                     EocId = @EocId,
                     IsRequired = @IsRequired,
-                    HasPrereq = @HasPrereq
+                    HasPrereq = @HasPrereq,
+                    LinkType = @LinkType
                 WHERE
                     Id = @Id;";
 
@@ -158,7 +159,8 @@ namespace RemsLogic.Repositories
                             new SqlParameter("Date", link.Date),
                             new SqlParameter("EocId", link.EocId),
                             new SqlParameter("IsRequired", link.IsRequired),
-                            new SqlParameter("HasPrereq", link.HasPrereq)
+                            new SqlParameter("HasPrereq", link.HasPrereq),
+                            new SqlParameter("LinkType", link.LinkType)
                         });
 
                     if(link.Id != 0)

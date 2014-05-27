@@ -12,6 +12,7 @@ namespace RemsLogic.Model.Dsq
         public string Label {get; set;}
         public string Value {get; set;}
         public string HelpText {get; set;}
+        public string LinkType {get; set;}
         public DateTime? Date {get; set;}
 
         public virtual DsqQuestion Question {get; set;}
