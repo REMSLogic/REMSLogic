@@ -63,6 +63,7 @@
     <Compile Include="Sprint11\Migration001AddPrereqToEocLink.cs" />
     <Compile Include="Sprint12\Migration001AddColumnsToEocTable.cs" />
     <Compile Include="Sprint12\Migration002AddNewEocs.cs" />
+    <Compile Include="Sprint12\Migration003AddLinkType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

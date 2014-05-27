@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using RemsLogic.Model.Compliance;
@@ -401,7 +402,24 @@ namespace Lib.Web.Controls
 				writer.AddAttribute( "class", "dsq-list-row clearfix" );
 				writer.RenderBeginTag( "div" );
 				{
-					if( ans.Trim().ToLower().StartsWith( "http://" ) || ans.Trim().ToLower().StartsWith( "https://" ) )
+                    if(answer.LinkType == "text")
+                    {
+                        IMarkdownService markdownSvc = new MarkdownService(enableSyntaxHighlighting: true);
+
+                        writer.AddAttribute( "style", "border-bottom: 1px dashed #CCCCCC; border-top: 1px dashed #CCCCCC;" );
+                        writer.RenderBeginTag( "div" );
+                        {
+                            StringBuilder text = new StringBuilder();
+
+                            if(answer.IsRequired)
+                                text.Append("REQUIRED - ");
+
+                            text.Append(ans);
+                            writer.Write(markdownSvc.ToHtml(text.ToString()));
+                        }
+                        writer.RenderEndTag();
+                    }
+					else if( ans.Trim().ToLower().StartsWith( "http://" ) || ans.Trim().ToLower().StartsWith( "https://" ) )
 					{
 						string css_class = "link-list-icon-a";
 

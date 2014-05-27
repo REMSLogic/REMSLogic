@@ -40,6 +40,8 @@ namespace Lib.Data.DSQ
         public long EocId;
         [Column]
         public bool IsRequired;
+        [Column]
+        public string LinkType;
 
         public bool HasEoc
         {

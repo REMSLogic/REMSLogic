@@ -24,15 +24,24 @@
         if ($('#form-type').val() == 'phone') {
             $('#form-value-holder').show();
             $('#form-value-holder label.form-label').html('Phone <em>*</em>');
+            $('#form-text-container').hide();
         }
         else if ($('#form-type').val() == 'url') {
             $('#form-value-holder').show();
             $('#btnUpload').show();
+            $('#form-text-container').hide();
         }
         else if ($('#form-type').val() == 'upload') {
+            $('#form-text-container').hide();
             $('#form-value-holder').show();
             $('#form-file-container').show();
             $('#btnUpload').show();
+        }
+        else if ($('#form-type').val() == 'text') {
+            $('#form-value-holder').hide();
+            $('#btnUpload').hide();
+            $('#form-file-container').hide();
+            $('#form-text-container').show();
         }
     }
 
@@ -54,6 +63,7 @@
                         <option value="phone"<%=((!string.IsNullOrEmpty(Link.Value) && !Link.Value.StartsWith("http")) ? " selected=\"selected\"" : "") %>>Phone</option>
                         <option value="url"<%=((!string.IsNullOrEmpty(Link.Value) && Link.Value.StartsWith("http")) ? " selected=\"selected\"" : "") %>>URL</option>
                         <option value="upload">Upload</option>
+                        <option value="text" <%=Link.LinkType == "text"? "selected=\"selected\"" : ""%>>Text</option>
                     </select>
                 </div>
             </div>
@@ -78,6 +88,13 @@
                 <div class="form-input has-button">
                     <input type="text" id="form-value" name="value" placeholder="Enter the value" value="<%=Link.Value%>" />
                     <button class="button" id="btnUpload" type="button">Upload</button>
+                </div>
+            </div>
+            
+            <div class="clearfix" id="form-text-container" style="display: none;">
+                <label for="form-text" class="form-label">Text</label>
+                <div class="form-input">
+                    <textarea name="text" id="form-text" class="auto-grow" rows="5" cols="40"><%=Link.Value%></textarea>
                 </div>
             </div>
 
