@@ -402,84 +402,90 @@ namespace Lib.Web.Controls
 				writer.AddAttribute( "class", "dsq-list-row clearfix" );
 				writer.RenderBeginTag( "div" );
 				{
-                    if(answer.LinkType == "text")
+                    switch(answer.LinkType)
                     {
-                        IMarkdownService markdownSvc = new MarkdownService(enableSyntaxHighlighting: true);
+                        case "phone":
+                            writer.AddAttribute( "src", "/App/images/navicons/75.png" );
+                            writer.AddAttribute( "class", "link-list-icon" );
+                            writer.RenderBeginTag( "img" );
+                            writer.RenderEndTag();
 
-                        writer.AddAttribute( "style", "border-bottom: 1px dashed #CCCCCC; border-top: 1px dashed #CCCCCC;" );
-                        writer.RenderBeginTag( "div" );
-                        {
-                            StringBuilder text = new StringBuilder();
+                            writer.AddAttribute( "class", "link-list-text" );
+                            writer.RenderBeginTag( "span" );
+                            {
+                                if(answer.IsRequired)
+                                    writer.WriteEncodedText("REQUIRED - ");
 
-                            if(answer.IsRequired)
-                                text.Append("REQUIRED - ");
+                                writer.WriteEncodedText( ans );
+                            }
+                            writer.RenderEndTag();
+                            break;
 
-                            text.Append(ans);
-                            writer.Write(markdownSvc.ToHtml(text.ToString()));
-                        }
-                        writer.RenderEndTag();
+                        case "url":
+                        case "upload":
+                            string css_class = "link-list-icon-a";
+
+                            if( Lib.Systems.Security.GetCurrentPrescriber() != null )
+                            {
+                                writer.AddAttribute( "href", "/api/App/List/FormsAndDocuments/AddItem?id=" + answer.ID.Value );
+                                writer.AddAttribute( "class", "ajax-button link-list-icon-a" );
+                                writer.RenderBeginTag( "a" );
+                                {
+                                    writer.AddAttribute( "src", "/App/images/navicons/101.png" );
+                                    writer.AddAttribute( "class", "link-list-icon" );
+                                    writer.RenderBeginTag( "img" );
+                                    writer.RenderEndTag();
+                                }
+                                writer.RenderEndTag();
+                            }
+                            else
+                                css_class += " pad-right";
+                        
+                            writer.AddAttribute( "href", ans );
+                            writer.AddAttribute( "target", "_blank" );
+                            writer.AddAttribute( "class", css_class );
+                            writer.RenderBeginTag( "a" );
+                            {
+                                writer.AddAttribute( "src", "/App/images/navicons/100.png" );
+                                writer.AddAttribute( "class", "link-list-icon" );
+                                writer.RenderBeginTag( "img" );
+                                writer.RenderEndTag();
+                            }
+                            writer.RenderEndTag();
+
+                            writer.AddAttribute( "href", ans );
+                            writer.AddAttribute( "target", "_blank" );
+                            writer.AddAttribute( "class", "link-list-text" );
+                            writer.RenderBeginTag( "a" );
+                            {
+                                if(answer.IsRequired)
+                                    writer.WriteEncodedText("REQUIRED - ");
+
+                                writer.WriteEncodedText( answer.Label );
+                            }
+                            writer.RenderEndTag();
+                            break;
+
+                        default:
+                            IMarkdownService markdownSvc = new MarkdownService(enableSyntaxHighlighting: true);
+
+                            writer.AddAttribute( "style", "border-bottom: 1px dashed #CCCCCC; border-top: 1px dashed #CCCCCC;" );
+                            writer.RenderBeginTag( "div" );
+                            {
+                                StringBuilder text = new StringBuilder();
+
+                                /*
+                                if(answer.IsRequired)
+                                    text.Append("REQUIRED - ");
+                                */
+
+                                text.Append(ans);
+                                var temp = markdownSvc.ToHtml(text.ToString());
+                                writer.Write(markdownSvc.ToHtml(text.ToString()));
+                            }
+                            writer.RenderEndTag();
+                            break;
                     }
-					else if( ans.Trim().ToLower().StartsWith( "http://" ) || ans.Trim().ToLower().StartsWith( "https://" ) )
-					{
-						string css_class = "link-list-icon-a";
-
-						if( Lib.Systems.Security.GetCurrentPrescriber() != null )
-						{
-							writer.AddAttribute( "href", "/api/App/List/FormsAndDocuments/AddItem?id=" + answer.ID.Value );
-							writer.AddAttribute( "class", "ajax-button link-list-icon-a" );
-							writer.RenderBeginTag( "a" );
-							{
-								writer.AddAttribute( "src", "/App/images/navicons/101.png" );
-								writer.AddAttribute( "class", "link-list-icon" );
-								writer.RenderBeginTag( "img" );
-								writer.RenderEndTag();
-							}
-							writer.RenderEndTag();
-						}
-						else
-							css_class += " pad-right";
-						
-						writer.AddAttribute( "href", ans );
-						writer.AddAttribute( "target", "_blank" );
-						writer.AddAttribute( "class", css_class );
-						writer.RenderBeginTag( "a" );
-						{
-							writer.AddAttribute( "src", "/App/images/navicons/100.png" );
-							writer.AddAttribute( "class", "link-list-icon" );
-							writer.RenderBeginTag( "img" );
-							writer.RenderEndTag();
-						}
-						writer.RenderEndTag();
-
-						writer.AddAttribute( "href", ans );
-						writer.AddAttribute( "target", "_blank" );
-						writer.AddAttribute( "class", "link-list-text" );
-						writer.RenderBeginTag( "a" );
-						{
-                            if(answer.IsRequired)
-                                writer.WriteEncodedText("REQUIRED - ");
-
-							writer.WriteEncodedText( answer.Label );
-						}
-						writer.RenderEndTag();
-					}
-					else
-					{
-						writer.AddAttribute( "src", "/App/images/navicons/75.png" );
-						writer.AddAttribute( "class", "link-list-icon pad-right" );
-						writer.RenderBeginTag( "img" );
-						writer.RenderEndTag();
-
-						writer.AddAttribute( "class", "link-list-text" );
-						writer.RenderBeginTag( "span" );
-						{
-                            if(answer.IsRequired)
-                                writer.WriteEncodedText("REQUIRED - ");
-
-							writer.WriteEncodedText( ans );
-						}
-						writer.RenderEndTag();
-					}
 				}
 				writer.RenderEndTag();
 			}

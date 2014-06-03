@@ -205,7 +205,8 @@ namespace RemsLogic.Repositories
                     : (DateTime?)null,
                 IsRequired = (bool)reader["IsRequired"],
                 EocId = (long)reader["EocId"],
-                HasPrereq = (bool)reader["HasPrereq"]
+                HasPrereq = (bool)reader["HasPrereq"],
+                LinkType = reader["LinkType"].ToString()
             };
         }
         #endregion
