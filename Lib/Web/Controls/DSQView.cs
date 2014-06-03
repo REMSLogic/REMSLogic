@@ -406,7 +406,7 @@ namespace Lib.Web.Controls
                     {
                         case "phone":
                             writer.AddAttribute( "src", "/App/images/navicons/75.png" );
-                            writer.AddAttribute( "class", "link-list-icon pad-right" );
+                            writer.AddAttribute( "class", "link-list-icon" );
                             writer.RenderBeginTag( "img" );
                             writer.RenderEndTag();
 
@@ -474,10 +474,13 @@ namespace Lib.Web.Controls
                             {
                                 StringBuilder text = new StringBuilder();
 
+                                /*
                                 if(answer.IsRequired)
                                     text.Append("REQUIRED - ");
+                                */
 
                                 text.Append(ans);
+                                var temp = markdownSvc.ToHtml(text.ToString());
                                 writer.Write(markdownSvc.ToHtml(text.ToString()));
                             }
                             writer.RenderEndTag();

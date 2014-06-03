@@ -700,7 +700,11 @@ namespace Lib.Web.Controls
 
 									writer.RenderBeginTag("td");
 									{
-										writer.WriteEncodedText(link.Value);
+										writer.WriteEncodedText(
+                                            link.Value.Length > 131
+                                                ? String.Format("{0}...", link.Value.Substring(0, 128))
+                                                : link.Value
+                                            );
 									}
 									writer.RenderEndTag();
 

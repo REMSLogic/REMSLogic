@@ -60,10 +60,10 @@
                 <div class="form-input">
                     <select id="form-type" name="type">
                         <option value="">Please Select</option>
-                        <option value="phone"<%=((!string.IsNullOrEmpty(Link.Value) && !Link.Value.StartsWith("http")) ? " selected=\"selected\"" : "") %>>Phone</option>
-                        <option value="url"<%=((!string.IsNullOrEmpty(Link.Value) && Link.Value.StartsWith("http")) ? " selected=\"selected\"" : "") %>>URL</option>
-                        <option value="upload">Upload</option>
-                        <option value="text" <%=Link.LinkType == "text"? "selected=\"selected\"" : ""%>>Text</option>
+                        <option value="phone"<%=(Link.LinkType == "phone" ? " selected=\"selected\"" : "") %>>Phone</option>
+                        <option value="url"<%=(Link.LinkType == "url" ? " selected=\"selected\"" : "") %>>URL</option>
+                        <option value="upload"<%=(Link.LinkType == "upload" ? " selected=\"selected\"" : "") %>>Upload</option>
+                        <option value="text" <%=(Link.LinkType == "text"? "selected=\"selected\"" : "")%>>Text</option>
                     </select>
                 </div>
             </div>
@@ -85,9 +85,8 @@
 
             <div class="clearfix" id="form-value-holder">
                 <label for="form-value" class="form-label">URL</label>
-                <div class="form-input has-button">
+                <div class="form-input">
                     <input type="text" id="form-value" name="value" placeholder="Enter the value" value="<%=Link.Value%>" />
-                    <button class="button" id="btnUpload" type="button">Upload</button>
                 </div>
             </div>
             
