@@ -93,22 +93,19 @@
         <li class="ui-state-default" data-drug-id="<%=pd_drug.ID %>"<%=GetEOCData(pd_drug) %>>
             <%if(pd.PercentComplete >= 1){ %>
             <div class="compliance-holder green-alert" id="<%=pd_drug.ID %>">
-                <%--<img class="compliance-icon" src="/App/images/Warning_Green_Check.png" alt="Compliance Details" />--%>
-                <span class="number-alert green-number"><%=(pd.PercentComplete * 100).ToString("0")%></span><span class="task-alert">% Compliant</span>
+                <span class="number-alert green-number"><%=String.Format("{0}/{1}", pd.UserEocsCount, pd.DrugEocsCount)%></span><span class="task-alert">% Compliant</span>
             </div>
             <span class="compliance-green compliance-expand"></span>
 
-            <% } else if(pd.PercentComplete >= 0.33){ %>
+            <% } else if(pd.PercentComplete > 0){ %>
             <div class="compliance-holder yellow-alert" id="<%=pd_drug.ID %>">
-                <%--<img class="compliance-icon" src="/App/images/Warning_Yellow_Exclimation.png" alt="Compliance Details" />--%>
-                <span class="number-alert yellow-number"><%=(pd.PercentComplete * 100).ToString("0")%></span><span class="task-alert">% Compliant</span>
+                <span class="number-alert yellow-number"><%=String.Format("{0}/{1}", pd.UserEocsCount, pd.DrugEocsCount)%></span><span class="task-alert">% Compliant</span>
             </div>
             <span class="compliance-yellow compliance-expand"></span>
 
             <% } else { %>
             <div class="compliance-holder red-alert" id="<%=pd_drug.ID %>">
-                <%--<img class="compliance-icon" src="/App/images/Warning_Red_Exclimation.png" alt="Compliance Details" />--%>
-                <span class="number-alert red-number"><%=(pd.PercentComplete * 100).ToString("0")%></span><span class="task-alert">% Compliant</span>
+                <span class="number-alert red-number"><%=String.Format("{0}/{1}", pd.UserEocsCount, pd.DrugEocsCount)%></span><span class="task-alert">% Compliant</span>
             </div>
             <span class="compliance-red compliance-expand"></span>
             <% } %>
@@ -116,66 +113,6 @@
             <div class="drugName">
                 <a href="#common/drugs/detail?id=<%=pd_drug.ID %>"><span class="name"><%=pd_drug.GenericName %></span></a>
             </div>
-            <%--
-            <span class="eoc-icons">
-                <% if( pd_drug.HasEoc("etasu") ) { %>
-                <span class="eoc-icon eoc-icon-etasu">
-                    <a href="#common/drugs/detail?id=<%=pd_drug.ID %>"><img src="/App/images/icons/ETASU.png" alt="ETASU" /></a>
-                </span>
-                <% } %>
-                <% if( pd_drug.HasEoc("facility-pharmacy-enrollment") ) { %>
-                <span class="eoc-icon eoc-icon-facility-pharmacy-enrollment">
-                    <a href="#common/drugs/detail?id=<%=pd_drug.ID %>"><img src="/App/images/icons/FP EN.png" alt="Facility/Pharmacy Enrollment" /></a>
-                </span>
-                <% } %>
-                <% if( pd_drug.HasEoc("patient-enrollment") ) { %>
-                <span class="eoc-icon eoc-icon-patient-enrollment">
-                    <a href="#common/drugs/detail?id=<%=pd_drug.ID %>"><img src="/App/images/icons/PAEN.png" alt="Patient Enrollment" /></a>
-                </span>
-                <% } %>
-                <% if( pd_drug.HasEoc("prescriber-enrollment") ) { %>
-                <span class="eoc-icon eoc-icon-prescriber-enrollment">
-                    <a href="#common/drugs/detail?id=<%=pd_drug.ID %>"><img src="/App/images/icons/PREN.png" alt="Prescriber Enrollment" /></a>
-                </span>
-                <% } %>
-                <% if( pd_drug.HasEoc("education-training") ) { %>
-                <span class="eoc-icon eoc-icon-education-training">
-                    <a href="#common/drugs/detail?id=<%=pd_drug.ID %>"><img src="/App/images/icons/EDUCRT.png" alt="Education/Certification" /></a>
-                </span>
-                <% } %>
-                <% if( pd_drug.HasEoc("monitoring-management") ) { %>
-                <span class="eoc-icon eoc-icon-monitoring-management">
-                    <a href="#common/drugs/detail?id=<%=pd_drug.ID %>"><img src="/App/images/icons/MON.png" alt="Monitoring" /></a>
-                </span>
-                <% } %>
-                <% if( pd_drug.HasEoc("medication-guide") ) { %>
-                <span class="eoc-icon eoc-icon-medication-guide">
-                    <a href="#common/drugs/detail?id=<%=pd_drug.ID %>"><img src="/App/images/icons/MG.png" alt="Medication Guide" /></a>
-                </span>
-                <% } %>
-                <% if( pd_drug.HasEoc("informed-consent") ) { %>
-                <span class="eoc-icon eoc-icon-informed-consent">
-                    <a href="#common/drugs/detail?id=<%=pd_drug.ID %>"><img src="/App/images/icons/IC.png" alt="Informed Consent" /></a>
-                </span>
-                <% } %>
-                <% if( pd_drug.HasEoc("forms-documents") ) { %>
-                <span class="eoc-icon eoc-icon-forms-documents">
-                    <a href="#common/drugs/detail?id=<%=pd_drug.ID %>"><img src="/App/images/icons/FD.png" alt="Forms and Documents" /></a>
-                </span>
-                <% } %>
-                <% if( pd_drug.HasEoc("pharmacy-requirements") ) { %>
-                <span class="eoc-icon eoc-icon-pharmacy-requirements">
-                    <a href="#common/drugs/detail?id=<%=pd_drug.ID %>"><img src="/App/images/icons/PR.png" alt="Pharmacy Requirements" /></a>
-                </span>
-                <% } %>
-            </span>
-            <span class="other">
-                <span class="actions-lbl">Actions</span>
-                <span class="actions"><a class="button" href="#common/drugs/detail?id=<%=pd_drug.ID %>">View</a>&nbsp;<a class="button" href="#">Remove</a></span>
-                <span class="enrolled-lbl">Date Enrolled</span>
-                <span class="enrolled"><%=(pd.DateAdded == null ? "" : pd.DateAdded.ToShortDateString()) %></span>
-            </span>
-            --%>
         </li>
         <% } }%>
     </ul>
