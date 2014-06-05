@@ -49,7 +49,7 @@ float total_percent = total_drug_eocs > 0
 %>
 
 <header class="portlet-header">
-    <h2>Compliance Status</h2>
+    <h2>Prerequisite Compliance</h2>
 </header>
 <section class="border-wrap">
     <div class="progress-bar">
