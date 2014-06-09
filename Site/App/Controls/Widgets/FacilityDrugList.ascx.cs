@@ -1,30 +1,56 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using RemsLogic.Model;
+using RemsLogic.Model.Compliance;
+using RemsLogic.Services;
+using StructureMap;
 
 namespace Site.App.Controls.Widgets
 {
     public partial class FacilityDrugList : System.Web.UI.UserControl
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
+        private readonly IComplianceService _complianceSvc;
+        private readonly IDrugListService _drugListSvc;
 
+        public List<Eoc> Eocs {get; set;}
+
+        public FacilityDrugList()
+        {
+            _complianceSvc = ObjectFactory.GetInstance<IComplianceService>();
+            _drugListSvc = ObjectFactory.GetInstance<IDrugListService>();
+        }
+
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            Eocs = _complianceSvc.GetEocs().ToList();
+        }
+
+        public DrugList GetDrugList()
+        {
+            return _drugListSvc.GetDrugListByProfileId(
+                Lib.Systems.Security.GetCurrentProfile().ID.Value, 
+                DrugListType.Favorites);
         }
 
         public string GetEOCData(Lib.Data.Drug d)
         {
-            var ret = "";
+            StringBuilder eocData = new StringBuilder();
 
-            if (d.HasEoc("etasu")) ret += " data-etasu=\"1\"";
-            if (d.HasEoc("facility-pharmacy-enrollment")) ret += " data-facility-pharmacy-enrollment=\"1\"";
-            if (d.HasEoc("patient-enrollment")) ret += " data-patient-enrollment=\"1\"";
-            if (d.HasEoc("prescriber-enrollment")) ret += " data-prescriber-enrollment=\"1\"";
-            if (d.HasEoc("education-training")) ret += " data-education-training=\"1\"";
-            if (d.HasEoc("monitoring-management")) ret += " data-monitoring-management=\"1\"";
-            if (d.HasEoc("medication-guide")) ret += " data-medication-guide=\"1\"";
-            if (d.HasEoc("informed-consent")) ret += " data-informed-consent=\"1\"";
-            if (d.HasEoc("forms-documents")) ret += " data-forms-documents=\"1\"";
-            if (d.HasEoc("pharmacy-requirements")) ret += " data-pharmacy-requirements=\"1\"";
+            foreach(Eoc eoc in _complianceSvc.GetByDrug(d.ID ?? 0))
+            {
+                eocData.Append(String.Format("data-{0}=\"1\" ", eoc.Name));
+            }
 
-            return ret;
+            return eocData.ToString();
         }
+
+        #region Utilty Methods
+        public bool DisplayEoc(Eoc eoc)
+        {
+            return eoc.AppliesTo.Any(role => Framework.Security.Manager.HasRole(role));
+        }
+        #endregion
     }
 }
