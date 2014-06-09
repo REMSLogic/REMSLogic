@@ -18,15 +18,15 @@
     <h2>Facility Drug List</h2>
 </header>
 <section>
-    <div id="divFac-filter" class="fac-filter">
+    <div id="divFac-filter" class="eoc-filter">
         <div class="filter-input mydruglist-inputwrap">
             <input id="drugs-filter" type="text" value="" size="50" placeholder="Filter Drugs" />
-            <a class="fac-menu-clear clear-btn" onclick="ClearDrugListFilter();" >Clear Filter</a>
+            <a class="eoc-menu-clear clear-btn" onclick="ClearDrugListFilter();" >Clear Filter</a>
         </div>
 
         <%foreach(var eoc in Eocs){
             if(DisplayEoc(eoc)){%>
-            <div class="fac-filter-item">
+            <div class="eoc-filter-item">
                 <img src="<%=eoc.LargeIcon%>" alt="<%=eoc.DisplayName %>" data-eoc="<%=eoc.Name %>" />
                 <%
                     var words = eoc.ShortDisplayName.ToUpperInvariant().Split(' ');
