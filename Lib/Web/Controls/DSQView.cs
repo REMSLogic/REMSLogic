@@ -283,12 +283,17 @@ namespace Lib.Web.Controls
 				writer.AddAttribute("class", "contains-children");
 				writer.RenderBeginTag("div");
 
+                /*
 				var drugs = Lib.Systems.Lists.GetMyDrugList().GetItems<Lib.Data.Drug>();
 				bool has_drug = false;
 
 				foreach( var d in drugs )
 					if( d.ID == Drug.ID )
 						has_drug = true;
+                */
+
+                var userList = Lib.Systems.Lists.GetMyDrugList().GetItems();
+                bool has_drug = userList.Any(x => x.ItemID == Drug.ID);
 
 				if( eoc_applies && has_drug )
 				{
