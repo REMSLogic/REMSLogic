@@ -10,11 +10,6 @@
     });
 </script>
 <%
-var p = Lib.Data.Provider.FindByUser(Lib.Data.ProviderUser.FindByProfile(Lib.Data.UserProfile.FindByUser(Framework.Security.Manager.GetUser())));
-var drugs = Lib.Data.Drug.FindByEoc("pharmacy-requirements");
-%>
-
-<%
     var drugs = GetDrugList();
 %>
 
