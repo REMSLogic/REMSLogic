@@ -39,7 +39,7 @@
     <%if (drugs == null || drugs.Drugs.Count == 0)
     {%>
         <div class="no-data">
-            You do not have any favorites.  Please visit the Manage Drugs page to add drugs to your favorites list.
+            You do not have any drugs on your list. Please visit the Manage Drugs page to add drugs to your facility drug list.
         </div>
         
     <%}else{%>
