@@ -45,7 +45,8 @@
         }
     }
 
-    function UploadCallBack() {
+    function UploadCallBack(data) {
+        $('#form-value').val(data.result.Result);
         $('#form-file-container').hide();
     }
 </script>
