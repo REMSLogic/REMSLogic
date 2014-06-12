@@ -391,7 +391,6 @@
     });
 
     $(window).bind('page-animation-completed', function () {
-        alert('hi');
         $('.wizard').trigger('resize');
         $('#training_video_1').height($('#training_video_1').width() * 0.6136);
     });
