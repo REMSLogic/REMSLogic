@@ -1071,6 +1071,12 @@
     <Content Include="App\images\Warning_Yellow_Exclimation.png" />
     <Content Include="App\js\lib\jquery.radialProgressBar.js" />
     <Content Include="App\js\remslogic.dsq.editor.js" />
+    <Content Include="App\js\video-js\demo.html" />
+    <Content Include="App\js\video-js\font\vjs.svg" />
+    <Content Include="App\js\video-js\video-js.css" />
+    <Content Include="App\js\video-js\video-js.min.css" />
+    <Content Include="App\js\video-js\video-js.swf" />
+    <Content Include="App\js\video-js\video.js" />
     <Content Include="App\js\views\common\drugs\select.js" />
     <Content Include="App\Locked.aspx" />
     <Content Include="App\css\cupertino\images\animated-overlay.gif" />
@@ -1884,6 +1890,8 @@
     <Content Include="App\Templates\NewsAndUpdates\template.html" />
     <Content Include="App\Templates\PrescriberInvite\template.html" />
     <Content Include="App\test.aspx" />
+    <Content Include="App\Videos\training-1-cover.png" />
+    <Content Include="App\Videos\training-1.mp4" />
     <Content Include="App\Views\account\prefs.ascx" />
     <Content Include="App\Views\account\profile.ascx" />
     <Content Include="App\Views\admin\drugs\companies\view.ascx" />
@@ -2241,6 +2249,10 @@
     <None Include="App\js\lib\datatables\images\Sorting icons.psd" />
     <None Include="App\js\lib\datatables\js\jquery.dataTables.min.js.gz" />
     <Content Include="Master\Front.Master" />
+    <Content Include="App\js\video-js\font\vjs.eot" />
+    <Content Include="App\js\video-js\font\vjs.ttf" />
+    <Content Include="App\js\video-js\font\vjs.woff" />
+    <Content Include="App\js\video-js\video-js.less" />
     <None Include="App\Templates\Generic\config.json" />
     <None Include="App\Templates\HCOReminder\config.json" />
     <None Include="App\Templates\NewsAndUpdates\config.json" />
