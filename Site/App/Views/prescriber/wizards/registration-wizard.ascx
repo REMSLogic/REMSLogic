@@ -136,7 +136,7 @@
                     <header>
                         <h2>
                             <strong>Step 3:</strong> Create your password
-                            <em>Change your password:</em>
+                            <em>Enter your password:</em>
                         </h2>
                     </header>
                 
@@ -177,7 +177,12 @@
                     </header>
                 
                     <section>
-                        <iframe id="video-container" width="100%" height="300px" style="margin-bottom: 20px;" src="//www.youtube.com/embed/xZWP7RG8kdE" frameborder="0" allowfullscreen></iframe>
+                          <video id="training_video_1" class="video-js vjs-default-skin" controls preload="none" width="100%" height="300"
+                              poster="../../Videos/training-1-cover.png"
+                              data-setup="{}">
+                            <source src="../../Videos/training-1.mp4" type='video/mp4' />
+                            <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+                          </video>
                         <input type="checkbox" name="watched-video" required="required" /> I watched the complete video.
                     </section>
                 
