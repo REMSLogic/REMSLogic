@@ -643,6 +643,7 @@ table.simple tr.highlight,
 	background-color: rgba(255,150,0,0.4);
 }
 
+/*
 .dsq-links-table-holder .dataTables_length,
 .dsq-links-table-holder .dataTables_filter,
 .dsq-links-table-holder .dataTables_info,
@@ -651,6 +652,7 @@ table.simple tr.highlight,
 #formulations-table_wrapper .dataTables_filter,
 #formulations-table_wrapper .dataTables_info,
 #formulations-table_wrapper .dataTables_paginate { display: none; }
+*/
 
 .dsq-form .form .form-input .form-info 
 {
