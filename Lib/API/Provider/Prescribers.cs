@@ -172,21 +172,14 @@ namespace Lib.API.Provider
         [Method("Provider/Prescribers/Delete")]
         public static ReturnObject Delete(HttpContext context, long id)
         {
-			if( id <= 0 )
+            if (id <= 0)
                 return new ReturnObject() { Error = true, Message = "Invalid Prescriber." };
 
-			var provider = Lib.Systems.Security.GetCurrentProvider();
+            var item = new PrescriberProfile(id);
 
-			if( provider == null )
-				return new ReturnObject() { Error = true, Message = "Invalid Prescriber." };
-
-			var profile = Data.PrescriberProfile.FindByPrescriberAndProvider( new Data.Prescriber( id ), provider );
-
-			if( profile == null || profile.ProviderID != provider.ID )
-				return new ReturnObject() { Error = true, Message = "Invalid Prescriber." };
-
-			profile.Deleted = true;
-			profile.Save();
+            item.Address.Delete();
+            item.Contact.Delete();
+            item.Delete();
 
             return new ReturnObject()
             {
@@ -195,14 +188,14 @@ namespace Lib.API.Provider
                     Type = "default",
                     Vars = new ReturnGrowlVarsObject()
                     {
-                        text = "You have successfully removed a prescriber.",
-                        title = "Prescriber Removed"
+                        text = "You have successfully deleted a Prescriber.",
+                        title = "Prescriber deleted"
                     }
                 },
                 Actions = new List<ReturnActionObject>()
                 {
                     new ReturnActionObject() {
-                        Ele = "#prescribers-table tr[data-id=\""+id+"\"]",
+                        Ele = "#prescribers-table tr[data-id=\""+id.ToString()+"\"]",
                         Type = "remove"
                     }
                 }
