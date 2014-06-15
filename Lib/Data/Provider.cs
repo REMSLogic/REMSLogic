@@ -93,7 +93,8 @@ namespace Lib.Data
                     LEFT JOIN Prescribers ON [PrescriberProfiles].[PrescriberID] = [Prescribers].[ID]
                 WHERE 
                     [PrescriberProfiles].[PrimaryFacilityID] = @FacilityId AND 
-                    [PrescriberProfiles].[PrescriberID] IS NOT NULL
+                    [PrescriberProfiles].[PrescriberID] IS NOT NULL AND
+                    [PrescriberProfiles].[Deleted] = 0
                 ORDER BY 
                     [Prescribers].[ID] DESC;";
 
