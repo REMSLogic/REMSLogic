@@ -1071,6 +1071,7 @@
     <Content Include="App\images\Warning_Yellow_Exclimation.png" />
     <Content Include="App\js\lib\jquery.radialProgressBar.js" />
     <Content Include="App\js\remslogic.dsq.editor.js" />
+    <Content Include="App\js\remslogic.section.editor.js" />
     <Content Include="App\js\video-js\demo.html" />
     <Content Include="App\js\video-js\font\vjs.svg" />
     <Content Include="App\js\video-js\video-js.css" />

@@ -4,6 +4,7 @@
 <link rel="stylesheet" media="screen" href="/App/js/lib/datatables/css/vpad.css" />
 <script type="text/javascript" src="/App/js/lib/datatables/js/jquery.dataTables.js"></script> 
 <script type="text/javascript" src="/App/js/jquery.autogrowtextarea.js"></script>
+<script type="text/javascript" src="/App/js/remslogic.section.editor.js"></script>
 <script type="text/javascript" src="/App/js/remslogic.dsq.editor.js"></script>
 <script type="text/javascript">
     var default_section = <%=(this.SectionIndex >= 0) ? this.SectionIndex.ToString() : "null" %>;
@@ -64,7 +65,6 @@
 <script type="text/javascript">
     $(window).bind('page-animation-completed', function () {
         var editor = new REMSLogic.DSQEditor($);
-
         var $editButtons = $('.edit-question-button');
 
         $editButtons.click(function(){
@@ -74,6 +74,21 @@
             var questionText = $this.siblings().text();
 
             editor.display(questionId, questionText);
+        });
+
+        var sectionEditor = new REMSLogic.SectionEditor($);
+        var $sectionButtons = $('.disable-section-button');
+
+        $sectionButtons.click(function(event){
+            var $this = $(this);
+
+            var sectionId = $this.data('section-id');
+            var drugId = $this.data('drug-id');
+
+            sectionEditor.updateSection(sectionId, drugId, false);
+
+            event.stopPropagation();
+            return false;
         });
     });
 </script>

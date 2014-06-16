@@ -64,6 +64,7 @@
     <Compile Include="Sprint12\Migration001AddColumnsToEocTable.cs" />
     <Compile Include="Sprint12\Migration002AddNewEocs.cs" />
     <Compile Include="Sprint12\Migration003AddLinkType.cs" />
+    <Compile Include="Sprint14\Migration001AddIsEnabledToSection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

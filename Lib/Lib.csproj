@@ -113,6 +113,7 @@
     <Compile Include="API\Dev\ReportFilters.cs" />
     <Compile Include="API\Dev\ReportOutputs.cs" />
     <Compile Include="API\Dev\Reports.cs" />
+    <Compile Include="API\Dev\DSQ\SectionSettings.cs" />
     <Compile Include="API\Dev\Test\Monk.cs" />
     <Compile Include="API\HCOs\Facility.cs" />
     <Compile Include="API\Notifications.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Data\Address.cs" />
     <Compile Include="Data\DistributionList.cs" />
     <Compile Include="Data\DrugSelection.cs" />
+    <Compile Include="Data\DSQ\SectionSettings.cs" />
     <Compile Include="Data\Eoc.cs" />
     <Compile Include="Data\FacilityEoc.cs" />
     <Compile Include="Data\NotificationRecipient.cs" />

@@ -703,6 +703,34 @@ div.main-content-header
     margin-top: 16px;
 }
 
+span.disable-section-button 
+{
+    margin-left: 8px;
+    display: inline-block;
+    background-color: #FFFFFF;
+    color: #666666;
+    text-align: center;
+    padding: 2px 4px;
+    cursor: pointer;
+    border-radius: 4px;
+    user-select: none;
+    -ms-user-select: none;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 16px;
+}
+
+    span.disable-section-button:hover 
+    {
+        background-color: #CCCCCC;
+    }
+
+span.form-label-hidden-section
+{
+    font-style: italic;
+    color: #666666;
+}
+
 span.edit-question-button 
 {
     margin-right: 8px;
