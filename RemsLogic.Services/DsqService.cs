@@ -32,7 +32,7 @@ namespace RemsLogic.Services
             // for the question and seeing if any of them have a required eoc.
             long eocId = (
                 from l in _dsqRepo.GetLinks(link.DrugId, link.QuestionId)
-                where l.IsRequired && l.EocId > 0
+                where l.HasPrereq && l.EocId > 0
                 select l.EocId).FirstOrDefault();
 
             // if eocId > 0, then we need to indicate that this question has an EOC.
