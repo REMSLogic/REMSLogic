@@ -93,19 +93,19 @@
         <li class="ui-state-default" data-drug-id="<%=pd_drug.ID %>"<%=GetEOCData(pd_drug) %>>
             <%if(pd.PercentComplete >= 1){ %>
             <div class="compliance-holder green-alert" id="<%=pd_drug.ID %>">
-                <span class="number-alert green-number"><%=String.Format("{0}/{1}", pd.UserEocsCount, pd.DrugEocsCount)%></span><span class="task-alert">% Compliant</span>
+                <span class="number-alert green-number"><%=String.Format("{0}/{1}", pd.UserEocsCount, pd.DrugEocsCount)%></span><span class="task-alert">Compliant</span>
             </div>
             <span class="compliance-green compliance-expand"></span>
 
             <% } else if(pd.PercentComplete > 0){ %>
             <div class="compliance-holder yellow-alert" id="<%=pd_drug.ID %>">
-                <span class="number-alert yellow-number"><%=String.Format("{0}/{1}", pd.UserEocsCount, pd.DrugEocsCount)%></span><span class="task-alert">% Compliant</span>
+                <span class="number-alert yellow-number"><%=String.Format("{0}/{1}", pd.UserEocsCount, pd.DrugEocsCount)%></span><span class="task-alert">Compliant</span>
             </div>
             <span class="compliance-yellow compliance-expand"></span>
 
             <% } else { %>
             <div class="compliance-holder red-alert" id="<%=pd_drug.ID %>">
-                <span class="number-alert red-number"><%=String.Format("{0}/{1}", pd.UserEocsCount, pd.DrugEocsCount)%></span><span class="task-alert">% Compliant</span>
+                <span class="number-alert red-number"><%=String.Format("{0}/{1}", pd.UserEocsCount, pd.DrugEocsCount)%></span><span class="task-alert">Compliant</span>
             </div>
             <span class="compliance-red compliance-expand"></span>
             <% } %>
