@@ -863,7 +863,7 @@ button.blue-btn:hover
 .drug-list-dc .forms-icon img { width: 32px; height: 32px;  margin: 5px; vertical-align: middle; }
 .drug-list-dc .forms-text { width: 82%; display: inline-block; vertical-align: top;  margin-top: 5px;font-size:12px; }
 .drug-list-dc .forms-text .forms-drugName { width: 100%; display: inline-block; font-size: 0.8em; color: #3F3F3F;}
-.drug-list-dc .forms-text .forms-desc { width: 100%; display: inline-block; font-size: 0.6em; color: #C6C6C6; }
+.drug-list-dc .forms-text .forms-desc { width: 100%; display: inline-block; font-size: 1em; color: #C6C6C6; }
 .drug-list-dc .forms-remove { float: right; width: 15px; height: 15px; display: inline; cursor: pointer; }
 
 #help-icons-sidebar { margin-top: 25px; }
