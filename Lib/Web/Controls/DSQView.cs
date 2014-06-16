@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Lib.Data.DSQ;
 using RemsLogic.Model.Compliance;
 using RemsLogic.Repositories;
 using RemsLogic.Utilities;
@@ -81,6 +82,19 @@ namespace Lib.Web.Controls
 
 		protected void RenderSection(HtmlTextWriter writer, Lib.Data.DSQ.Section s)
 		{
+            // load the section settings.  some older drugs may not have
+            // a settings object in the database.
+            SectionSettings settings = SectionSettings.Get(s.ID ?? 0, DrugID ?? 0) ?? new SectionSettings
+                {
+                    SectionId = s.ID ?? 0,
+                    DrugId = DrugID ?? 0,
+                    IsEnabled = true
+                };
+
+            // if the section is disabled, just return and ignore it.
+            if(!settings.IsEnabled)
+                return;
+
 			var user = Framework.Security.Manager.GetUser();
 			if (user != null)
 			{

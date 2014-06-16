@@ -6,6 +6,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Lib.Data.DSQ;
 
 namespace Lib.Web.Controls
 {
@@ -83,10 +84,33 @@ namespace Lib.Web.Controls
 
 		protected void RenderSection(HtmlTextWriter writer, Lib.Data.DSQ.Section s)
 		{
+            // load the section settings.  some older drugs may not have
+            // a settings object in the database.
+            SectionSettings settings = SectionSettings.Get(s.ID ?? 0, DrugID ?? 0) ?? new SectionSettings
+                {
+                    SectionId = s.ID ?? 0,
+                    DrugId = DrugID ?? 0,
+                    IsEnabled = true
+                };
+
 			// Header
 			writer.RenderBeginTag("header");
 			writer.RenderBeginTag("h2");
+
+            if(!settings.IsEnabled)
+                writer.AddAttribute("class", "form-label-hidden-section");
+
+            writer.RenderBeginTag("span");
 			writer.WriteEncodedText(s.Name);
+            writer.RenderEndTag();
+
+            writer.AddAttribute("class", "disable-section-button");
+            writer.AddAttribute("data-section-id", (s.ID ?? 0).ToString());
+            writer.AddAttribute("data-drug-id", (DrugID ?? 0).ToString());
+            writer.RenderBeginTag("span");
+            writer.WriteEncodedText(settings.IsEnabled? "Disable" : "Enable");
+            writer.RenderEndTag();
+
 			writer.RenderEndTag();
 			writer.RenderEndTag();
 
