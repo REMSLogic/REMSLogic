@@ -251,19 +251,22 @@
                 <tbody>
                     <% foreach( var i in this.Prescribers ) { 
                         var prescriberProfile = GetPrescriberProfile(i);%>
+                        
+                        <% if(prescriberProfile != null){%>
                         <tr data-id="<%=prescriberProfile.ID%>"> 
-                        <td>
-                            <a href="#provider/prescribers/detail?id=<%=i.ID%>" class="button">Detail</a>
-                            <a href="/api/Provider/Prescribers/Delete?id=<%=prescriberProfile.ID%>" class="ajax-button button" data-confirmtext="Are you sure you want to delete this facility?">Delete</a>
-                            <a href="#" class="button email-dialog-button" data-id="<%=i.ID%>">Email</a>
-                        </td>
-                        <td><%=i.Profile.PrimaryContact.LastName%></td>
-                        <td><%=i.Profile.PrimaryContact.FirstName %></td>
-                        <td><%=GetPrescriberType(prescriberProfile)%></td>
-                        <td><%=GetPrescriberSpecialty(i)%></td>
-                        <td><%=GetPrescriberFacilityName(prescriberProfile)%></td>
-                        <td><input type="checkbox" name="cb<%=i.ID%>" id="cb<%=i.ID%>" /></td>
-                    </tr>
+                            <td>
+                                <a href="#provider/prescribers/detail?id=<%=i.ID%>" class="button">Detail</a>
+                                <a href="/api/Provider/Prescribers/Delete?id=<%=prescriberProfile.ID%>" class="ajax-button button" data-confirmtext="Are you sure you want to delete this facility?">Delete</a>
+                                <a href="#" class="button email-dialog-button" data-id="<%=i.ID%>">Email</a>
+                            </td>
+                            <td><%=i.Profile.PrimaryContact.LastName%></td>
+                            <td><%=i.Profile.PrimaryContact.FirstName %></td>
+                            <td><%=GetPrescriberType(prescriberProfile)%></td>
+                            <td><%=GetPrescriberSpecialty(i)%></td>
+                            <td><%=GetPrescriberFacilityName(prescriberProfile)%></td>
+                            <td><input type="checkbox" name="cb<%=i.ID%>" id="cb<%=i.ID%>" /></td>
+                        </tr>
+                        <%} %>
                     <% } %>
                 </tbody>
             </table>

@@ -9,6 +9,7 @@ namespace Site.App.Views.provider.prescribers
 	public partial class list : Lib.Web.AppControlPage
     {
         #region Member Variables
+        private ProviderUser _providerUser;
         private Provider _provider;
         #endregion
 
@@ -20,11 +21,12 @@ namespace Site.App.Views.provider.prescribers
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            _provider = Provider.FindByUser(Lib.Data.ProviderUser.FindByProfile(Lib.Data.UserProfile.FindByUser(Framework.Security.Manager.GetUser())));
+            _providerUser = ProviderUser.FindByProfile(UserProfile.FindByUser(Framework.Security.Manager.GetUser()));
+            _provider = Provider.FindByUser(_providerUser);
 
             Prescribers = _provider.GetPrescribers();
 
-            BuildDistributionListArray(DistributionList.FindByUserProfile(Lib.Data.UserProfile.FindByUser(Framework.Security.Manager.GetUser())));
+            BuildDistributionListArray(DistributionList.FindByUserProfile(UserProfile.FindByUser(Framework.Security.Manager.GetUser())));
         }
 
         #region Utility Methods
@@ -67,7 +69,7 @@ namespace Site.App.Views.provider.prescribers
 
         public PrescriberProfile GetPrescriberProfile(Prescriber prescriber)
         {
-            return PrescriberProfile.FindByPrescriberAndProvider(prescriber, _provider);
+            return PrescriberProfile.FindByOrganization(_providerUser.OrganizationID, prescriber.ID ?? 0);
         }
 
         public string GetPrescriberType(PrescriberProfile profile)

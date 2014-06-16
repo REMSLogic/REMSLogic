@@ -34,13 +34,13 @@ namespace Lib.Data
 			}, new[] { "-Expires" } );
 		}
 
-		public static PrescriberProfile FindByPrescriberAndProvider( Prescriber p, Provider pro )
-		{
-			return FindFirstBy<PrescriberProfile>( new Dictionary<string, object> {
-				{ "ProviderID", pro.ID.Value },
-				{ "PrescriberID", p.ID.Value }
-			}, new[] { "-Expires" } );
-		}
+        public static PrescriberProfile FindByOrganization(long organizationId, long prescriberId)
+        {
+            return FindFirstBy<PrescriberProfile>( new Dictionary<string, object> {
+                { "ProviderID", organizationId},
+                { "PrescriberID", prescriberId}
+            }, new[] { "-Expires" } );
+        }
 
         public static PrescriberProfile FindByPrescriberAndProvider( Prescriber p, long providerId )
         {
