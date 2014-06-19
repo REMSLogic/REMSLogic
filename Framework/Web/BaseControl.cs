@@ -48,7 +48,7 @@ namespace Framework.Web
 		protected void RequireRole(string role_name)
 		{
 			if (!HasRole(role_name))
-				RedirectUrl("/App/Login.aspx", false, "You are not logged in or have insufficient permissions.");
+				RedirectUrl("/Login.aspx", false, "You are not logged in or have insufficient permissions.");
 		}
 
 		protected void RequireAnyRole(params string[] roles)
@@ -59,7 +59,7 @@ namespace Framework.Web
 					return;
 			}
 
-			RedirectUrl("/App/Login.aspx", false, "You are not logged in or have insufficient permissions.");
+			RedirectUrl("/Login.aspx", false, "You are not logged in or have insufficient permissions.");
 		}
 
 		protected void RequireAnyRole(IEnumerable<string> roles)
@@ -70,7 +70,7 @@ namespace Framework.Web
 					return;
 			}
 
-			RedirectUrl("/App/Login.aspx", false, "You are not logged in or have insufficient permissions.");
+			RedirectUrl("/Login.aspx", false, "You are not logged in or have insufficient permissions.");
 		}
 
 		protected bool HasRole(string role_name)

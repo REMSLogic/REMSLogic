@@ -20,7 +20,7 @@ namespace RemsLogic.Migrations.Sprint12
                     DisplayName = "Facility Enrollment", 
                     Roles = "view_provider", 
                     ShortDisplayName = "Facility Enrollment", 
-                    LargeIcon = "/App/images/icons/FP EN.png",
+                    LargeIcon = "/images/icons/FP EN.png",
                     SmallIcon = "small icon",
                     DisplayOrder = 2
                 }).Where(new {Id = 1});
@@ -31,7 +31,7 @@ namespace RemsLogic.Migrations.Sprint12
                     DisplayName = "Patient Enrollment", 
                     Roles = "view_prescriber", 
                     ShortDisplayName = "Patient Enrollment", 
-                    LargeIcon = "/App/images/icons/PAEN.png",
+                    LargeIcon = "/images/icons/PAEN.png",
                     SmallIcon = "small icon",
                     DisplayOrder = 3
                 }).Where(new {Id = 2});
@@ -42,7 +42,7 @@ namespace RemsLogic.Migrations.Sprint12
                     DisplayName = "Prescriber Enrollment", 
                     Roles = "view_prescriber", 
                     ShortDisplayName = "Prescriber Enrollment", 
-                    LargeIcon = "/App/images/icons/PREN.png",
+                    LargeIcon = "/images/icons/PREN.png",
                     SmallIcon = "small icon",
                     DisplayOrder = 4
                 }).Where(new {Id = 3});
@@ -53,7 +53,7 @@ namespace RemsLogic.Migrations.Sprint12
                     DisplayName = "Prescriber Eduction", 
                     Roles = "view_prescriber", 
                     ShortDisplayName = "Prescriber Eduction", 
-                    LargeIcon = "/App/images/icons/EDUCRT.png",
+                    LargeIcon = "/images/icons/EDUCRT.png",
                     SmallIcon = "small icon",
                     DisplayOrder = 5
                 }).Where(new {Id = 4});
@@ -64,7 +64,7 @@ namespace RemsLogic.Migrations.Sprint12
                     DisplayName = "Monitoring", 
                     Roles = "view_prescriber", 
                     ShortDisplayName = "Monitoring", 
-                    LargeIcon = "/App/images/icons/MON.png",
+                    LargeIcon = "/images/icons/MON.png",
                     SmallIcon = "small icon",
                     DisplayOrder = 6
                 }).Where(new {Id = 5});
@@ -75,7 +75,7 @@ namespace RemsLogic.Migrations.Sprint12
                     DisplayName = "Informed Consent", 
                     Roles = "view_prescriber", 
                     ShortDisplayName = "Informed Consent", 
-                    LargeIcon = "/App/images/icons/IC.png",
+                    LargeIcon = "/images/icons/IC.png",
                     SmallIcon = "small icon",
                     DisplayOrder = 9
                 }).Where(new {Id = 6});
@@ -86,7 +86,7 @@ namespace RemsLogic.Migrations.Sprint12
                     DisplayName = "Pharmacy Requirements", 
                     Roles = "view_provider", 
                     ShortDisplayName = "Pharmacy Requirements", 
-                    LargeIcon = "/App/images/icons/PR.png",
+                    LargeIcon = "/images/icons/PR.png",
                     SmallIcon = "small icon",
                     DisplayOrder = 12
                 }).Where(new {Id = 7});
@@ -97,7 +97,7 @@ namespace RemsLogic.Migrations.Sprint12
                     DisplayName = "ETASU", 
                     Roles = "view_prescriber", 
                     ShortDisplayName = "ETASU", 
-                    LargeIcon = "/App/images/icons/ETASU.png",
+                    LargeIcon = "/images/icons/ETASU.png",
                     SmallIcon = "small icon",
                     DisplayOrder = 1
                 }).Where(new {Id = 8});
@@ -109,7 +109,7 @@ namespace RemsLogic.Migrations.Sprint12
                     DisplayName = "Nursing Education", 
                     Roles = "view_prescriber", 
                     ShortDisplayName = "Nursing Education", 
-                    LargeIcon = "/App/images/icons/EOC-Nursing_Education.png",
+                    LargeIcon = "/images/icons/EOC-Nursing_Education.png",
                     SmallIcon = "small icon",
                     DisplayOrder = 7
                 }).Where(new {Id = 9});
@@ -120,7 +120,7 @@ namespace RemsLogic.Migrations.Sprint12
                     DisplayName = "Medication Guide", 
                     Roles = "view_provider", 
                     ShortDisplayName = "Medication Guide", 
-                    LargeIcon = "/App/images/icons/MG.png",
+                    LargeIcon = "/images/icons/MG.png",
                     SmallIcon = "small icon",
                     DisplayOrder = 8
                 }).Where(new {Id = 10});
@@ -131,7 +131,7 @@ namespace RemsLogic.Migrations.Sprint12
                     DisplayName = "Forms and Documents", 
                     Roles = "view_prescriber|view_provider", 
                     ShortDisplayName = "Forms Documents", 
-                    LargeIcon = "/App/images/icons/FD.png",
+                    LargeIcon = "/images/icons/FD.png",
                     SmallIcon = "small icon",
                     DisplayOrder = 10
                 }).Where(new {Id = 11});
@@ -142,7 +142,7 @@ namespace RemsLogic.Migrations.Sprint12
                     DisplayName = "Patient Education", 
                     Roles = "view_prescriber", 
                     ShortDisplayName = "Patient Education", 
-                    LargeIcon = "/App/images/icons/EOC-Patient_Education.png",
+                    LargeIcon = "/images/icons/EOC-Patient_Education.png",
                     SmallIcon = "small icon",
                     DisplayOrder = 11
                 }).Where(new {Id = 12});

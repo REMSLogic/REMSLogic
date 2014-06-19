@@ -16,12 +16,12 @@ namespace Lib.Web
 			{
 				if (Request.ContentType == "application/json" || Request.ContentType.StartsWith("application/json") || Request.Headers["X-Requested-With"] == "XMLHttpRequest")
 				{
-					RedirectUrl( "/App/Login.aspx" );
+					RedirectUrl( "/Login.aspx" );
 					Response.End();
 				}
 				else
 				{
-					Response.Redirect("~/App/Login.aspx", true);
+					Response.Redirect("~/Login.aspx", true);
 				}
 				return;
 			}
