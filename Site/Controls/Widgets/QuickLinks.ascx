@@ -9,7 +9,7 @@
 
             if (id) {
                 $.ajax({
-                    url: '/api/List/FormsAndDocuments/RemoveItem',
+                    url: '/api/App/List/FormsAndDocuments/RemoveItem',
                     data: 'id=' + encodeURIComponent(id),
                     cache: false,
                     success: function (response) {

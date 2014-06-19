@@ -1886,6 +1886,7 @@
     <Content Include="css\Fonts\fontawesome-webfont.woff" />
     <Content Include="css\Fonts\FontAwesome.otf" />
     <Content Include="ConnectionStrings.config" />
+    <Content Include="API.ashx" />
     <None Include="js\lib\datatables\images\Sorting icons.psd" />
     <None Include="js\lib\datatables\js\jquery.dataTables.min.js.gz" />
     <Content Include="js\video-js\font\vjs.eot" />

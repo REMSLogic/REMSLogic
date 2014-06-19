@@ -10,7 +10,7 @@
         $("#graph-container").empty().append($('<div class="jqPlot" id="jqplot-actions" style="width:100%;height:160px;"></div>'));
 
         $.ajax({
-            url: "/api/Stats/SumActivityByName",
+            url: "/api/App/Stats/SumActivityByName",
             type: "GET",
             dataType: "json",
             data: { name: "<%=ActivityService.StandardLogin%>", min_date: "<%=DateTime.Now.AddDays(-7).Date%>", max_date: "<%=DateTime.Now.Date%>" }

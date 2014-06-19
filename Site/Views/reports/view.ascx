@@ -150,7 +150,7 @@
 				<h2>Filter</h2> 
 			</header>
 			<section>
-				<form class="form has-validation reports-filter-form" action="/api/Reports/Get?id=<%=item.ID%>">
+				<form class="form has-validation reports-filter-form" action="/api/App/Reports/Get?id=<%=item.ID%>">
 					<% foreach( var filter in item.GetFilters() ) { %>
 
 					<div class="clearfix">

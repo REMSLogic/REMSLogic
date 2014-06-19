@@ -49,7 +49,7 @@
 	<link rel="stylesheet" href="/css/jquery.itextsuggest.css" media="screen">
 	<link rel="stylesheet" href="/css/themes/lightblue/style.css" media="screen" />
 	<link rel="stylesheet" media="screen" href="/css/notifications.css" />
-    <link href="/css-overrides.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="/css/app-overrides.css" rel="stylesheet" type="text/css" media="screen" />
     <style type="text/css">
         #loading-container
         {

@@ -365,7 +365,7 @@ namespace Lib.Web.Controls
 								writer.RenderEndTag();
 
 								writer.AddAttribute( "class", "button ajax-button" );
-								writer.AddAttribute( "href", "/api/Users/Certified?drug_id=" + Drug.ID.Value + "&eoc_name=" + eocForQ.Name );
+								writer.AddAttribute( "href", "/api/App/Users/Certified?drug_id=" + Drug.ID.Value + "&eoc_name=" + eocForQ.Name );
 								writer.RenderBeginTag( "a" );
 								{
 									writer.WriteEncodedText( "YES" );
@@ -446,7 +446,7 @@ namespace Lib.Web.Controls
 
                             if( Lib.Systems.Security.GetCurrentPrescriber() != null )
                             {
-                                writer.AddAttribute( "href", "/api/List/FormsAndDocuments/AddItem?id=" + answer.ID.Value );
+                                writer.AddAttribute( "href", "/api/App/List/FormsAndDocuments/AddItem?id=" + answer.ID.Value );
                                 writer.AddAttribute( "class", "ajax-button link-list-icon-a" );
                                 writer.RenderBeginTag( "a" );
                                 {

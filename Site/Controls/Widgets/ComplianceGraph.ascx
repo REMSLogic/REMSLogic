@@ -8,7 +8,7 @@
 <script type="text/javascript">
     $(window).bind('content-loaded', function () {
         $.ajax({
-            url: '/api/Stats/Compliance',
+            url: '/api/App/Stats/Compliance',
             type: 'GET',
             dataType: 'json',
             data: {
