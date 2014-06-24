@@ -5,18 +5,18 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Site
+namespace Site.App
 {
-	public partial class Test : System.Web.UI.Page
+	public partial class test : Framework.Web.BasePage
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
 
 		}
 
-		protected void btnResetAPI_Click(object sender, EventArgs e)
+		protected void btn1_Click(object sender, EventArgs e)
 		{
-			Framework.API.Manager.Init();
+			
 		}
 	}
 }

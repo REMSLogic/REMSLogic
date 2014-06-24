@@ -20,18 +20,18 @@ namespace RemsLogic.Migrations.Sprint07
                     .NotNullable();
 
             Insert.IntoTable("Widgets")
-                .Row(new{Name="Account Statistics", Location="~/App/Controls/Widgets/AccountStatistics.ascx", Roles="view_admin"})
-                .Row(new{Name="Compliance Graph", Location="~/App/Controls/Widgets/ComplianceGraph.ascx", Roles="view_provider"})
-                .Row(new{Name="Compliance Status", Location="~/App/Controls/Widgets/ComplianceStatus.ascx", Roles="view_prescriber"})
-                .Row(new{Name="Facility Drug List", Location="~/App/Controls/Widgets/FacilityDrugList.ascx", Roles="view_provider"})
-                .Row(new{Name="My Drug List", Location="~/App/Controls/Widgets/MyDrugList.ascx", Roles="view_prescriber"})
-                .Row(new{Name="My Drugs", Location="~/App/Controls/Widgets/MyDrugs.ascx", Roles="dashboard_drugcompany_view"})
-                .Row(new{Name="Organization Summary", Location="~/App/Controls/Widgets/OrganizationSummary.ascx", Roles="view_provider"})
-                .Row(new{Name="Pending Drug Changes", Location="~/App/Controls/Widgets/PendingDrugChanges.ascx", Roles="view_admin"})
-                .Row(new{Name="Prescriber Updates", Location="~/App/Controls/Widgets/PrescriberUpdates.ascx", Roles="view_provider"})
-                .Row(new{Name="Quick Links", Location="~/App/Controls/Widgets/QuickLinks.ascx", Roles="view_prescriber"})
-                .Row(new{Name="Reports", Location="~/App/Controls/Widgets/Reports.ascx", Roles="view_admin|view_prescriber|view_provider|dashboard_drugcompany_view"})
-                .Row(new{Name="User Activity Graph", Location="~/App/Controls/Widgets/UserActivityGraph.ascx", Roles="view_admin|view_provider"});
+                .Row(new{Name="Account Statistics", Location="~/Controls/Widgets/AccountStatistics.ascx", Roles="view_admin"})
+                .Row(new{Name="Compliance Graph", Location="~/Controls/Widgets/ComplianceGraph.ascx", Roles="view_provider"})
+                .Row(new{Name="Compliance Status", Location="~/Controls/Widgets/ComplianceStatus.ascx", Roles="view_prescriber"})
+                .Row(new{Name="Facility Drug List", Location="~/Controls/Widgets/FacilityDrugList.ascx", Roles="view_provider"})
+                .Row(new{Name="My Drug List", Location="~/Controls/Widgets/MyDrugList.ascx", Roles="view_prescriber"})
+                .Row(new{Name="My Drugs", Location="~/Controls/Widgets/MyDrugs.ascx", Roles="dashboard_drugcompany_view"})
+                .Row(new{Name="Organization Summary", Location="~/Controls/Widgets/OrganizationSummary.ascx", Roles="view_provider"})
+                .Row(new{Name="Pending Drug Changes", Location="~/Controls/Widgets/PendingDrugChanges.ascx", Roles="view_admin"})
+                .Row(new{Name="Prescriber Updates", Location="~/Controls/Widgets/PrescriberUpdates.ascx", Roles="view_provider"})
+                .Row(new{Name="Quick Links", Location="~/Controls/Widgets/QuickLinks.ascx", Roles="view_prescriber"})
+                .Row(new{Name="Reports", Location="~/Controls/Widgets/Reports.ascx", Roles="view_admin|view_prescriber|view_provider|dashboard_drugcompany_view"})
+                .Row(new{Name="User Activity Graph", Location="~/Controls/Widgets/UserActivityGraph.ascx", Roles="view_admin|view_provider"});
         }
 
         public override void Down()

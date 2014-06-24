@@ -1,17 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Lib.Systems.Notifications;
 
-namespace Site
+namespace Site.App
 {
-	public partial class Default : System.Web.UI.Page
-	{
-		protected void Page_Load(object sender, EventArgs e)
-		{
+	public partial class Default : Lib.Web.AppPage
+    {
+        protected struct Notifys
+        {
+            public Lib.Data.Notification notification;
+            public bool read;
+        }
 
-		}
-	}
+        protected List<Notifys> notifications;
+        protected int NumUnread;
+
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            notifications = new List<Notifys>();
+            NumUnread = 0;
+            var nis = Lib.Data.NotificationInstance.FindNewForUser(Framework.Security.Manager.GetUser());
+
+            foreach (var ni in nis)
+            {
+                var t = new Notifys
+                {
+                    notification = ni.Notification,
+                    read = ni.Read.HasValue
+                };
+
+                if (!t.read)
+                    NumUnread++;
+
+                notifications.Add(t);
+            }
+        }
+    }
 }

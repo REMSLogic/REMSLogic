@@ -346,7 +346,7 @@ namespace Lib.Web.Controls
 							{
 								writer.AddAttribute( "alt", "Certified" );
 								writer.AddAttribute( "class", "eoc-certified-icon" );
-								writer.AddAttribute( "src", "/App/images/Warning_Green_Check.png" );
+								writer.AddAttribute( "src", "/images/Warning_Green_Check.png" );
 								writer.RenderBeginTag( "img" );
 								writer.RenderEndTag();
 
@@ -360,7 +360,7 @@ namespace Lib.Web.Controls
 							{
 								writer.AddAttribute( "alt", "Not Certified" );
 								writer.AddAttribute( "class", "eoc-certified-icon" );
-								writer.AddAttribute( "src", "/App/images/Warning_Yellow_Exclimation.png" );
+								writer.AddAttribute( "src", "/images/Warning_Yellow_Exclimation.png" );
 								writer.RenderBeginTag( "img" );
 								writer.RenderEndTag();
 
@@ -424,7 +424,7 @@ namespace Lib.Web.Controls
                     switch(answer.LinkType)
                     {
                         case "phone":
-                            writer.AddAttribute( "src", "/App/images/navicons/75.png" );
+                            writer.AddAttribute( "src", "/images/navicons/75.png" );
                             writer.AddAttribute( "class", "link-list-icon" );
                             writer.RenderBeginTag( "img" );
                             writer.RenderEndTag();
@@ -450,7 +450,7 @@ namespace Lib.Web.Controls
                                 writer.AddAttribute( "class", "ajax-button link-list-icon-a" );
                                 writer.RenderBeginTag( "a" );
                                 {
-                                    writer.AddAttribute( "src", "/App/images/navicons/101.png" );
+                                    writer.AddAttribute( "src", "/images/navicons/101.png" );
                                     writer.AddAttribute( "class", "link-list-icon" );
                                     writer.RenderBeginTag( "img" );
                                     writer.RenderEndTag();
@@ -465,7 +465,7 @@ namespace Lib.Web.Controls
                             writer.AddAttribute( "class", css_class );
                             writer.RenderBeginTag( "a" );
                             {
-                                writer.AddAttribute( "src", "/App/images/navicons/100.png" );
+                                writer.AddAttribute( "src", "/images/navicons/100.png" );
                                 writer.AddAttribute( "class", "link-list-icon" );
                                 writer.RenderBeginTag( "img" );
                                 writer.RenderEndTag();

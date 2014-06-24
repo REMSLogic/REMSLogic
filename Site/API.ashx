@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" Class="Framework.API.Manager" %>
+<%@ WebHandler Language="C#" Class="Framework.API.Manager" %>

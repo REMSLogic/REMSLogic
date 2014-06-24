@@ -251,7 +251,7 @@ namespace Lib.API.Dev.DSQ
 		}
 
 		[SecurityRole("drug_version_approve", "You do not have permission to approve pending drug changes.")]
-		[Method("Dev/DSQ/Drug/ApproveVersion")]
+		[Method("Dev/DSQ/DrugroveVersion")]
 		public static ReturnObject ApproveVersion(HttpContext context, long drug_id, long drug_version_id, string message = null)
 		{
 			var drug = new Lib.Data.Drug(drug_id);
