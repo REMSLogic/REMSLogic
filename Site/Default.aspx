@@ -320,7 +320,7 @@
 	<div id="notifications-popover" class="popover">
         <header class="clearfix">
             <div style="float: left; padding-left: 8px;">Notifications</div>
-            <div style="float: right; padding-right: 8px;"><input type="button" value="Archive All" onclick="archiveAll();" /></div>
+            <div style="float: right; padding-right: 8px;"><a class="button" href="#common/notifications/archive">View Archive</a></div>
         </header>
         <section>
             <div class="content">
@@ -346,12 +346,15 @@
 						<li class="read">No new notifications.</li>
 						<% } %>
                         <!--<li class="new"><span class="avatar"></span>John Doe created a new project</li>>-->
+                        <li>
+                            <div style="float: right;"><input type="button" value="Archive All" onclick="archiveAll();" /></div>
+                        </li>
                     </ul>
                 </nav>
             </div>
         </section>
         <footer class="clearfix">
-            <div style="float: right; padding: 4px 12px 8px 0;"><a class="button" href="#common/notifications/archive">View Archive</a></div>
+            
         </footer>
     </div>
     <!-- POPOVERS SETUP END-->
