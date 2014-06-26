@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
+using Framework.Security;
 using Lib.Systems.Notifications;
 
 namespace Site.App
@@ -14,25 +16,37 @@ namespace Site.App
 
         protected List<Notifys> notifications;
         protected int NumUnread;
+        protected long UserId;
 
         protected void Page_Init(object sender, EventArgs e)
         {
             notifications = new List<Notifys>();
             NumUnread = 0;
-            var nis = Lib.Data.NotificationInstance.FindNewForUser(Framework.Security.Manager.GetUser());
 
-            foreach (var ni in nis)
+            User user = Manager.GetUser();
+
+            if(user == null)
+                return;
+
+            var nis = Lib.Data.NotificationInstance.FindNewForUser(user);
+
+            UserId = user.ID ?? 0;
+            NumUnread = (
+                from ni in nis
+                where !ni.Read.HasValue
+                select ni).Count();
+
+            var shortList = nis
+                .OrderByDescending(x => x.Notification.Sent)
+                .Take(5);
+
+            foreach (var ni in shortList)
             {
-                var t = new Notifys
+                notifications.Add(new Notifys
                 {
                     notification = ni.Notification,
                     read = ni.Read.HasValue
-                };
-
-                if (!t.read)
-                    NumUnread++;
-
-                notifications.Add(t);
+                });
             }
         }
     }

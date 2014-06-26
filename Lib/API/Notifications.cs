@@ -189,6 +189,28 @@ namespace Lib.API
             };
         }
 
+        [Method("Notifications/ArchiveAll")]
+        public static ReturnObject ArchiveAll(HttpContext context, long id)
+        {
+            User user = new User(id);
+            var nis = Lib.Data.NotificationInstance.FindNewForUser(user);
+            bool success = true;
+
+            foreach (var ni in nis)
+            {
+                success = success && NotificationService.Archive(ni.NotificationID);
+            }
+
+            return new ReturnObject
+            {
+                Result = null,
+                Error = !success,
+                Message = (success)
+                    ? String.Empty
+                    : "Invalid Notification"
+            };
+        }
+
         [Method("Notifications/Delete")]
         public static ReturnObject Delete(HttpContext context, long id)
         {
