@@ -1,21 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Lib.Data;
+using RemsLogic.Model;
+using RemsLogic.Services;
+using StructureMap;
+using User = Framework.Security.User;
 
 namespace Site.App.Views.hcos.facilities
 {
-	public partial class list : Lib.Web.AppControlPage
-	{
-		public Lib.Data.Provider Provider;
-		public IList<Lib.Data.ProviderFacility> ProviderFacilities;
+    public partial class list : Lib.Web.AppControlPage
+    {
+        private readonly IOrganizationService _orgSvc;
+        public Provider Provider;
 
-		protected void Page_Init(object sender, EventArgs e)
-		{
-			Provider = Lib.Systems.Security.GetCurrentProvider();
-			ProviderFacilities = Lib.Data.ProviderFacility.FindAll();
-		}
-	}
+        public List<Facility> Facilities {get; set;}
+        public long OrganizationId {get; set;}
+
+        public list()
+        {
+            _orgSvc = ObjectFactory.GetInstance<IOrganizationService>();
+        }
+
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            Provider = Lib.Systems.Security.GetCurrentProvider();
+
+            User user = Framework.Security.Manager.GetUser();
+            UserProfile userProfile = UserProfile.FindByUser(user);
+            ProviderUser providerUser = ProviderUser.FindByProfile(userProfile);
+            Organization org = _orgSvc.Get(providerUser.OrganizationID);
+
+            OrganizationId = org.Id;
+            Facilities = org.Facilities;
+        }
+    }
 }
