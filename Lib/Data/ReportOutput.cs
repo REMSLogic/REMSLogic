@@ -61,7 +61,7 @@ namespace Lib.Data
 			var db = this.table.DB;
 
             // hack to get the currenly logged in HCO id into a query
-            if(SqlText.Contains("{{HCO-ID}}"))
+            if(SqlText.Contains("{{HCO-ID}}") || SqlText.Contains("{{FACILITY-ID}}"))
             {
                 User user = Framework.Security.Manager.GetUser();
                 UserProfile userProfile = UserProfile.FindByUser(user);
@@ -69,6 +69,10 @@ namespace Lib.Data
 
                 SqlText = SqlText.Replace("{{HCO-ID}}", providerUser != null 
                     ? providerUser.ProviderID.ToString(CultureInfo.InvariantCulture)
+                    : "0");
+
+                SqlText = SqlText.Replace("{{FACILITY-ID}}", providerUser != null
+                    ? (providerUser.PrimaryFacilityID ?? 0).ToString(CultureInfo.InvariantCulture)
                     : "0");
             }
 
