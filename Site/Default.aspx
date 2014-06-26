@@ -137,9 +137,9 @@
 	<div id="loading"> 
 
         <script type = "text/javascript">
-        	document.write("<div id='loading-container'><p id='loading-content'>" +
-                           "<img id='loading-graphic' width='16' height='16' src='/images/ajax-loader-abc4ff.gif' /> " +
-                           "Loading...</p></div>");
+            document.write("<div id='loading-container'><p id='loading-content'>" +
+                "<img id='loading-graphic' width='16' height='16' src='/images/ajax-loader-abc4ff.gif' /> " +
+                "Loading...</p></div>");
         </script>
     </div>
     <div id="wrapper" class="app-wrap">
@@ -295,7 +295,7 @@
                 <footer class="clearfix">
                     <div class="container_12">
                         <div class="grid_12">
-                            
+
                         </div>
                     </div>
                 </footer>
@@ -307,12 +307,12 @@
 	
 	<!-- LOADING SCRIPT -->
     <script type="text/javascript">
-    	$(window).load(function () {
-    		$("#loading").fadeOut(function () {
-    			$(this).remove();
-    			$('body').removeAttr('style');
-    		});
-    	});
+        $(window).load(function () {
+            $("#loading").fadeOut(function () {
+                $(this).remove();
+                $('body').removeAttr('style');
+            });
+        });
     </script>
     <!-- LOADING SCRIPT -->
 
@@ -320,7 +320,7 @@
 	<div id="notifications-popover" class="popover">
         <header class="clearfix">
             <div style="float: left; padding-left: 8px;">Notifications</div>
-            <div style="float: right; padding-right: 8px;"><a class="button" href="#common/notifications/archive">View Archive</a></div>
+            <div style="float: right; padding-right: 8px;"><input type="button" value="Archive All" onclick="archiveAll();" /></div>
         </header>
         <section>
             <div class="content">
@@ -330,7 +330,7 @@
          { %>
 						<% foreach (var n in this.notifications)
          { %>
-						<li class="<%=(n.read) ? "read" : "new" %>" data-id="<%=n.notification.ID %>">
+						<li class="<%=(n.read) ? "read" : "new" %> notification-instance" data-id="<%=n.notification.ID %>">
 						    <div class="content">
 						    <div class="message"><%=n.notification.Message %></div>
                             <div class="controls">
@@ -350,10 +350,24 @@
                 </nav>
             </div>
         </section>
+        <footer class="clearfix">
+            <div style="float: right; padding: 4px 12px 8px 0;"><a class="button" href="#common/notifications/archive">View Archive</a></div>
+        </footer>
     </div>
     <!-- POPOVERS SETUP END-->
 
 	<script type="text/javascript">
+	    function archiveAll() {
+	        $.ajax({
+	            url: '/api/Notifications/ArchiveAll',
+	            data: 'id=' + encodeURIComponent(<%=UserId%>),
+	            cache: false,
+	            success: function (response) {
+	                $('.notification-instance').remove();
+	            }
+	        });
+	    }
+
 	    $(document).ready(function () {
 	        $('#notifications-button').popover('#notifications-popover', { preventRight: true });
 
@@ -456,7 +470,7 @@
 	            $('.searchbox', $(this).parent()).animate({ marginRight: 0 }).next().fadeOut();
 	        });
 	    });
-    </script>
+	</script>
 	
 	<!-- GROWL CONTAINER -->
 	<div id="container">
@@ -472,20 +486,20 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		(function () {
-			var $container;
+	    (function () {
+	        var $container;
 
-			window.growl_create = function (template, vars, opts) {
-				var default_opts = { speed: 500 };
-				if (template == 'sticky-container')
-					default_opts = { expires: false, speed: 500 }
-				return $container.notify("create", template, vars, $.extend(true, {}, default_opts, opts));
-			}
+	        window.growl_create = function (template, vars, opts) {
+	            var default_opts = { speed: 500 };
+	            if (template == 'sticky-container')
+	                default_opts = { expires: false, speed: 500 }
+	            return $container.notify("create", template, vars, $.extend(true, {}, default_opts, opts));
+	        }
 
-			$(function () {
-				$container = $("#container").notify();
-			});
-		})();
+	        $(function () {
+	            $container = $("#container").notify();
+	        });
+	    })();
 	</script>
 	<!-- GROWL CONTAINER END -->
 </body>
