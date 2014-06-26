@@ -22,7 +22,7 @@
     function displayComplianceGraph(compliant, nonCompliant) {
         var plot = $.jqplot('chart', [compliant, nonCompliant], {
             title: {
-                text: '<div style="font-size: 10pt;">Jan 1, 2012 - Dec 31, 2012</div>',
+                text: '<div style="font-size: 14pt; padding: 8px;">Jan 1, 2012 - Dec 31, 2012</div>',
                 show: true,
                 escapeHtml: false
             },
@@ -55,9 +55,15 @@
             axes: {
                 xaxis: {
                     renderer: $.jqplot.CategoryAxisRenderer,
-                    ticks: ['Prescriber enrollment', 'Patient enrollment', 'Education / Training'],
+                    ticks: [
+                        '<div style="text-align: center">Prescriber<br />Enrollment</div>', 
+                        '<div style="text-align: center">Patient<br />Enrollment</div>', 
+                        '<div style="text-align: center">Education<br />Training</div>'
+                    ],
                     tickOptions: {
-                        showGridline: false
+                        showGridline: false,
+                        fontSize: '12pt',
+                        labelPosition: 'middle'
                     }
                 },
                 yaxis: {
@@ -70,14 +76,16 @@
                     max: 100,
                     tickInterval: 10,
                     tickOptions: {
-                        formatString: '%d%%'
+                        formatString: '%d%%',
+                        fontSize: '10pt'
                     }
                 }
             },
             legend: {
                 show: true,
                 location: 'ne',
-                placement: 'inside'
+                placement: 'inside',
+                fontSize: '10pt'
             }
         });
         // Bind a listener to the "jqplotDataClick" event.  Here, simply change
@@ -122,9 +130,11 @@
     <h2>HCO Compliance (All)</h2>
 </header>
 <section>
-  <div id="chart" style="display: inline-block; width: 100%; height: 200px;"></div>
+  <div id="chart" style="display: inline-block; width: 100%; height: 300px;"></div>
 </section>
 
+<!--
 <div onclick="downloadImage($('#chart').jqplotToImageStr(), 'test.png');">
   Save image as file
 </div>
+-->
