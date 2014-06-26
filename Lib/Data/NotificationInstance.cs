@@ -84,6 +84,31 @@ namespace Lib.Data
             return rows[0];
         }
 
+        public static IList<NotificationInstance> FindAllInstancesForUser(long userId, long notificationId)
+        {
+            var db = Database.Get( "FDARems" );
+            StringBuilder query = new StringBuilder();
+
+            query.Append("SELECT * ");
+            query.Append(" FROM " + db.DelimTable("NotificationInstances"));
+            query.Append(" WHERE " + db.DelimColumn("UserID") + " = " + db.DelimParameter("userId"));
+            query.Append(" AND "+db.DelimColumn("NotificationID")+" = "+db.DelimParameter("notificationId"));
+            query.Append(" ORDER BY " + db.DelimColumn("ID") + " DESC");
+
+            var ps = new List<Parameter>
+            {
+                new Parameter("userId", userId),
+                new Parameter("notificationId", notificationId)
+            };
+
+            var rows = db.ExecuteQuery<NotificationInstance>(query.ToString(), ps.ToArray());
+
+            if( rows == null || rows.Count <= 0 )
+                return null;
+
+            return rows;
+        }
+
         public static IList<NotificationInstance> FindNewForUser(User user)
         {
             if (user == null || !user.ID.HasValue)

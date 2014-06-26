@@ -62,6 +62,23 @@ namespace Lib.Systems.Notifications
             return true;
         }
 
+        public static bool ArchiveAllInstancesForUser(long id)
+        {
+            User u = Framework.Security.Manager.GetUser();
+
+            if(u == null || u.ID == null)
+                return false;
+
+            IList<NotificationInstance> nis = NotificationInstance.FindAllInstancesForUser(u.ID.Value, id);
+
+            foreach(var ni in nis)
+            {
+                ni.Archived = true;
+                ni.Save();
+            }
+            return true;
+        }
+
         public static bool Delete(long id)
         {
             User u = Framework.Security.Manager.GetUser();

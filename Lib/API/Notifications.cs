@@ -198,7 +198,7 @@ namespace Lib.API
 
             foreach (var ni in nis)
             {
-                success = success && NotificationService.Archive(ni.NotificationID);
+                success = success && NotificationService.ArchiveAllInstancesForUser(ni.NotificationID);
             }
 
             return new ReturnObject
