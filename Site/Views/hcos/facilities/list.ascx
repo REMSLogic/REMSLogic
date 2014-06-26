@@ -32,20 +32,20 @@
                     </tr> 
                 </thead> 
                 <tbody>
-					<% foreach( var i in this.ProviderFacilities ) { %>
-                    <tr data-id="<%=i.ID%>"> 
+					<% foreach( var i in this.Facilities ) { %>
+                    <tr data-id="<%=i.Id%>"> 
 						<td>
-						    <a href="#hcos/facilities/edit?id=<%=i.ID%>" class="button">Edit</a>
+						    <a href="#hcos/facilities/edit?id=<%=i.Id%>&provider-id=<%=OrganizationId%>" class="button">Edit</a>
                             <% if (Framework.Security.Manager.HasRole("view_admin", true)){ %>
-                                <a href="/api/HCOs/Facility/Delete?id=<%=i.ID%>" class="ajax-button button" data-confirmtext="Are you sure you want to delete this facility?">Delete</a>
+                                <a href="/api/HCOs/Facility/Delete?id=<%=i.Id%>" class="ajax-button button" data-confirmtext="Are you sure you want to delete this facility?">Delete</a>
                             <% } %>
 						</td>
 						<td><%=i.Name%></td>
-						<td><%=i.PrimaryAddress.Street1%></td>
-						<td><%=i.PrimaryAddress.Street2%></td>
-						<td><%=i.PrimaryAddress.City%></td>
-						<td><%=i.PrimaryAddress.State%></td>
-						<td><%=i.PrimaryAddress.Zip%></td>
+						<td><%=i.Address.Street1%></td>
+						<td><%=i.Address.Street2%></td>
+						<td><%=i.Address.City%></td>
+						<td><%=i.Address.State%></td>
+						<td><%=i.Address.Zip%></td>
                     </tr>
 					<% } %>
                 </tbody>
