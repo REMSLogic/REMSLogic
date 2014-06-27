@@ -73,7 +73,13 @@ namespace Lib.API.Common
 
             if (profile != null && profile.ID != null)
             {
+                Lib.Data.Drug drug = new Lib.Data.Drug(id);
+                Lib.Data.Prescriber prescriber = Lib.Data.Prescriber.FindByProfile(profile);
+
                 dlService.AddDrugToDrugListByProfileId(profile.ID.Value, id, DrugListType.MyDrugs);
+
+                if(drug != null && prescriber != null)
+                    Systems.PrescriberUpdate.DrugAdded(prescriber, drug);
             }
 
             return new ReturnObject()
@@ -100,7 +106,13 @@ namespace Lib.API.Common
 
             if (profile != null && profile.ID != null)
             {
+                Lib.Data.Drug drug = new Lib.Data.Drug(id);
+                Lib.Data.Prescriber prescriber = Lib.Data.Prescriber.FindByProfile(profile);
+
                 dlService.RemoveDrugFromDrugListByProfileId(profile.ID.Value, id, DrugListType.MyDrugs);
+
+                if(drug != null && prescriber != null)
+                    Systems.PrescriberUpdate.DrugAdded(prescriber, drug);
             }
 
             return new ReturnObject()
