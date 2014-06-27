@@ -7,49 +7,15 @@
             $detail = $(eval('com' + $btn.attr('id').toString().substring(3)));
 
             $detail.animate({ width: 'toggle' }, 500);
-            //            if ($btn.attr('src') === '/images/Warning_Arrow_Down.png') {
-            //                $detail.animate({ width: "20px" }, 500);
-            //                //$btn.attr('src', '/images/Warning_Arrow_Up.png');
-            //            }
-            //            else {
-            //                $detail.animate({ width: "0px" }, 500);
-            //                //$btn.attr('src', "/images/Warning_Arrow_Down.png");
-            //            }
         });
-
-        //		$("#drug-list-widget").sortable({
-        //			placeholder: "sortable-placeholder",
-        //			start: function (event, ui)
-        //			{
-        //				ui.item.startPos = ui.item.index();
-        //			},
-        //			stop: function handleDrop(event, ui)
-        //			{
-        //				var drugId = $(ui.item[0]).attr('data-drug-id');
-
-        //				$.ajax({
-        //					url: "/api/Prescriber/Drug/Reorder",
-        //					type: 'POST',
-        //					dataType: 'json',
-        //					data: {
-        //						'id': drugId,
-        //						'fromPosition': ui.item.startPos + 1,
-        //						'toPosition': ui.item.index() + 1
-        //					}
-        //				});
-        //			}
-        //		}).disableSelection();
     });
 </script>
 
 <%
-    //var drugs = Lib.Data.PrescriberDrug.FindByPrescriber(Lib.Data.Prescriber.FindByProfile(Lib.Data.UserProfile.FindByUser(Framework.Security.Manager.GetUser())));
-    //var drugs = Lib.Systems.Security.GetCurrentPrescriber().GetDrugInfo();
     var drugs = GetDrugList();
 %>
 
 <header class="portlet-header">
-    <%--<a href="#prescriber/drugs/select" class="add-drugs-icon" style="float: right; margin-top: -4px; margin-right: -10px;"><img src="/images/dashboard-icon.png" alt="Dashboard-icon" width="24" height="24" /></a>--%>
     <img class="eoc-menu-toggle" style="float: right; margin-top: 0px; margin-right: -10px;" src="/images/dashboard-icon.png" alt="Filter Menu" width="24" height="24"/>
     <h2>My Favorite Drugs</h2>
 </header>
@@ -73,13 +39,6 @@
         <%}} %>
     </div>
 
-    <%--
-    <div class="widgetTitle">
-        <span class="drugName">Drug</span>
-        <span class="enrolled">Enrolled</span>
-        <span class="actions">Actions</span>
-    </div>
-    --%>
     <%if (drugs == null || drugs.Drugs.Count == 0)
     {%>
         <div class="no-data">

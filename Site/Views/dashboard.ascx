@@ -104,43 +104,21 @@ panels should stack ontop of each other instead of being side by side.
                     url: '/api/Common/Widgets/UpdateLayout',
                     type: 'GET',
                     data: $(event.target).sortable('serialize')+'&containerId='+containerId
-                })
+                });
             }
         });
 
-        <% if (Framework.Security.Manager.HasRole("view_prescriber", true)){ %>
         $(".eoc-menu-toggle").click(function () {
-            //$header = $(this);
-            //$btn = $(".eoc-menu-clear");
-            //getting the next element
             $content = $(".eoc-filter");
             //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
             $content.slideToggle(500, function () {
             if ($(this).css('display') == 'block') {
                     $(this).css('display', 'inline-block');
             }
-                //execute this after slideToggle is done
-                //change text of header based on visibility of content div
-                //$header.text(function () {
-                //change text based on condition
-                //return $content.is(":visible") ? "Collapse" : "Expand";
-                //});
-                //$content.is(":visible") ? $btn.show() : $btn.hide();
                 if ($(this).css('display') == 'block') {
                     $(this).css('display', 'inline-block');
                 }
             });
         });
-        <% } else {%>
-        $(".fac-menu-toggle").click(function () {
-            $content = $(".fac-filter");
-            $content.slideToggle(500, function () {
-             if ($(this).css('display') == 'block') {
-                    $(this).css('display', 'inline-block');
-            }
-
-            });
-        });
-        <% } %>
     });
 </script>
