@@ -11,12 +11,13 @@ namespace Lib.Queries
 
             const string sql = @"
                 SELECT TOP 1
-                    COUNT(DISTINCT PrescriberProfiles.PrescriberID)
+                    COUNT(*)
                 FROM UserEocs
                     INNER JOIN Prescribers ON UserEocs.ProfileID = Prescribers.ProfileID
                     INNER JOIN PrescriberProfiles ON PrescriberProfiles.PrescriberID = Prescribers.ID
                 WHERE
                     PrescriberProfiles.PrimaryFacilityID = @FacilityId AND
+                    UserEocs.Deleted = 0 AND
                     UserEocs.EocID = 3;";
 
             var parameters = new List<Parameter>()
