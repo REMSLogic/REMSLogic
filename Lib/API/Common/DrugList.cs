@@ -112,7 +112,7 @@ namespace Lib.API.Common
                 dlService.RemoveDrugFromDrugListByProfileId(profile.ID.Value, id, DrugListType.MyDrugs);
 
                 if(drug != null && prescriber != null)
-                    Systems.PrescriberUpdate.DrugAdded(prescriber, drug);
+                    Systems.PrescriberUpdate.DrugRemoved(prescriber, drug);
             }
 
             return new ReturnObject()
