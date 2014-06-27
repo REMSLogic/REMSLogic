@@ -83,7 +83,7 @@ namespace Lib.Systems
 
                 var name = prescriber.Profile.PrimaryContact.Name;
                 var drug_name = drug.GenericName;
-                string msg = "<b>" + name + " has marked a prerequisite for <b>" + drug_name + "</b> as complete.";
+                string msg = "<b>" + name + "</b> has marked a prerequisite for <b>" + drug_name + "</b> as complete.";
                 string type = "drug-certified";
 
                 var pu = new Data.PrescriberUpdate();
