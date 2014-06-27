@@ -104,7 +104,8 @@ namespace Lib.Data
         {
             return FindAllBy<PrescriberProfile>( new Dictionary<string, object> {
                 { "OrganizatioNID", organization_id },
-                { "PrescriberId", SpecialValue.IsNotNull }
+                { "PrescriberId", SpecialValue.IsNotNull },
+                { "Deleted", 0 }
             }, new[] { "-Expires" } );
         }
 
