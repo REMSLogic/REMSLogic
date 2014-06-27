@@ -444,21 +444,16 @@ namespace Lib.Web.Controls
                         case "upload":
                             string css_class = "link-list-icon-a";
 
-                            if( Lib.Systems.Security.GetCurrentPrescriber() != null )
+                            writer.AddAttribute( "href", "/api/App/List/FormsAndDocuments/AddItem?id=" + answer.ID.Value );
+                            writer.AddAttribute( "class", "ajax-button link-list-icon-a" );
+                            writer.RenderBeginTag( "a" );
                             {
-                                writer.AddAttribute( "href", "/api/App/List/FormsAndDocuments/AddItem?id=" + answer.ID.Value );
-                                writer.AddAttribute( "class", "ajax-button link-list-icon-a" );
-                                writer.RenderBeginTag( "a" );
-                                {
-                                    writer.AddAttribute( "src", "/images/navicons/101.png" );
-                                    writer.AddAttribute( "class", "link-list-icon" );
-                                    writer.RenderBeginTag( "img" );
-                                    writer.RenderEndTag();
-                                }
+                                writer.AddAttribute( "src", "/images/navicons/101.png" );
+                                writer.AddAttribute( "class", "link-list-icon" );
+                                writer.RenderBeginTag( "img" );
                                 writer.RenderEndTag();
                             }
-                            else
-                                css_class += " pad-right";
+                            writer.RenderEndTag();
                         
                             writer.AddAttribute( "href", ans );
                             writer.AddAttribute( "target", "_blank" );
