@@ -65,6 +65,7 @@
     <Compile Include="Sprint12\Migration002AddNewEocs.cs" />
     <Compile Include="Sprint12\Migration003AddLinkType.cs" />
     <Compile Include="Sprint14\Migration001AddIsEnabledToSection.cs" />
+    <Compile Include="Sprint15\Migration0001AddFacilityAndOrgToPrescriberUpdates.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

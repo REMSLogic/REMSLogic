@@ -8,7 +8,6 @@
     <%if(PrescriberUpdateItems != null && PrescriberUpdateItems.Count > 0){
         foreach (var pu in PrescriberUpdateItems){%>
         <div class="update-row">
-            <h3><%=pu.Type.ToUpper() %></h3><a href="#common/drugs/detail?id=<%=pu.DrugID %>" class="button" style="float:right; margin-right:10px;">View</a>
             <span><%=pu.Message%></span>
         </div>
         <%}

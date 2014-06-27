@@ -37,6 +37,7 @@ namespace Lib.API.App
 			}
 
 			var p = Systems.Security.GetCurrentProfile();
+            var prescriber = Data.Prescriber.FindByProfile(p);
 
 			if( p == null || p.ID == null )
 			{
@@ -64,6 +65,9 @@ namespace Lib.API.App
 				DrugId = d.ID.Value,
 				PrescriberId = p.ID.Value
 			}, DateTime.Now.Add( Lib.Systems.Drugs.GetRenewalPeriod( d ) ) );
+
+            if(prescriber != null)
+                Systems.PrescriberUpdate.DrugCertified(prescriber, d);
 
 			return new ReturnObject {
 				Error = false,

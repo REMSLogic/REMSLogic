@@ -900,10 +900,12 @@ button.blue-btn:hover
     border-radius: 4px;
 }
 
+/*
 .provider-prescriber-updates div.update-row:nth-child(odd)
 {
 	background-color: #CFEAF5;
 }
+*/
 
 .link-add-button { float: left; margin: 0 16px; width: 16px; height: 16px; }
 .link-external {padding: 2px 1px 3px 4px;}

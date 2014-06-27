@@ -31,6 +31,23 @@ namespace Lib.Data
 			return db.ExecuteQuery<PrescriberUpdate>( sql, ps.ToArray() );
 		}
 
+		public static IList<PrescriberUpdate> FindByFacility(long facilityId)
+		{
+			if(facilityId == 0)
+				return new List<PrescriberUpdate>();
+
+			var db = Framework.Data.Database.Get( "FDARems" );
+			string sql = "SELECT TOP 10 * " +
+							" FROM " + db.Delim( "PrescriberUpdates", Framework.Data.DelimType.Table ) +
+							" WHERE [FacilityId] = @facilityId " +
+							" ORDER BY [DateCreated] DESC";
+
+			var ps = new List<Parameter>();
+			ps.Add( new Parameter( "facilityId", facilityId) );
+
+			return db.ExecuteQuery<PrescriberUpdate>( sql, ps.ToArray() );
+		}
+
 		[Column]
 		public long PrescriberID;
 		[Column]
@@ -43,6 +60,10 @@ namespace Lib.Data
         public string Type;
 		[Column]
         public DateTime DateCreated;
+        [Column]
+        public long FacilityId;
+        [Column]
+        public long OrganizationId;
 
 		public PrescriberUpdate(long? id = null) : base(id)
 		{ }
