@@ -8,7 +8,7 @@
     <%if(PrescriberUpdateItems != null && PrescriberUpdateItems.Count > 0){
         foreach (var pu in PrescriberUpdateItems){%>
         <div class="update-row">
-            <span><%=pu.Message%></span>
+            <span><%=pu.DateCreated.ToShortDateString()%></span><span> - <%=pu.Message%></span>
         </div>
         <%}
     }else{%>
