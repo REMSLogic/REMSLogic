@@ -103,6 +103,11 @@ namespace RemsLogic.Services
                         select eoc).ToList());
         }
 
+        public Eoc GetEoc(long eocId)
+        {
+            return _complianceRepo.GetEoc(eocId);
+        }
+
         public IEnumerable<Eoc> GetEocs()
         {
             return _complianceRepo.GetEocs();

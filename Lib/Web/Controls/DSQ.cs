@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Lib.Data.DSQ;
+using RemsLogic.Services;
+using StructureMap;
 
 namespace Lib.Web.Controls
 {
@@ -588,6 +590,9 @@ namespace Lib.Web.Controls
 
 		protected void RenderQuestion_LinkList( HtmlTextWriter writer, Lib.Data.DSQ.Question q, string a = null, bool pending_changes = false, bool for_eoc = false )
 		{
+            IDsqService dsqService = ObjectFactory.GetInstance<IDsqService>();
+            IComplianceService complianceService = ObjectFactory.GetInstance<IComplianceService>();
+
 			if( for_eoc )
 			{
 				writer.AddAttribute( "data-parent-id", q.ID.Value.ToString() );
@@ -654,12 +659,6 @@ namespace Lib.Web.Controls
 
 							writer.RenderBeginTag("th");
 							{
-								writer.WriteEncodedText("Information");
-							}
-							writer.RenderEndTag();
-
-							writer.RenderBeginTag("th");
-							{
 								writer.WriteEncodedText("EOC");
 							}
 							writer.RenderEndTag();
@@ -667,6 +666,12 @@ namespace Lib.Web.Controls
 							writer.RenderBeginTag("th");
 							{
 								writer.WriteEncodedText("Required");
+							}
+							writer.RenderEndTag();
+
+							writer.RenderBeginTag("th");
+							{
+								writer.WriteEncodedText("Prerequisite");
 							}
 							writer.RenderEndTag();
 						}
@@ -681,8 +686,14 @@ namespace Lib.Web.Controls
 						if (d.ID.HasValue && d.ID.Value == this.DrugID)
 						{
 							var links = Lib.Data.DSQ.Link.FindByDrug(d, q);
+                            
 							foreach (var link in links)
 							{
+                                var info = dsqService.GetLink(link.ID ?? 0);
+                                var eoc = link.HasEoc
+                                    ? complianceService.GetEoc(info.EocId)
+                                    : null;
+
 								writer.AddAttribute("data-id", link.ID.Value.ToString());
 								writer.RenderBeginTag("tr");
 								{
@@ -724,23 +735,20 @@ namespace Lib.Web.Controls
 
 									writer.RenderBeginTag("td");
 									{
-										writer.WriteEncodedText(
-                                            link.Value.Length > 131
-                                                ? String.Format("{0}...", link.Value.Substring(0, 128))
-                                                : link.Value
-                                            );
-									}
-									writer.RenderEndTag();
-
-									writer.RenderBeginTag("td");
-									{
-										writer.WriteEncodedText(link.HasEoc? "Yes" : "No");
+                                        if(link.HasEoc)
+                                            writer.WriteEncodedText(eoc.Name);
 									}
 									writer.RenderEndTag();
 
 									writer.RenderBeginTag("td");
 									{
 										writer.WriteEncodedText(link.IsRequired? "Yes" : "No");
+									}
+									writer.RenderEndTag();
+
+									writer.RenderBeginTag("td");
+									{
+										writer.WriteEncodedText(info.HasPrereq? "Yes" : "No");
 									}
 									writer.RenderEndTag();
 								}
