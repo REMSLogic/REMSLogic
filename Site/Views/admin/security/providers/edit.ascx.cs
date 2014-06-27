@@ -45,5 +45,10 @@ namespace Site.App.Views.admin.security.providers
                 PendingInvites = PrescriberProfile.FindPendingInvitesByOrganization(id);
             }
         }
+
+        public string GetUsername(PrescriberProfile prescriberProfile)
+        {
+            return prescriberProfile.Prescriber.Profile.User.Username;
+        }
     }
 }
