@@ -27,31 +27,6 @@ namespace RemsLogic.Services.Tests
         }
 
         [Test]
-        public void should_save_eocs_for_prescriber()
-        {
-            // arrange
-            List<Eoc> expectedEocs = new List<Eoc>
-            {
-                new Eoc{Id = 1,Name = "Eoc 1"},
-                new Eoc{Id = 2,Name = "Eoc 2"}
-            };
-
-            List<PrescriberEoc> savedPrescriberEocs = new List<PrescriberEoc>();
-
-            _complianceRepo.Stub(x => x.GetByDrugAndRole(0, "")).IgnoreArguments().Return(expectedEocs);
-            _complianceRepo.Stub(x => x.Find(0,0,0)).IgnoreArguments().Return(null);
-            _complianceRepo.Stub(x => x.Save(Arg<PrescriberEoc>.Is.Anything))
-                .WhenCalled(x => savedPrescriberEocs.Add((PrescriberEoc)x.Arguments.First()));
-
-            // act
-            _complianceSvc.AddEocsToPrescriberProfile(-1, -1);
-
-            // assert
-            savedPrescriberEocs.Count.Should().Be(2);
-            savedPrescriberEocs[1].EocId.Should().Be(2);
-        }
-
-        [Test]
         public void should_call_LogEocComplianceEntry()
         {
             // arrange

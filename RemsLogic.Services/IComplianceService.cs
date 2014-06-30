@@ -11,7 +11,7 @@ namespace RemsLogic.Services
         void RecordCompliance(PrescriberEoc prescriberEoc);
         void LogEocComplianceEntry(long precriberEocId, DateTime recordedAt);
 
-        void AddEocsToPrescriberProfile(long profileId, long drugId);
+        void AddEocsToProfile(long profileId, List<string> roles, long drugId);
         void RemoveEocsFromPrescriberProfile(long profileId, long drugId);
 
         Dictionary<Drug, List<PrescriberEoc>> GetEocsStatus(long profileId, string listType);

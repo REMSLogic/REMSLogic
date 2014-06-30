@@ -221,9 +221,17 @@ namespace Lib.API.Prescriber
         {
             IComplianceService complianceService = ObjectFactory.GetInstance<IComplianceService>();
 
+            List<string> roles = new List<string>();
+
+            if(Framework.Security.Manager.HasRole("view_prescriber"))
+                roles.Add("view_prescriber");
+
+            if(Framework.Security.Manager.HasRole("view_provider"))
+                roles.Add("view_provider");
+
             // this adds the entries into the UserEoc table for all possible eocs for the drug.
             // the date completed is left null
-            complianceService.AddEocsToPrescriberProfile(profileId, drugId);
+            complianceService.AddEocsToProfile(profileId, roles, drugId);
         }
 
         private static void RecordCompliance(Data.UserEoc cert)

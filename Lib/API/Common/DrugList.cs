@@ -1,4 +1,5 @@
-﻿using Framework.API;
+﻿using System.Collections.Generic;
+using Framework.API;
 using RemsLogic.Model;
 using RemsLogic.Services;
 using System.Web;
@@ -16,9 +17,17 @@ namespace Lib.API.Common
             Framework.Security.User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
 
+            List<string> roles = new List<string>();
+
+            if(Framework.Security.Manager.HasRole("view_prescriber"))
+                roles.Add("view_prescriber");
+
+            if(Framework.Security.Manager.HasRole("view_provider"))
+                roles.Add("view_provider");
+
             if (profile != null && profile.ID != null)
             {
-                dlService.AddDrugToDrugListByProfileId(profile.ID.Value, id, DrugListType.Favorites);
+                dlService.AddDrugToDrugListByProfileId(profile.ID.Value, roles, id, DrugListType.Favorites);
             }
 
             return new ReturnObject()
@@ -71,12 +80,20 @@ namespace Lib.API.Common
             Framework.Security.User user = Framework.Security.Manager.GetUser();
             var profile = Data.UserProfile.FindByUser(user);
 
+            List<string> roles = new List<string>();
+
+            if(Framework.Security.Manager.HasRole("view_prescriber"))
+                roles.Add("view_prescriber");
+
+            if(Framework.Security.Manager.HasRole("view_provider"))
+                roles.Add("view_provider");
+
             if (profile != null && profile.ID != null)
             {
                 Lib.Data.Drug drug = new Lib.Data.Drug(id);
                 Lib.Data.Prescriber prescriber = Lib.Data.Prescriber.FindByProfile(profile);
 
-                dlService.AddDrugToDrugListByProfileId(profile.ID.Value, id, DrugListType.MyDrugs);
+                dlService.AddDrugToDrugListByProfileId(profile.ID.Value, roles, id, DrugListType.MyDrugs);
 
                 if(drug != null && prescriber != null)
                     Systems.PrescriberUpdate.DrugAdded(prescriber, drug);

@@ -345,7 +345,11 @@ namespace RemsLogic.Repositories
                 AppliesTo = reader["Roles"] != DBNull.Value
                     ? ((string)reader["Roles"]).Split(new []{'|'}, StringSplitOptions.RemoveEmptyEntries)
                         .ToList()
-                    : new List<string>()
+                    : new List<string>(),
+                DisplayFor = reader["DisplayForRoles"] != DBNull.Value
+                    ? ((string)reader["DisplayForRoles"]).Split(new []{'|'}, StringSplitOptions.RemoveEmptyEntries)
+                        .ToList()
+                    : new List<string>(),
             };
         }
 

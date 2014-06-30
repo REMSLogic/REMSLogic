@@ -65,12 +65,13 @@ namespace RemsLogic.Services
             return retList;
         }
 
-        public void AddDrugToDrugListByProfileId(long profileId, long drugId, string listType)
+        public void AddDrugToDrugListByProfileId(long profileId, List<string> roles, long drugId, string listType)
         {
             _drugListRepo.AddDrugToList(profileId, drugId, listType);
+
             if (listType.Equals(DrugListType.MyDrugs))
             {
-                _complianceSvc.AddEocsToPrescriberProfile(profileId, drugId);
+                _complianceSvc.AddEocsToProfile(profileId, roles, drugId);
             }
         }
 
