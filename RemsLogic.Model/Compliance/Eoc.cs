@@ -7,6 +7,7 @@ namespace RemsLogic.Model.Compliance
         public string Name {get; set;}
         public string DisplayName {get; set;}
         public List<string> AppliesTo {get; set;}
+        public List<string> DisplayFor {get; set;}
         public string ShortDisplayName {get; set;}
         public string LargeIcon {get; set;}
         public string SmallIcon {get; set;}

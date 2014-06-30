@@ -46,7 +46,7 @@ namespace Site.App.Views.prescriber.drugs
         #region Utilty Methods
         public bool DisplayEoc(Eoc eoc)
         {
-            return eoc.AppliesTo.Any(role => Framework.Security.Manager.HasRole(role));
+            return eoc.DisplayFor.Any(role => Framework.Security.Manager.HasRole(role));
         }
         #endregion
     }
