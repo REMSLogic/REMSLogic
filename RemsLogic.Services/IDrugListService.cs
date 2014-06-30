@@ -1,4 +1,5 @@
-﻿using RemsLogic.Model;
+﻿using System.Collections.Generic;
+using RemsLogic.Model;
 
 namespace RemsLogic.Services
 {
@@ -6,7 +7,7 @@ namespace RemsLogic.Services
     {
         DrugList GetDrugListByProfileId(long profileId, string listType);
 
-        void AddDrugToDrugListByProfileId(long profileId, long drugId, string listType);
+        void AddDrugToDrugListByProfileId(long profileId, List<string> roles, long drugId, string listType);
         void RemoveDrugFromDrugListByProfileId(long profileId, long drugId, string listType);
     }
 }

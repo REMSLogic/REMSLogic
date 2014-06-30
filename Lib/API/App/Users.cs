@@ -12,7 +12,6 @@ namespace Lib.API.App
 {
 	public class Users : Base
 	{
-		[SecurityRole( "view_prescriber" )]
 		[Method( "App/Users/Certified" )]
 		public static ReturnObject Certified( HttpContext context, long drug_id, string eoc_name )
 		{
