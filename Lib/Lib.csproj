@@ -80,6 +80,7 @@
     <Compile Include="API\Admin\Drugs\DrugFormulation.cs" />
     <Compile Include="API\Admin\Drugs\Formulation.cs" />
     <Compile Include="API\Admin\Language.cs" />
+    <Compile Include="API\Admin\RestrictedLinks.cs" />
     <Compile Include="API\Admin\Security\DrugCompanyUser.cs" />
     <Compile Include="API\Admin\Security\ProviderUser.cs" />
     <Compile Include="API\Admin\Security\Speciality.cs" />

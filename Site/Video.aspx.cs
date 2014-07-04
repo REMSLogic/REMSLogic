@@ -30,7 +30,13 @@ namespace Site
 
             RestrictedLink link = _linkRepo.GetByToken(token);
 
+            if(link == null)
+                return;
+
             if(link.ExpirationDate.Date <= DateTime.UtcNow)
+                return;
+
+            if(link.Url != Request.Url.AbsolutePath)
                 return;
 
             ShowVideo = true;

@@ -203,7 +203,7 @@
 								<li><a href="#admin/security/users/list" title="Users"><img src="/images/navicons/111.png" alt=""/><span>Users</span></a></li>
 								<li><a href="#admin/security/providers/list" title="Providers"><img src="/images/navicons/77.png" alt=""/><span>Health Care Org.</span></a></li>
 								<li><a href="#admin/drugs/companies/list" title="Drug Companies"><img src="/images/navicons/159.png" alt=""/><span>Drug Companies</span></a></li>
-								<li><a href="#admin/security/us-fda/list" title="US FDA Officials"><img src="/images/navicons/167.png" alt=""/><span>US FDA Officials</span></a></li>
+								<li><a href="#admin/security/us-fda/list" title="US FDA Officials"><img src="/images/navicons/167.png" alt=""/><span>US FDA Officials</span></a></li>   
 							</ul>
 						</li>
 						<li class="hasul"><a href="#"><img src="/images/navicons/15.png" alt=""/><span>Drug Management</span></a>
@@ -228,6 +228,7 @@
 							</ul>
 						</li>
 						<li><a href="/" title="Home Page"><img src="/images/navicons/12.png" alt="" /><span>Home Page</span></a></li>
+                        <li><a href="#admin/video-links/list" title="Video Links"><img src="/images/navicons/139.png" alt=""/><span>Video Links</span></a></li>
 						<% } %>
 						<% if (Framework.Security.Manager.HasRole("dashboard_drugcompany_view", true))
                         { %>

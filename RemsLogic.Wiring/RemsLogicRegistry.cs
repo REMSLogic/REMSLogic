@@ -24,6 +24,7 @@ namespace RemsLogic.Wiring
             For<IWidgetRepository>().Use(c => new WidgetRepository(connectionString));
             For<IDsqRepository>().Use(c => new DsqRepository(connectionString));
             For<IOrganizationRepository>().Use(c => new OrganizationRepository(connectionString));
+            For<IRestrictedLinkRepository>().Use(c => new RestrictedLinkRepository(connectionString));
         }
     }
 }
