@@ -232,6 +232,13 @@
     <Compile Include="test.aspx.designer.cs">
       <DependentUpon>test.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Video.aspx.cs">
+      <DependentUpon>Video.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Video.aspx.designer.cs">
+      <DependentUpon>Video.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\account\prefs.ascx.cs">
       <DependentUpon>prefs.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1777,6 +1784,7 @@
     <Content Include="Templates\NewsAndUpdates\template.html" />
     <Content Include="Templates\PrescriberInvite\template.html" />
     <Content Include="test.aspx" />
+    <Content Include="Video.aspx" />
     <Content Include="Videos\training-1-cover.png" />
     <Content Include="Videos\training-1.mp4" />
     <Content Include="Views\account\prefs.ascx" />
