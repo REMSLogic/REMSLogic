@@ -379,6 +379,20 @@
     <Compile Include="Views\admin\tasks\list.ascx.designer.cs">
       <DependentUpon>list.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Views\admin\video-links\edit.ascx.cs">
+      <DependentUpon>edit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\admin\video-links\edit.ascx.designer.cs">
+      <DependentUpon>edit.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\admin\video-links\list.ascx.cs">
+      <DependentUpon>list.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\admin\video-links\list.ascx.designer.cs">
+      <DependentUpon>list.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Views\common\addresses\edit.ascx.cs">
       <DependentUpon>edit.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1806,6 +1820,8 @@
     <Content Include="Views\admin\security\providers\edit.ascx" />
     <Content Include="Views\admin\security\us-fda\list.ascx" />
     <Content Include="Views\admin\tasks\list.ascx" />
+    <Content Include="Views\admin\video-links\edit.ascx" />
+    <Content Include="Views\admin\video-links\list.ascx" />
     <Content Include="Views\common\addresses\edit.ascx" />
     <Content Include="Views\common\contacts\edit.ascx" />
     <Content Include="Views\common\drugs\companies\detail.ascx" />
