@@ -1785,8 +1785,7 @@
     <Content Include="Templates\PrescriberInvite\template.html" />
     <Content Include="test.aspx" />
     <Content Include="Video.aspx" />
-    <Content Include="Videos\training-1-cover.png" />
-    <Content Include="Videos\training-1.mp4" />
+    <Content Include="Videos\prescriber-training.mp4" />
     <Content Include="Views\account\prefs.ascx" />
     <Content Include="Views\account\profile.ascx" />
     <Content Include="Views\admin\drugs\companies\view.ascx" />
