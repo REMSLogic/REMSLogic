@@ -4,7 +4,7 @@ using FluentMigrator;
 namespace RemsLogic.Migrations.Sprint16
 {
     [Migration(201407040212)]
-    class Migration0001AddRestrictedLinkTable : Migration
+    public class Migration0001AddRestrictedLinkTable : Migration
     {
         public override void Up()
         {
