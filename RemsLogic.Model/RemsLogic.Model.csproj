@@ -57,6 +57,7 @@
     <Compile Include="Compliance\PrescriberEoc.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="Compliance\PrescriberEocLogEntry.cs" />
+    <Compile Include="RestrictedLink.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UI\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -67,6 +67,7 @@
     <Compile Include="Sprint14\Migration001AddIsEnabledToSection.cs" />
     <Compile Include="Sprint15\Migration0001AddFacilityAndOrgToPrescriberUpdates.cs" />
     <Compile Include="Sprint15\Migration0002AddDisplayForToEocs.cs" />
+    <Compile Include="Sprint16\Migration0001AddRestrictedLinkTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
