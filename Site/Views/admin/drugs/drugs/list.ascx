@@ -12,12 +12,22 @@
 			"iCookieDuration": (60 * 60 * 24 * 30)
 		});
 	});
+
+    function rebuildEocs() {
+        $.ajax({
+            url: '/api/Dev/DSQ/Drug/RebuildEocs',
+            type: 'GET'
+        }).error(function () {
+            alert('Failed to rebuild EOCs.');
+        });
+    }
 </script> 
 <!-- DATATABLES CSS END -->
 <h1 class="page-title"><%=this.Title %></h1>
 <div class="container_12 clearfix leading">
     <div class="grid_12">
-		<a href="#admin/dsq/edit" class="button" style="float: right; margin-bottom: 10px;">Add Drug</a>
+        <a href="#admin/dsq/edit" class="button" style="float: right; margin-bottom: 10px; margin-left: 8px;">Add Drug</a>
+        <a href="#Dev/DSQ/Drug/RebuildEocs" class="button" style="float: right; margin-bottom: 10px;" onclick="rebuildEocs(); return false;">Rebuild User EOCs</a>
 		<a class="button back-button" href="#" style="margin-bottom: 10px;">Back</a>
         <div id="demo" class="clearfix">
             <table class="display admin-drugs-list" id="drugs-table-<%=ts %>">

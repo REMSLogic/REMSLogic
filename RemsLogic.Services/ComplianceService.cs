@@ -43,7 +43,6 @@ namespace RemsLogic.Services
 
         public void AddEocsToProfile(long profileId, List<string> roles, long drugId)
         {
-            
             // first, load all of the EOCs for the given drug
             List<Eoc> eocs = new List<Eoc>();
 
@@ -89,6 +88,12 @@ namespace RemsLogic.Services
                 prescriberEoc.Deleted = true;
                 _complianceRepo.Save(prescriberEoc);
             }
+        }
+
+        public void RebuildEocs(long profileId, List<string> roles, long drugId)
+        {
+            RemoveEocsFromPrescriberProfile(profileId, drugId);
+            AddEocsToProfile(profileId, roles, drugId);
         }
 
         public Dictionary<Drug, List<PrescriberEoc>> GetEocsStatus(long profileId, string listType)
