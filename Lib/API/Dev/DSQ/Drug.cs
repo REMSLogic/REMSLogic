@@ -8,6 +8,8 @@ using Framework.API;
 using Framework.Security;
 using Lib.Data;
 using Lib.Systems.Notifications;
+using RemsLogic.Services;
+using StructureMap;
 
 namespace Lib.API.Dev.DSQ
 {
@@ -361,6 +363,63 @@ namespace Lib.API.Dev.DSQ
 				}
 			};
 		}
+
+        [Method("Dev/DSQ/Drug/RebuildEocs")]
+        public static ReturnObject RebuildEocs(HttpContext context)
+        {
+            IComplianceService _complianceSvc = ObjectFactory.GetInstance<IComplianceService>();
+
+            Role prescriberRole = Framework.Security.Role.FindByName("view_prescriber");
+            Role providerRole = Framework.Security.Role.FindByName("view_provider");
+
+            List<string> roles = new List<string>();
+
+            // 1. list all users
+            List<User> users = User.FindAll().ToList();
+
+            // 2. loop through each user loading thier drug list
+            foreach(User u in users)
+            {
+                UserProfile userProfile = UserProfile.FindByUser(u);
+                UserList list = UserList.FindByUserProfile(userProfile.ID ?? 0, "drug", null, "My Drugs").FirstOrDefault();
+
+                if(list == null)
+                    continue;
+
+                List<Group> groups = u.GetGroups().ToList();
+
+                if(groups.Any(x => x.HasRole(prescriberRole)))
+                    roles.Add(prescriberRole.Name);
+
+                if(groups.Any(x => x.HasRole(providerRole)))
+                    roles.Add(providerRole.Name);
+
+                // 3. loop through each drug in the list rebuilding eocs
+                List<UserListItem> items = list.GetItems().ToList();
+
+                foreach(UserListItem item in items)
+                {
+                    _complianceSvc.RebuildEocs(userProfile.ID ?? 0, roles, item.ItemID);
+                }
+
+                roles.Clear();
+            }
+
+            // 4. let the user know we finished
+            return new ReturnObject
+            {
+                Result = null,
+                Growl = new ReturnGrowlObject
+                {
+                    Type = "default",
+                    Vars = new ReturnGrowlVarsObject
+                    {
+                        text = "All users have had their EOCs rebuilt (existing time stamps have not been removed).",
+                        title = "Success"
+                    }
+                }
+            };
+        }
 
         private static void SendNotification(Lib.Data.Drug drug)
         {
