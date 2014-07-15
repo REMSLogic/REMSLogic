@@ -25,9 +25,9 @@ namespace RemsLogic.Repositories
             {
                 sql = @"
                     INSERT INTO UserEocs
-                        (ProfileId, DrugId, EocId, DateCompleted, Deleted)
+                        (ProfileId, DrugId, EocId, LinkId, DateCompleted, Deleted)
                     VALUES
-                        (@ProfileId, @DrugId, @EocId, @DateCompleted, @Deleted)";
+                        (@ProfileId, @DrugId, @EocId, @LinkId, @DateCompleted, @Deleted)";
             }
             else
             {
@@ -38,6 +38,7 @@ namespace RemsLogic.Repositories
                             DrugId = @DrugId,
                             EocId = @EocId,
                             DateCompleted = @DateCompleted,
+                            LinkId = @LinkId,
                             Deleted = @Deleted
                     WHERE ID = @UserEocId;";
             }
@@ -51,6 +52,7 @@ namespace RemsLogic.Repositories
                     command.Parameters.AddWithValue("ProfileId", model.PrescriberProfileId);
                     command.Parameters.AddWithValue("DrugId", model.DrugId);
                     command.Parameters.AddWithValue("EocId", model.EocId);
+                    command.Parameters.AddWithValue("LinkId", model.LinkId);
                     command.Parameters.AddWithValue("DateCompleted", model.CompletedAt != null
                         ? (object)model.CompletedAt.Value 
                         : DBNull.Value);
@@ -121,7 +123,36 @@ namespace RemsLogic.Repositories
             return null;
         }
 
+        public PrescriberEoc FindByLinkId(long profileId, long linkId)
+        {
+            const string sql = @"
+                SELECT *
+                FROM UserEocs
+                WHERE
+                    LinkId = @LinkId AND
+                    ProfileId = @ProfileId;";
 
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("LinkId", linkId);
+                    command.Parameters.AddWithValue("ProfileId", profileId);
+
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if(reader.Read())
+                        {
+                            return ReadPrescriberEoc(reader);
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
 
         public Eoc GetEoc(long id)
         {
@@ -329,6 +360,30 @@ namespace RemsLogic.Repositories
                 }
             }
         }
+
+        public void RemovePrescriberEocs(long profileId, long drugId)
+        {
+            const string sql = @"
+                UPDATE UserEocs
+                    SET
+                        Deleted = 1
+                WHERE
+                    ProfileId = @ProfileId AND
+                    DrugId = @DrugId;";
+
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("ProfileId", profileId);
+                    command.Parameters.AddWithValue("DrugId", drugId);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
         #endregion
 
         #region Utility Methods
@@ -361,6 +416,7 @@ namespace RemsLogic.Repositories
                 PrescriberProfileId = (long)reader["ProfileId"],
                 DrugId = (long)reader["DrugId"],
                 EocId = (long)reader["EocId"],
+                LinkId = (long)reader["LinkId"],
                 CompletedAt = reader["DateCompleted"] != DBNull.Value
                     ? (DateTime)reader["DateCompleted"]
                     : (DateTime?)null,
