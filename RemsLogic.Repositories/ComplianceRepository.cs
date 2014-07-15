@@ -121,7 +121,36 @@ namespace RemsLogic.Repositories
             return null;
         }
 
+        public PrescriberEoc FindByLinkId(long profileId, long linkId)
+        {
+            const string sql = @"
+                SELECT *
+                FROM UserEocs
+                WHERE
+                    LinkId = @DrugId AND
+                    ProfileId = @ProfileId;";
 
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("LinkId", linkId);
+                    command.Parameters.AddWithValue("ProfileId", profileId);
+
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if(reader.Read())
+                        {
+                            return ReadPrescriberEoc(reader);
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
 
         public Eoc GetEoc(long id)
         {
@@ -326,6 +355,30 @@ namespace RemsLogic.Repositories
                             yield return ReadPrescriberEocLogEntry(reader);
                         }
                     }
+                }
+            }
+        }
+
+        public void RemovePrescriberEocs(long profileId, long drugId)
+        {
+            const string sql = @"
+                UPDATE UserEocs
+                    SET
+                        Deleted = 1
+                WHERE
+                    ProfileId = @ProfileId AND
+                    DrugId = @DrugId;";
+
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("ProfileId", profileId);
+                    command.Parameters.AddWithValue("DrugId", drugId);
+
+                    command.ExecuteNonQuery();
                 }
             }
         }
