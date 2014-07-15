@@ -29,12 +29,17 @@ namespace RemsLogic.Services
             return _complianceRepo.Find(profileId, drugId, eocId);
         }
 
+        public PrescriberEoc FindByLinkId(long profileId, long linkId)
+        {
+            return _complianceRepo.FindByLinkId(profileId, linkId);
+        }
+
         public void RecordCompliance(PrescriberEoc prescriberEoc)
         {
             _complianceRepo.Save(prescriberEoc);
 
             // TODO: Optimize this.  This approach is terrible
-            PrescriberEoc eoc = _complianceRepo.Find(prescriberEoc.PrescriberProfileId, prescriberEoc.DrugId, prescriberEoc.EocId);
+            PrescriberEoc eoc = _complianceRepo.FindByLinkId(prescriberEoc.PrescriberProfileId, prescriberEoc.LinkId);
 
             if(eoc.Id > 0 && eoc.CompletedAt != null)
                 LogEocComplianceEntry(eoc.Id, eoc.CompletedAt.Value);

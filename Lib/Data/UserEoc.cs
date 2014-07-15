@@ -31,6 +31,8 @@ namespace Lib.Data
 		public long EocID;
 		[Column]
 		public DateTime DateCompleted;
+        [Column]
+        public long LinkId;
 
 		public UserEoc(long? id = null) : base( id )
 		{ }

@@ -402,6 +402,10 @@ namespace Lib.Web.Controls
                 */
                 
                 PrescriberEoc prescriberEoc = complianceRepo.FindByLinkId(Systems.Security.GetCurrentProfile().ID ?? 0, answer.ID ?? 0);
+
+                if(prescriberEoc == null)
+                    return;
+
                 bool is_certified = prescriberEoc != null && prescriberEoc.CompletedAt != null;
 
                 DateTime? date_certified = prescriberEoc != null
@@ -414,6 +418,7 @@ namespace Lib.Web.Controls
 		        writer.AddAttribute( "class", "clearfix form-row has-parent eoc-certify-row" + ((is_certified) ? " eoc-certified" : "") );
 		        writer.RenderBeginTag( "div" );
 		        {
+                    /*
 			        writer.AddAttribute( "class", "label-wrapper clearfix" );
 			        writer.RenderBeginTag( "div" );
 			        {
@@ -426,6 +431,7 @@ namespace Lib.Web.Controls
 				        writer.RenderEndTag();
 			        }
 			        writer.RenderEndTag();
+                    */
 
 			        writer.AddAttribute( "class", "form-input" );
 			        writer.RenderBeginTag( "div" );
