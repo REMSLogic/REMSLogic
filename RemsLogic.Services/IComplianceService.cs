@@ -8,8 +8,6 @@ namespace RemsLogic.Services
     public interface IComplianceService
     {
         PrescriberEoc Find(long profileId, long drugId, long eocId);
-        PrescriberEoc FindByLinkId(long profileId, long linkId);
-
         void RecordCompliance(PrescriberEoc prescriberEoc);
         void LogEocComplianceEntry(long precriberEocId, DateTime recordedAt);
 

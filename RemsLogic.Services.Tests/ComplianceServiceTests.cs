@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using RemsLogic.Model.Compliance;
@@ -14,7 +15,6 @@ namespace RemsLogic.Services.Tests
     {
         private IComplianceRepository _complianceRepo;
         private IDrugRepository _drugRepo;
-        private IDsqRepository _dsqRepo;
         private IComplianceService _complianceSvc;
 
         [SetUp]
@@ -22,9 +22,8 @@ namespace RemsLogic.Services.Tests
         {
             _complianceRepo = MockRepository.GenerateStub<IComplianceRepository>();
             _drugRepo = MockRepository.GenerateStub<IDrugRepository>();
-            _dsqRepo = MockRepository.GenerateStub<IDsqRepository>();
 
-            _complianceSvc = new ComplianceService(_drugRepo, _complianceRepo, _dsqRepo);
+            _complianceSvc = new ComplianceService(_drugRepo, _complianceRepo);
         }
 
         [Test]
