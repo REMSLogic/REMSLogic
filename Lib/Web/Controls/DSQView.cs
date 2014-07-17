@@ -184,6 +184,17 @@ namespace Lib.Web.Controls
                 return;
             }
 
+            Eoc eocForQ = complianceRepo.GetEoc(DrugID.Value, q.ID.Value);
+            bool for_eoc = false;
+
+            if(eocForQ != null)
+            {
+                if(eocForQ.AppliesTo.Any(r => Framework.Security.Manager.HasRole(r)))
+                {
+                    for_eoc = true;
+                }
+            }
+
 			string cssClass = "clearfix form-row";
 			if (has_children)
 				cssClass += " has-children";
@@ -203,17 +214,14 @@ namespace Lib.Web.Controls
 			writer.AddAttribute("for", "form-q-"+q.ID.Value.ToString());
 			writer.RenderBeginTag("label");
 
-            /*
 			if( for_eoc )
 			{
 				writer.AddAttribute( "class", "form-label-text" );
 				writer.RenderBeginTag( "span" );
 			}
-            */
 
 			writer.WriteEncodedText(q.ViewText);
 
-            /*
 			if( for_eoc )
 			{
 				writer.RenderEndTag();
@@ -226,7 +234,6 @@ namespace Lib.Web.Controls
 
 				writer.RenderEndTag();
 			}
-            */
 
 			writer.RenderEndTag();
 
@@ -259,17 +266,129 @@ namespace Lib.Web.Controls
 			}
 
 			writer.RenderEndTag();
-			writer.RenderEndTag();
+
 			writer.RenderEndTag();
 
-			if( has_children)
+			writer.RenderEndTag();
+
+			bool eoc_applies = false;
+			Lib.Data.Eoc eoc = null;
+
+			if( for_eoc )
+			{
+                /*
+				eoc = new Lib.Data.Eoc( long.Parse(q.Answers) );
+				if( eoc != null )
+				{
+					var profile = Systems.Security.GetCurrentProfile();
+					if( profile != null && eoc.HasUserType( profile.UserTypeID ) )
+						eoc_applies = true;
+				}
+                */
+
+                // code has been changed to only display as an eoc if the
+                // eoc applies to the current user.
+                eoc_applies = for_eoc;
+			}
+
+			if( has_children || eoc_applies )
 			{
 				writer.AddAttribute("id", "form-q-" + q.ID.Value.ToString()+"-children");
 				writer.AddAttribute("class", "contains-children");
 				writer.RenderBeginTag("div");
 
-				foreach( var cq in children )
-					RenderQuestion( writer, cq );
+                /*
+				var drugs = Lib.Systems.Lists.GetMyDrugList().GetItems<Lib.Data.Drug>();
+				bool has_drug = false;
+
+				foreach( var d in drugs )
+					if( d.ID == Drug.ID )
+						has_drug = true;
+                */
+
+                var userList = Lib.Systems.Lists.GetMyDrugList().GetItems();
+                bool has_drug = userList.Any(x => x.ItemID == Drug.ID);
+
+				if( eoc_applies && has_drug )
+				{
+                    PrescriberEoc prescriberEoc = complianceRepo.Find(Systems.Security.GetCurrentProfile().ID ?? 0, Drug.ID ?? 0, eocForQ.Id);
+                    bool is_certified = prescriberEoc != null 
+                        ? prescriberEoc.CompletedAt != null
+                        : false;
+
+                    DateTime? date_certified = prescriberEoc != null
+                        ? prescriberEoc.CompletedAt
+                        : null;
+
+					writer.AddAttribute( "data-parent-id", q.ID.Value.ToString() );
+					writer.AddAttribute( "data-parent-checks", "Required|Optional" );
+					writer.AddAttribute( "data-id", q.ID.Value.ToString() + "-certify" );
+					writer.AddAttribute( "class", "clearfix form-row has-parent eoc-certify-row" + ((is_certified) ? " eoc-certified" : "") );
+					writer.RenderBeginTag( "div" );
+					{
+						writer.AddAttribute( "class", "label-wrapper clearfix" );
+						writer.RenderBeginTag( "div" );
+						{
+							writer.AddAttribute( "class", "form-label" );
+							writer.AddAttribute( "for", "form-q-" + q.ID.Value.ToString() );
+							writer.RenderBeginTag( "label" );
+							{
+								writer.WriteEncodedText( "Yes, I acknowledge that I am aware of the " + q.ViewText + " requirement for this REMS medication" );
+							}
+							writer.RenderEndTag();
+						}
+						writer.RenderEndTag();
+
+						writer.AddAttribute( "class", "form-input" );
+						writer.RenderBeginTag( "div" );
+						{
+							if( is_certified )
+							{
+								writer.AddAttribute( "alt", "Certified" );
+								writer.AddAttribute( "class", "eoc-certified-icon" );
+								writer.AddAttribute( "src", "/images/Warning_Green_Check.png" );
+								writer.RenderBeginTag( "img" );
+								writer.RenderEndTag();
+
+								writer.RenderBeginTag( "span" );
+								{
+									writer.WriteEncodedText( "Complete as of " + date_certified.Value.ToShortDateString() + " " + date_certified.Value.ToShortTimeString() );
+								}
+								writer.RenderEndTag();
+							}
+							else
+							{
+								writer.AddAttribute( "alt", "Not Certified" );
+								writer.AddAttribute( "class", "eoc-certified-icon" );
+								writer.AddAttribute( "src", "/images/Warning_Yellow_Exclimation.png" );
+								writer.RenderBeginTag( "img" );
+								writer.RenderEndTag();
+
+								writer.AddAttribute( "class", "button ajax-button" );
+								writer.AddAttribute( "href", "/api/App/Users/Certified?drug_id=" + Drug.ID.Value + "&eoc_name=" + eocForQ.Name );
+								writer.RenderBeginTag( "a" );
+								{
+									writer.WriteEncodedText( "YES" );
+								}
+								writer.RenderEndTag();
+
+								writer.RenderBeginTag( "span" );
+								{
+									writer.WriteEncodedText( "Reviewed Requirements?" );
+								}
+								writer.RenderEndTag();
+							}
+						}
+						writer.RenderEndTag();
+					}
+					writer.RenderEndTag();
+				}
+
+				if( has_children )
+				{
+					foreach( var cq in children )
+						RenderQuestion( writer, cq );
+				}
 
 				writer.RenderEndTag();
 			}
@@ -383,100 +502,6 @@ namespace Lib.Web.Controls
                     }
 				}
 				writer.RenderEndTag();
-
-                IComplianceRepository complianceRepo = ObjectFactory.GetInstance<IComplianceRepository>();
-                IDsqRepository dsqRepo = ObjectFactory.GetInstance<IDsqRepository>();
-
-                /*
-                Eoc eocForLink = complianceRepo.GetEocForLink(DrugID.Value, q.ID.Value);
-
-                if(eocForLink == null || !eocForLink.AppliesTo.Any(r => Framework.Security.Manager.HasRole(r)))
-                    return;
-
-                var userList = Lib.Systems.Lists.GetMyDrugList().GetItems();  
-
-                if(!userList.Any(x => x.ItemID == Drug.ID))
-                    return;
-
-                PrescriberEoc prescriberEoc = complianceRepo.Find(Systems.Security.GetCurrentProfile().ID ?? 0, Drug.ID ?? 0, eocForLink.Id);
-                */
-                
-                PrescriberEoc prescriberEoc = complianceRepo.FindByLinkId(Systems.Security.GetCurrentProfile().ID ?? 0, answer.ID ?? 0);
-
-                if(prescriberEoc == null)
-                    return;
-
-                bool is_certified = prescriberEoc != null && prescriberEoc.CompletedAt != null;
-
-                DateTime? date_certified = prescriberEoc != null
-                    ? prescriberEoc.CompletedAt
-                    : null;
-
-		        writer.AddAttribute( "data-parent-id", q.ID.Value.ToString() );
-		        writer.AddAttribute( "data-parent-checks", "Required|Optional" );
-		        writer.AddAttribute( "data-id", q.ID.Value.ToString() + "-certify" );
-		        writer.AddAttribute( "class", "clearfix form-row has-parent eoc-certify-row" + ((is_certified) ? " eoc-certified" : "") );
-		        writer.RenderBeginTag( "div" );
-		        {
-                    /*
-			        writer.AddAttribute( "class", "label-wrapper clearfix" );
-			        writer.RenderBeginTag( "div" );
-			        {
-				        writer.AddAttribute( "class", "form-label" );
-				        writer.AddAttribute( "for", "form-q-" + q.ID.Value.ToString() );
-				        writer.RenderBeginTag( "label" );
-				        {
-					        writer.WriteEncodedText( "Yes, I acknowledge that I am aware of the " + q.ViewText + " requirement for this REMS medication" );
-				        }
-				        writer.RenderEndTag();
-			        }
-			        writer.RenderEndTag();
-                    */
-
-			        writer.AddAttribute( "class", "form-input" );
-			        writer.RenderBeginTag( "div" );
-			        {
-				        if( is_certified )
-				        {
-					        writer.AddAttribute( "alt", "Certified" );
-					        writer.AddAttribute( "class", "eoc-certified-icon" );
-					        writer.AddAttribute( "src", "/images/Warning_Green_Check.png" );
-					        writer.RenderBeginTag( "img" );
-					        writer.RenderEndTag();
-
-					        writer.RenderBeginTag( "span" );
-					        {
-						        writer.WriteEncodedText( "Complete as of " + date_certified.Value.ToShortDateString() + " " + date_certified.Value.ToShortTimeString() );
-					        }
-					        writer.RenderEndTag();
-				        }
-				        else
-				        {
-					        writer.AddAttribute( "alt", "Not Certified" );
-					        writer.AddAttribute( "class", "eoc-certified-icon" );
-					        writer.AddAttribute( "src", "/images/Warning_Yellow_Exclimation.png" );
-					        writer.RenderBeginTag( "img" );
-					        writer.RenderEndTag();
-
-					        writer.AddAttribute( "class", "button ajax-button" );
-					        //writer.AddAttribute( "href", "/api/App/Users/Certified?drug_id=" + Drug.ID.Value + "&eoc_name=" + eocForLink.Name );
-                            writer.AddAttribute( "href", "/api/App/Users/Certified?link_id=" + answer.ID );
-					        writer.RenderBeginTag( "a" );
-					        {
-						        writer.WriteEncodedText( "YES" );
-					        }
-					        writer.RenderEndTag();
-
-					        writer.RenderBeginTag( "span" );
-					        {
-						        writer.WriteEncodedText( "Reviewed Requirements?" );
-					        }
-					        writer.RenderEndTag();
-				        }
-			        }
-			        writer.RenderEndTag();
-		        }
-		        writer.RenderEndTag();
 			}
 		}
 	}

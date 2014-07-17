@@ -92,31 +92,6 @@ namespace RemsLogic.Repositories
             return null;
         }
 
-        public IEnumerable<DsqLink> GetLinks(long drugId)
-        {
-            const string sql = @"
-                SELECT *
-                FROM DSQ_Links
-                WHERE
-                    DrugId = @DrugId;";
-
-            using(SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-
-                using(SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue("DrugId", drugId);
-
-                    using(SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while(reader.Read())
-                            yield return ReadLink(reader);
-                    }
-                }
-            }
-        }
-
         public IEnumerable<DsqLink> GetLinks(long drugId, long questionid)
         {
             const string sql = @"
