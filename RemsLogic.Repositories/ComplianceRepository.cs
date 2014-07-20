@@ -451,6 +451,7 @@ namespace RemsLogic.Repositories
                 DrugId = (long)reader["DrugId"],
                 EocId = (long)reader["EocId"],
                 LinkId = (long)reader["LinkId"],
+                QuestionId = (long)reader["QuestionId"],
                 CompletedAt = reader["DateCompleted"] != DBNull.Value
                     ? (DateTime)reader["DateCompleted"]
                     : (DateTime?)null,

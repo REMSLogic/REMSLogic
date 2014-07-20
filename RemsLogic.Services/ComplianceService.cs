@@ -34,6 +34,11 @@ namespace RemsLogic.Services
             return _complianceRepo.FindByLinkId(profileId, linkId);
         }
 
+        public IEnumerable<PrescriberEoc> GetPrescriberEocs(long drugId, long questionId, long userProfileId)
+        {
+            return _complianceRepo.GetPrescriberEocs(drugId, questionId, userProfileId);
+        }
+
         public void RecordCompliance(PrescriberEoc prescriberEoc)
         {
             _complianceRepo.Save(prescriberEoc);
@@ -52,35 +57,6 @@ namespace RemsLogic.Services
 
         public void AddEocsToProfile(long profileId, List<string> roles, long drugId)
         {
-            /*
-            // first, load all of the EOCs for the given drug
-            List<Eoc> eocs = new List<Eoc>();
-
-            foreach(string role in roles)
-                eocs.AddRange(_complianceRepo.GetByDrugAndRole(drugId, role, true).ToList());
-
-            // now make sure that the presriber has the requirment setup correctly
-            foreach(Eoc eoc in eocs)
-            {
-                // try and load an existing eoc.  if one isn't found, create a new one
-                PrescriberEoc prescriberEoc = _complianceRepo.Find(profileId, drugId, eoc.Id) 
-                    ?? new PrescriberEoc
-                    {
-                        PrescriberProfileId = profileId,
-                        EocId = eoc.Id,
-                        DrugId = drugId,
-                        CompletedAt = null
-                    };
-
-                // set deleted to false (there may have been one that previously
-                // existed but was deleted
-                prescriberEoc.Deleted = false;
-
-                // save the prescriber eoc
-                _complianceRepo.Save(prescriberEoc);
-            }
-            */
-
             // get a list of eoc ids that apply to the roles
             List<long> eocIds = (
                 from e in _complianceRepo.GetEocs()
@@ -121,24 +97,6 @@ namespace RemsLogic.Services
 
         public void RemoveEocsFromPrescriberProfile(long profileId, long drugId)
         {
-            /*
-            // first, load all of hte eocs for the given drug
-            List<Eoc> eocs = _complianceRepo.GetByDrug(drugId).ToList();
-
-            // now "delete" each eoc from the user's profile.  the entries are
-            // only marked as deleted.  they are not actually deleted
-            foreach(Eoc eoc in eocs)
-            {
-                PrescriberEoc prescriberEoc = _complianceRepo.Find(profileId, drugId, eoc.Id);
-
-                if(prescriberEoc == null)
-                    continue;
-
-                prescriberEoc.Deleted = true;
-                _complianceRepo.Save(prescriberEoc);
-            }
-            */
-
             _complianceRepo.RemovePrescriberEocs(profileId, drugId);
         }
 

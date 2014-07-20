@@ -10,6 +10,8 @@ namespace RemsLogic.Services
         PrescriberEoc Find(long profileId, long drugId, long eocId);
         PrescriberEoc FindByLinkId(long profileId, long linkId);
 
+        IEnumerable<PrescriberEoc> GetPrescriberEocs(long drugId, long questionId, long userProfileId);
+
         void RecordCompliance(PrescriberEoc prescriberEoc);
         void LogEocComplianceEntry(long precriberEocId, DateTime recordedAt);
 
