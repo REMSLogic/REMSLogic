@@ -9,6 +9,7 @@ namespace RemsLogic.Repositories
         void LogEocComplianceEntry(long prescriberEocId, DateTime recordedAt);
 
         PrescriberEoc Find(long profileId, long drugId, long eocId);
+        PrescriberEoc FindByLinkId(long profileId, long linkId);
 
         Eoc GetEoc(long eocId);
         Eoc GetEoc(long drugId, long questionId);
@@ -20,5 +21,7 @@ namespace RemsLogic.Repositories
         IEnumerable<PrescriberEoc> GetPrescriberEocs(long drugId, long questionId, long userProfileId);
 
         IEnumerable<PrescriberEocLogEntry> GetComplianceLog(long prescriberEocID);
+
+        void RemovePrescriberEocs(long profileId, long drugId);
     }
 }

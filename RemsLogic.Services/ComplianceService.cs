@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RemsLogic.Model;
 using RemsLogic.Model.Compliance;
+using RemsLogic.Model.Dsq;
 using RemsLogic.Repositories;
 
 namespace RemsLogic.Services
@@ -11,13 +12,16 @@ namespace RemsLogic.Services
     {
         private readonly IDrugRepository _drugRepo;
         private readonly IComplianceRepository _complianceRepo;
+        private readonly IDsqRepository _dsqRepo;
 
         public ComplianceService(
             IDrugRepository drugRepo,
-            IComplianceRepository complianceRepo)
+            IComplianceRepository complianceRepo,
+            IDsqRepository dsqRep)
         {
             _drugRepo = drugRepo;
             _complianceRepo = complianceRepo;
+            _dsqRepo = dsqRep;
         }
 
         public PrescriberEoc Find(long profileId, long drugId, long eocId)
@@ -40,7 +44,7 @@ namespace RemsLogic.Services
             _complianceRepo.Save(prescriberEoc);
 
             // TODO: Optimize this.  This approach is terrible
-            PrescriberEoc eoc = _complianceRepo.Find(prescriberEoc.PrescriberProfileId, prescriberEoc.DrugId, prescriberEoc.EocId);
+            PrescriberEoc eoc = _complianceRepo.FindByLinkId(prescriberEoc.PrescriberProfileId, prescriberEoc.LinkId);
 
             if(eoc.Id > 0 && eoc.CompletedAt != null)
                 LogEocComplianceEntry(eoc.Id, eoc.CompletedAt.Value);
@@ -53,7 +57,6 @@ namespace RemsLogic.Services
 
         public void AddEocsToProfile(long profileId, List<string> roles, long drugId)
         {
-<<<<<<< HEAD
             // get a list of eoc ids that apply to the roles
             List<long> eocIds = (
                 from e in _complianceRepo.GetEocs()
@@ -80,24 +83,6 @@ namespace RemsLogic.Services
                         DrugId = drugId,
                         LinkId = link.Id,
                         QuestionId = link.QuestionId,
-=======
-            // first, load all of the EOCs for the given drug
-            List<Eoc> eocs = new List<Eoc>();
-
-            foreach(string role in roles)
-                eocs.AddRange(_complianceRepo.GetByDrugAndRole(drugId, role, true).ToList());
-
-            // now make sure that the presriber has the requirment setup correctly
-            foreach(Eoc eoc in eocs)
-            {
-                // try and load an existing eoc.  if one isn't found, create a new one
-                PrescriberEoc prescriberEoc = _complianceRepo.Find(profileId, drugId, eoc.Id) 
-                    ?? new PrescriberEoc
-                    {
-                        PrescriberProfileId = profileId,
-                        EocId = eoc.Id,
-                        DrugId = drugId,
->>>>>>> cc150d639a1dcf6658dc30143df67cb6fa8d5756
                         CompletedAt = null
                     };
 
@@ -112,25 +97,7 @@ namespace RemsLogic.Services
 
         public void RemoveEocsFromPrescriberProfile(long profileId, long drugId)
         {
-<<<<<<< HEAD
             _complianceRepo.RemovePrescriberEocs(profileId, drugId);
-=======
-            // first, load all of hte eocs for the given drug
-            List<Eoc> eocs = _complianceRepo.GetByDrug(drugId).ToList();
-
-            // now "delete" each eoc from the user's profile.  the entries are
-            // only marked as deleted.  they are not actually deleted
-            foreach(Eoc eoc in eocs)
-            {
-                PrescriberEoc prescriberEoc = _complianceRepo.Find(profileId, drugId, eoc.Id);
-
-                if(prescriberEoc == null)
-                    continue;
-
-                prescriberEoc.Deleted = true;
-                _complianceRepo.Save(prescriberEoc);
-            }
->>>>>>> cc150d639a1dcf6658dc30143df67cb6fa8d5756
         }
 
         public void RebuildEocs(long profileId, List<string> roles, long drugId)

@@ -236,9 +236,10 @@ namespace Lib.Data
             long profileId = Systems.Security.GetCurrentProfile().ID.Value;
 
             IDrugRepository drugRepo = new DrugRepository(connectionString);
+            IDsqRepository dsqRepo = new DsqRepository(connectionString);
             IComplianceRepository complianceRepo = new ComplianceRepository(connectionString);
 
-            IComplianceService complianceSvc = new ComplianceService(drugRepo, complianceRepo);
+            IComplianceService complianceSvc = new ComplianceService(drugRepo, complianceRepo, dsqRepo);
 
             var eocs = complianceSvc.GetEocsStatus(profileId, DrugListType.MyDrugs);
 
