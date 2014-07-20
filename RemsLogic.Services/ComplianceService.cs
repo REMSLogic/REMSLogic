@@ -106,6 +106,7 @@ namespace RemsLogic.Services
                         EocId = link.EocId,
                         DrugId = drugId,
                         LinkId = link.Id,
+                        QuestionId = link.QuestionId,
                         CompletedAt = null
                     };
 

@@ -9,6 +9,7 @@ namespace RemsLogic.Model.Compliance
         public long DrugId {get; set;}
         public long EocId {get; set;}
         public long LinkId {get; set;}
+        public long QuestionId {get; set;}
         public DateTime? CompletedAt {get; set;}
         public bool Deleted {get; set;}
 
