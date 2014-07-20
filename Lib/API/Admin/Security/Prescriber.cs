@@ -98,7 +98,7 @@ namespace Lib.API.Admin.Security
             address.Save();
 
             userProfile.UserID = user.ID.Value;
-            userProfile.UserTypeID = 0;
+            userProfile.UserTypeID = 3;
             userProfile.PrimaryAddressID = address.ID.Value;
             userProfile.PrimaryContactID = contact.ID.Value;
             userProfile.Save();
