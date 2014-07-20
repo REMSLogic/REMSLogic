@@ -27,7 +27,7 @@
 <div class="container_12 clearfix leading">
     <div class="grid_12">
         <a href="#admin/dsq/edit" class="button" style="float: right; margin-bottom: 10px; margin-left: 8px;">Add Drug</a>
-        <a href="#Dev/DSQ/Drug/RebuildEocs" class="button" style="float: right; margin-bottom: 10px;" onclick="rebuildEocs(); return false;">Rebuild User EOCs</a>
+        <a href="#Dev/DSQ/Drug/RebuildEocs&force=<%=Guid.NewGuid()%>" class="button" style="float: right; margin-bottom: 10px;" onclick="rebuildEocs(); return false;">Rebuild User EOCs</a>
 		<a class="button back-button" href="#" style="margin-bottom: 10px;">Back</a>
         <div id="demo" class="clearfix">
             <table class="display admin-drugs-list" id="drugs-table-<%=ts %>">

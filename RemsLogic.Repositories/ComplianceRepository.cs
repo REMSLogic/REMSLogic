@@ -25,9 +25,9 @@ namespace RemsLogic.Repositories
             {
                 sql = @"
                     INSERT INTO UserEocs
-                        (ProfileId, DrugId, EocId, LinkId, DateCompleted, Deleted)
+                        (ProfileId, DrugId, EocId, LinkId, QuestionId, DateCompleted, Deleted)
                     VALUES
-                        (@ProfileId, @DrugId, @EocId, @LinkId, @DateCompleted, @Deleted)";
+                        (@ProfileId, @DrugId, @EocId, @LinkId, @QuestionId, @DateCompleted, @Deleted)";
             }
             else
             {
@@ -39,6 +39,7 @@ namespace RemsLogic.Repositories
                             EocId = @EocId,
                             DateCompleted = @DateCompleted,
                             LinkId = @LinkId,
+                            QuestionId = @QuestionId,
                             Deleted = @Deleted
                     WHERE ID = @UserEocId;";
             }
@@ -53,6 +54,7 @@ namespace RemsLogic.Repositories
                     command.Parameters.AddWithValue("DrugId", model.DrugId);
                     command.Parameters.AddWithValue("EocId", model.EocId);
                     command.Parameters.AddWithValue("LinkId", model.LinkId);
+                    command.Parameters.AddWithValue("QuestionId", model.QuestionId);
                     command.Parameters.AddWithValue("DateCompleted", model.CompletedAt != null
                         ? (object)model.CompletedAt.Value 
                         : DBNull.Value);
@@ -320,6 +322,38 @@ namespace RemsLogic.Repositories
                 using(SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("ProfileId", profileId);
+
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while(reader.Read())
+                        {
+                            yield return ReadPrescriberEoc(reader);
+                        }
+                    }
+                }
+            }
+        }
+
+        public IEnumerable<PrescriberEoc> GetPrescriberEocs(long drugId, long questionId, long userProfileId)
+        {
+            const string sql = @"
+                SELECT *
+                FROM UserEocs
+                WHERE
+                    ProfileId = @ProfileId AND
+                    DrugId = @DrugId AND
+                    QuestionId = @QuestionId AND
+                    Deleted = 0;";
+
+            using(SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("ProfileId", userProfileId);
+                    command.Parameters.AddWithValue("DrugId", drugId);
+                    command.Parameters.AddWithValue("QuestionId", questionId);
 
                     using(SqlDataReader reader = command.ExecuteReader())
                     {
