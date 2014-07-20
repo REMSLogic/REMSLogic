@@ -11,7 +11,6 @@ namespace RemsLogic.Repositories
         
         // DSQ_Links
         DsqLink GetLink(long id);
-        IEnumerable<DsqLink> GetLinks(long drugId);
         IEnumerable<DsqLink> GetLinks(long drugId, long questionid);
 
         void SaveLink(DsqLink link);

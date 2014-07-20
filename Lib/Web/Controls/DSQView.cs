@@ -190,19 +190,6 @@ namespace Lib.Web.Controls
                 return;
             }
 
-            /*
-            Eoc eocForQ = complianceRepo.GetEoc(DrugID.Value, q.ID.Value);
-            bool for_eoc = false;
-
-            if(eocForQ != null)
-            {
-                if(eocForQ.AppliesTo.Any(r => Framework.Security.Manager.HasRole(r)))
-                {
-                    for_eoc = true;
-                }
-            }
-            */
-
             List<PrescriberEoc> eocs = complianceRepo.GetPrescriberEocs(DrugID ?? 0, q.ID ?? 0, _userProfile.ID ?? 0).ToList();
             bool for_eoc = (eocs.Count > 0);
 
