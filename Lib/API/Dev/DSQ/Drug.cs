@@ -222,8 +222,6 @@ namespace Lib.API.Dev.DSQ
 			{
 				item.DetermineEOC();
                 Lib.Systems.Lists.UpdateDrugLists( item );
-
-                SendNotification(item);
 			}
 
 			return new ReturnObject()
