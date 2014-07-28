@@ -178,9 +178,8 @@
                 
                     <section>
                           <video id="training_video_1" class="video-js vjs-default-skin" controls preload="none" width="100%" height="600"
-                              poster="../Videos/training-1-cover.png"
                               data-setup="{}">
-                            <source src="../Videos/training-1.mp4" type='video/mp4' />
+                            <source src="../Videos/prescriber-training.mp4" type='video/mp4' />
                             <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
                           </video>
                         <input type="checkbox" name="watched-video" required="required" /> I watched the complete video.
