@@ -128,5 +128,23 @@ namespace Framework.Security
 
 			return (num >= 1);
 		}
+
+        public override bool Equals(object obj)
+        {
+            if(obj == null)
+                return false;
+
+            User u = obj as User;
+            
+            if(u == null)
+                return false;
+
+            return u.ID == ID;
+        }
+
+        public override int GetHashCode()
+        {
+            return ID.GetHashCode();
+        }
 	}
 }
