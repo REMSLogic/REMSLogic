@@ -46,36 +46,17 @@ namespace Lib.API.Provider
 
             var prescriberProf = new PrescriberProfile
             {
+                Guid = Guid.NewGuid(),
+                ProviderID = provider.ID.Value,
 				ContactID = contact.ID.Value,
                 AddressID = address.ID.Value,
                 Expires = DateTime.Now.AddYears(1),
-                ProviderID = provider.ID.Value,
+                PrimaryFacilityID = providerProfile.PrimaryFacilityID,
+                OrganizationId = providerProfile.OrganizationID,
                 Deleted = false,
-                Guid = Guid.NewGuid()
             };
 
             prescriberProf.Save();
-
-            if(providerProfile != null && providerProfile.PrimaryFacilityID != null && providerProfile.PrimaryFacilityID > 0)
-            {
-                ProviderFacility facility = new ProviderFacility(providerProfile.PrimaryFacilityID);
-
-                prescriberProf.AddFacility(facility);
-                prescriberProf.PrimaryFacilityID = facility.ID;
-                prescriberProf.Save();
-
-                if(facility.AddressID > 0)
-                {
-                    Address facilityAddr = new Address(facility.AddressID);
-
-                    prescriberProf.Address.Street1 = facilityAddr.Street1;
-                    prescriberProf.Address.Street2 = facilityAddr.Street2;
-                    prescriberProf.Address.City = facilityAddr.City;
-                    prescriberProf.Address.State = facilityAddr.State;
-                    prescriberProf.Address.Zip = facilityAddr.Zip;
-                    prescriberProf.Address.Country = facilityAddr.Country;
-                }
-            }
 
 			var data = new Dictionary<string, object> {
                 {"Message", (message != null)? message : "You have been invited to use the REMS Logic system.  Please click the link below to complete your profile"},

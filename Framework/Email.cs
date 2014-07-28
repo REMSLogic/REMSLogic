@@ -12,8 +12,6 @@ namespace Framework
 	{
 		public static void SendEmail(string to, string subject, string message, string from_email = null, string from_name = null, bool isHtml = true)
 		{
-            return;
-
 			var msg = new MailMessage();
 			msg.To.Add(to);
 
@@ -30,7 +28,7 @@ namespace Framework
 			msg.Body = message;
 
 			var client = new SmtpClient();
-			//client.Send(msg);
+			client.Send(msg);
 		}
 
 		public class TemplateOverrides
@@ -42,8 +40,6 @@ namespace Framework
 
 		public static void SendTemplate( string template_name, Dictionary<string, object> data, TemplateOverrides overrides = null )
 		{
-            return;
-
 			var template_path = System.Web.HttpContext.Current.Server.MapPath(Config.Manager.Framework.Email.Template.Path);
 			var base_path = Path.Combine( template_path, template_name );
 
