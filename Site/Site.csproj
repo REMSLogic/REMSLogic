@@ -1793,10 +1793,18 @@
     <Content Include="Logout.aspx" />
     <Content Include="Page.aspx" />
     <Content Include="SignUp.aspx" />
-    <Content Include="Templates\Generic\template.html" />
-    <Content Include="Templates\HCOReminder\template.html" />
-    <Content Include="Templates\NewsAndUpdates\template.html" />
-    <Content Include="Templates\PrescriberInvite\template.html" />
+    <None Include="Templates\Generic\template.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\HCOReminder\template.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\NewsAndUpdates\template.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\PrescriberInvite\template.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="test.aspx" />
     <Content Include="Video.aspx" />
     <Content Include="Videos\prescriber-training.mp4" />
@@ -1917,10 +1925,18 @@
     <Content Include="js\video-js\font\vjs.woff" />
     <Content Include="js\video-js\video-js.less" />
     <Content Include="Master\Front.Master" />
-    <None Include="Templates\Generic\config.json" />
-    <None Include="Templates\HCOReminder\config.json" />
-    <None Include="Templates\NewsAndUpdates\config.json" />
-    <None Include="Templates\PrescriberInvite\config.json" />
+    <None Include="Templates\Generic\config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\HCOReminder\config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\NewsAndUpdates\config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\PrescriberInvite\config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="downloads\8715dft.pdf" />
     <None Include="Properties\PublishProfiles\Development Publishing Profile.pubxml" />
     <None Include="Properties\PublishProfiles\Production Publishing Profile.pubxml" />
