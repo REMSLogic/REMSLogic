@@ -90,7 +90,8 @@ namespace Lib.Systems
 
 		public static bool SelectionsUpdateRequired()
 		{
-			return SelectionsUpdateRequired( Lib.Systems.Security.GetCurrentUser() );
+			//return SelectionsUpdateRequired( Lib.Systems.Security.GetCurrentUser() );
+            return false;
 		}
 
         // MJL 2013-11-06 - Technically the method above could be used to accomplish the same
