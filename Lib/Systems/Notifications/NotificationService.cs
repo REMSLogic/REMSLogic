@@ -196,6 +196,7 @@ namespace Lib.Systems.Notifications
 
             UserPreferences pref = UserPreferences.FindByUser(u);
 
+            /*
             if((pref != null && pref.EmailNotifications) && !String.IsNullOrEmpty(u.Email))
             {
                 Dictionary<string, object> data = new Dictionary<string,object>();
@@ -210,6 +211,7 @@ namespace Lib.Systems.Notifications
                         //To = new List<MailAddress>{new MailAddress("mike.lindegarde@gmail.com", "Mike Lindegarde")}
                     });
             }
+            */
 		}
 
 		public static void Send(Data.Notification n, IEnumerable<User> us, string template = null)
