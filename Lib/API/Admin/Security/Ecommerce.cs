@@ -6,10 +6,10 @@ using Lib.Data;
 
 namespace Lib.API.Admin.Security
 {
-	public class ProviderUser : Base
-	{
+    public class Ecommerce : Base
+    {
         [SecurityRole("view_admin")]
-        [Method("Admin/Security/ProviderUser/Edit")]
+        [Method("Admin/Security/Ecommerce/Edit")]
         public static ReturnObject Edit(HttpContext context, long provider_user_id, long organization_id, long facility_id, string user_type, string username, string password, string email, string first_name, string last_name, string street, string city, string state, string zip, string street_2 = null, string phone = null)
         {
             Lib.Data.Provider provider;
@@ -105,7 +105,7 @@ namespace Lib.API.Admin.Security
             providerUser.OrganizationID = organization_id;
             providerUser.ProviderUserType = user_type;
             providerUser.PrimaryFacilityID = facility_id;
-            providerUser.Class = Data.ProviderUser.ProviderClass.Standard;
+            providerUser.Class = Data.ProviderUser.ProviderClass.Ecommerce;
             providerUser.Save();
 
             return new ReturnObject()
@@ -124,7 +124,7 @@ namespace Lib.API.Admin.Security
         }
 
 		[SecurityRole("view_admin")]
-		[Method("Admin/Security/ProviderUser/Delete")]
+		[Method("Admin/Security/Ecommerce/Delete")]
 		public static ReturnObject Delete(HttpContext context, long id)
 		{
 			if (id <= 0)
@@ -153,5 +153,5 @@ namespace Lib.API.Admin.Security
 				}
 			};
 		}
-	}
+    }
 }
