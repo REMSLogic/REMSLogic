@@ -344,6 +344,13 @@
     <Compile Include="Views\admin\dsq\view.ascx.designer.cs">
       <DependentUpon>view.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Views\admin\security\ecommerce\list.ascx.cs">
+      <DependentUpon>list.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\admin\security\ecommerce\list.ascx.designer.cs">
+      <DependentUpon>list.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Views\admin\security\prescribers\edit.ascx.cs">
       <DependentUpon>edit.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1828,6 +1835,7 @@
     <Content Include="Views\admin\dsq\link.ascx" />
     <Content Include="Views\admin\dsq\edit.ascx" />
     <Content Include="Views\admin\dsq\view.ascx" />
+    <Content Include="Views\admin\security\ecommerce\list.ascx" />
     <Content Include="Views\admin\security\prescribers\edit.ascx" />
     <Content Include="Views\admin\security\providers\edit-user.ascx" />
     <Content Include="Views\admin\security\providers\edit.ascx" />
