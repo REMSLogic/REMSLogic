@@ -464,6 +464,7 @@ namespace Lib.API.Admin.Security
                 providerUser.ProviderUserType = row.UserType;
                 providerUser.OrganizationID = id;
                 providerUser.PrimaryFacilityID = facility.Id;
+                providerUser.Class = Data.ProviderUser.ProviderClass.Standard;
                 providerUser.Save();
 
                 count++;

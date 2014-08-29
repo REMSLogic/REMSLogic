@@ -1,178 +1,133 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="edit.ascx.cs" Inherits="Site.Views.admin.security.ecommerce.edit" %>
 <%@ Import Namespace="Lib.Data" %>
 
-<h1 class="page-title">Edit Prescriber</h1>
+<h1 class="page-title">Edit Provider User</h1>
 <div class="container_12 clearfix leading">
     <div class="grid_12">
-        <a class="button back-button" href="#" style="margin-bottom: 10px;">Back</a>
-        <form id="frmEditPrescriber" class="form has-validation ajax-form" action="/api/Admin/Security/Prescriber/Edit?provider-id=<%=ProviderId%>&profile-id=<%=(PrescriberProfile.ID.HasValue? PrescriberProfile.ID.Value : 0)%>">
-            <div class="clearfix">
-                <label for="first-name" class="form-label">First Name</label>
+		<a class="button back-button" href="#" style="margin-bottom: 10px;">Back</a>
+		<form class="form has-validation ajax-form" action="/api/Admin/Security/Ecommerce/Edit?provider-user-id=<%=((ProviderUser.ID == null) ? 0 : ProviderUser.ID)%>">
+			<input type="hidden" name="organization-id" value="<%=Organization.Id%>" />
+
+			<div class="clearfix">
+                <label for="form-first-name" class="form-label">First Name <em>*</em></label>
                 <div class="form-input">
-                    <input type="text" id="first-name" name="first-name" required="required" placeholder="Enter Prescriber's First Name" 
-                        value="<%=PrescriberProfile.Contact.FirstName%>" />
+                    <input type="text" id="form-first-name" name="first-name" required="required" placeholder="Enter the first name" 
+                        value="<%=Contact.FirstName%>" />
                 </div>
             </div>
 
-            <div class="clearfix">
-                <label for="last-name" class="form-label">Last Name</label>
+			<div class="clearfix">
+                <label for="form-last-name" class="form-label">Last Name <em>*</em></label>
                 <div class="form-input">
-                    <input type="text" id="last-name" name="last-name" required="required" placeholder="Enter Prescriber's Last Name" 
-                        value="<%=PrescriberProfile.Contact.LastName%>" />
+                    <input type="text" id="form-last-name" name="last-name" required="required" placeholder="Enter the last name" 
+                        value="<%=Contact.LastName%>" />
                 </div>
             </div>
 
-            <div class="clearfix">
-                <label for="phone" class="form-label">Phone</label>
+			<div class="clearfix">
+                <label for="form-email" class="form-label">Email <em>*</em></label>
                 <div class="form-input">
-                    <input type="text" id="phone" name="phone" required="required" placeholder="Enter Prescriber's Phone" 
-                        value="<%=PrescriberProfile.Contact.Phone%>" />
+                    <input type="text" id="form-email" name="email" required="required" placeholder="Enter the email" 
+                        value="<%=Contact.Email%>" />
                 </div>
             </div>
 
-            <div class="clearfix">
-                <label for="fax" class="form-label">Fax</label>
+			<div class="clearfix">
+                <label for="form-phone" class="form-label">Phone <em>*</em></label>
                 <div class="form-input">
-                    <input type="text" id="fax" name="fax" placeholder="Enter Prescriber's Fax" 
-                        value="<%=PrescriberProfile.Contact.Fax%>" />
+                    <input type="text" id="form-phone" name="phone" required="required" placeholder="Enter the phone" 
+                        value="<%=Contact.Phone%>" />
                 </div>
             </div>
 
-            <div class="clearfix">
-                <label for="email" class="form-label">Email</label>
+			<div class="clearfix">
+                <label for="form-username" class="form-label">Username <em>*</em></label>
                 <div class="form-input">
-                    <input type="text" id="email" name="email" required="required" placeholder="Enter Prescriber's Email" 
-                        value="<%=PrescriberProfile.Contact.Email%>" />
+                    <input type="text" id="form-username" name="username" required="required" placeholder="Enter the Username" 
+                        value="<%=User.Username%>" />
                 </div>
             </div>
 
-            <div class="clearfix">
-                <label for="street-1" class="form-label">Street 1</label>
+			<div class="clearfix">
+                <label for="form-user-type" class="form-label">User Type <em>*</em></label>
                 <div class="form-input">
-                    <input type="text" id="street-1" name="street-1" required="required" placeholder="Enter Prescriber's Street 1" 
-                        value="<%=PrescriberProfile.Address.Street1%>" />
-                </div>
+					<select id="form-user-type" name="user-type" required="required">
+						<option value="">Please Select</option>
+						<option value="administrative"<%= ((ProviderUser.ProviderUserType == "administrative") ? "selected" : "") %>>Administrative</option>
+						<option value="technical"<%= ((ProviderUser.ProviderUserType == "technical") ? "selected" : "") %>>Technical</option>
+					</select>
+				</div>
             </div>
-
-            <div class="clearfix">
-                <label for="street-2" class="form-label">Street 2</label>
-                <div class="form-input">
-                    <input type="text" id="street-2" name="street-2" placeholder="Enter Prescriber's Street 2" 
-                        value="<%=PrescriberProfile.Address.Street2%>" />
-                </div>
-            </div>
-
-            <div class="clearfix">
-                <label for="city" class="form-label">City</label>
-                <div class="form-input">
-                    <input type="text" id="city" name="city" required="required" placeholder="Enter Prescriber's City" 
-                        value="<%=PrescriberProfile.Address.City%>" />
-                </div>
-            </div>
-
-            <div class="clearfix">
-                <label for="state" class="form-label">State</label>
-                <div class="form-input">
-                    <input type="text" id="state" name="state" required="required" placeholder="Enter Prescriber's State" 
-                        value="<%=PrescriberProfile.Address.State%>" />
-                </div>
-            </div>
-
-            <div class="clearfix">
-                <label for="zip" class="form-label">Zip</label>
-                <div class="form-input">
-                    <input type="text" id="zip" name="zip" required="required" placeholder="Enter Prescriber's Zip" 
-                        value="<%=PrescriberProfile.Address.Zip%>" />
-                </div>
-            </div>
-
+            
             <div class="clearfix">
                 <label for="form-facility-id" class="form-label">Primary Facility <em>*</em></label>
                 <div class="form-input">
                     <select id="form-facility-id" name="facility-id" required="required">
                         <option value="">Please Select</option>
-                        <% foreach( var f in Facilities ) { %>
-                        <option value="<%=f.Id%>"<%=((PrescriberProfile.PrimaryFacilityID == f.Id) ? " selected=\"selected\"" : "") %>><%=f.Name %></option>
+                        <% foreach( var f in Organization.Facilities ) { %>
+                        <option value="<%=f.Id%>"<%=((ProviderUser.PrimaryFacilityID == f.Id) ? " selected=\"selected\"" : "") %>><%=f.Name %></option>
                         <% } %>
                     </select>
                 </div>
             </div>
 
-            <div class="clearfix">
-                <label for="form-npi" class="form-label">NPI Number</label>
+			<div class="clearfix">
+                <label for="form-password" class="form-label">New Password<% if( !User.ID.HasValue ) { %> <em>*</em><% } %></label>
+                <div class="form-input"><input type="password" id="form-password" name="password"<% if( !User.ID.HasValue ) { %> required="required"<% } %> placeholder="Enter the Password" /></div>
+            </div>
+
+			<div class="clearfix">
+                <label for="form-confirm-password" class="form-label">Confirm Password<% if( !User.ID.HasValue ) { %> <em>*</em><% } %></label>
                 <div class="form-input">
-                    <input type="text" id="form-npi" name="npi" placeholder="Enter your NPI Number" 
-                        value="<%=Prescriber.NpiId%>"/>
+                    
+                    <input type="password" id="form-confirm-password" name="confirm-password"<% if( !User.ID.HasValue ) { %> required="required"<% } %> placeholder="Confirm the Password" />
                 </div>
             </div>
 
-            <div class="clearfix">
-                <label for="form-state-id" class="form-label">State ID <em>*</em></label>
+			<div class="clearfix">
+                <label for="form-street" class="form-label">Street <em>*</em></label>
                 <div class="form-input">
-                    <input type="text" id="form-state-id" name="state-id" placeholder="Enter your State Id" 
-                        value="<%=Prescriber.StateId%>" required="required" />
+                    <input type="text" id="form-street" name="street" required="required" placeholder="Enter the Street Address" 
+                        value="<%=Address.Street1%>" />
                 </div>
             </div>
 
-            <div class="clearfix">
-                <label for="form-state-id" class="form-label">Issuing State <em>*</em></label>
+			<div class="clearfix">
+                <label for="form-street-2" class="form-label">Street 2</label>
                 <div class="form-input">
-                    <select id="form-issuer" name="issuer" required="required" >
-                    <%foreach(State s in States){%>
-                        <option value="<%=s.ID%>" <%=(Prescriber.StateIdIssuer == s.ID)? "selected=\"selected\"" : String.Empty%>><%=s.USPS%></option>
-                    <%}%>
-                    </select>
+                    <input type="text" id="form-street-2" name="street-2" placeholder="" 
+                        value="<%=Address.Street2%>" />
                 </div>
             </div>
 
-            <div class="clearfix">
-                <label for="form-speciality" class="form-label">Speciality <em>*</em></label>
+			<div class="clearfix">
+                <label for="form-city" class="form-label">City <em>*</em></label>
                 <div class="form-input">
-                    <select id="form-speciality" name="speciality" required="required" >
-                    <%foreach(Speciality s in Specialities){%>
-                        <option value="<%=s.ID%>" <%=(SpecialityId == s.ID)? "selected=\"selected\"" : String.Empty%>><%=s.Name%></option>
-                    <%}%>
-                    </select>
+                    <input type="text" id="form-city" name="city" required="required" placeholder="Enter the City" 
+                        value="<%=Address.City%>" />
                 </div>
             </div>
 
-            <div class="clearfix">
-                <label for="form-prescriber-type" class="form-label">Prescriber Type <em>*</em></label>
+			<div class="clearfix">
+                <label for="form-state" class="form-label">State <em>*</em></label>
                 <div class="form-input">
-                    <select id="form-prescriber-type" name="prescriber-type" required="required" >
-                    <%foreach(PrescriberType pt in PrescriberTypes){%>
-                        <option value="<%=pt.ID%>" <%=(TypeId == pt.ID)? "selected=\"selected\"" : String.Empty%>><%=pt.DisplayName%></option>
-                    <%}%>
-                    </select>
+                    <input type="text" id="form-state" name="state" required="required" placeholder="Enter the State" 
+                        value="<%=Address.State%>" />
                 </div>
             </div>
 
-            <div class="clearfix">
-                <label for="form-username" class="form-label">Username</label>
+			<div class="clearfix">
+                <label for="form-zip" class="form-label">Zip <em>*</em></label>
                 <div class="form-input">
-                    <input type="text" id="form-username" name="username" placeholder="Enter Username"
-                        value="<%=User.Username%>"  />
-                </div>
-            </div>
-            
-            <div class="clearfix">
-                <label for="form-password" class="form-label">Password</label>
-                <div class="form-input">
-                    <input type="text" id="form-password" name="password" placeholder="Enter Password" />
-                </div>
-            </div>
-            
-            <div class="clearfix">
-                <label for="form-confirm-password" class="form-label">Confirm Password</label>
-                <div class="form-input">
-                    <input type="text" id="form-confirm-password" name="confirm-password" placeholder="Confirm your password" />
+                    <input type="text" id="form-zip" name="zip" required="required" placeholder="Enter the Zip" 
+                        value="<%=Address.Zip%>" />
                 </div>
             </div>
 
-            <div class="form-action clearfix">
+			<div class="form-action clearfix">
                 <button class="button" type="submit">Save</button>
                 <button class="button" type="reset">Reset</button>
             </div>
-        </form>
-    </div>
+		</form>
+	</div>
 </div>

@@ -82,6 +82,7 @@
     <Compile Include="API\Admin\Language.cs" />
     <Compile Include="API\Admin\RestrictedLinks.cs" />
     <Compile Include="API\Admin\Security\DrugCompanyUser.cs" />
+    <Compile Include="API\Admin\Security\Ecommerce.cs" />
     <Compile Include="API\Admin\Security\ProviderUser.cs" />
     <Compile Include="API\Admin\Security\Speciality.cs" />
     <Compile Include="API\Admin\Security\UserType.cs" />
