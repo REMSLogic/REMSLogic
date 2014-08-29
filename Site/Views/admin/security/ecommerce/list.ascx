@@ -16,7 +16,7 @@
 <div class="container_12 clearfix leading">
     <div class="grid_12">
         <div style="float: right; margin-top: 10px; margin-bottom: 10px;">
-            <a href="#admin/security/ecommerce/edit?id=" class="button" style="display: inline-block; margin-right: 6px;">Add E-Commerce User</a>
+            <a href="#admin/security/ecommerce/edit?provider-user-id=0&organization-id=0" class="button" style="display: inline-block; margin-right: 6px;">Add E-Commerce User</a>
         </div>        
 		<a class="button back-button" href="#" style="margin-bottom: 10px;">Back</a>
         <div id="demo" class="clearfix"> 
