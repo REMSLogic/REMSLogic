@@ -10,7 +10,7 @@ namespace Site.Views.admin.security.ecommerce
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ProviderUsers = Lib.Data.ProviderUser.FindByClass();
+            ProviderUsers = ProviderUser.FindByClass(ProviderUser.ProviderClass.Ecommerce);
         }
     }
 }
