@@ -69,6 +69,8 @@
     <Compile Include="Sprint15\Migration0002AddDisplayForToEocs.cs" />
     <Compile Include="Sprint16\Migration0001AddRestrictedLinkTable.cs" />
     <Compile Include="Sprint16\Migration0002AddCreateForColumnToRestrictedLinks.cs" />
+    <Compile Include="Sprint26\Migration0001AddClassToProviderUser.cs" />
+    <Compile Include="Sprint26\Migration0002AddAccountTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
