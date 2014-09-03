@@ -10,12 +10,22 @@ using Lib.Data;
 using Lib.Systems;
 using Lib.Systems.Activity;
 using Lib.Systems.Notifications;
+using RemsLogic.Model.Ecommerce;
+using RemsLogic.Services;
+using StructureMap;
 
 namespace Site.App
 {
 	public partial class Login : System.Web.UI.Page
 	{
+        private readonly IAccountService _accountSvc;
+
 		public string msg;
+
+        public Login()
+        {
+            _accountSvc = ObjectFactory.GetInstance<IAccountService>();
+        }
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -56,6 +66,32 @@ namespace Site.App
 				Framework.Security.Manager.GenerateLoginCookie();
 
 			var u = Framework.Security.Manager.GetUser();
+
+            // if it's an ecommerce user we need to ensure the account is enabled and not expired
+            ProviderUser providerUser = Security.GetCurrentProviderUser();
+
+            // ecommerce is abased off of the provider use type
+            if(providerUser != null)
+            {
+                Account account = _accountSvc.GetByProviderUserId(providerUser.ID ?? 0);
+
+                if(account != null)
+                {
+                    if(!account.IsEnabled)
+                    {
+				        Framework.Security.Manager.Logout();
+				        msg = "Your account has been disabled.";
+				        return;
+                    }
+
+                    if(account.ExpiresOn < DateTime.Now)
+                    {
+				        Framework.Security.Manager.Logout();
+				        msg = "Your account has exired.";
+				        return;
+                    }
+                }
+            }
 
 			string hash = "";
 
