@@ -6,8 +6,6 @@
     <div class="grid_12">
 		<a class="button back-button" href="#" style="margin-bottom: 10px;">Back</a>
 		<form class="form has-validation ajax-form" action="/api/Admin/Security/Ecommerce/Edit?provider-user-id=<%=((ProviderUser.ID == null) ? 0 : ProviderUser.ID)%>">
-			<input type="hidden" name="organization-id" value="<%=Organization.Id%>" />
-
 			<div class="clearfix">
                 <label for="form-first-name" class="form-label">First Name <em>*</em></label>
                 <div class="form-input">
@@ -45,29 +43,6 @@
                 <div class="form-input">
                     <input type="text" id="form-username" name="username" required="required" placeholder="Enter the Username" 
                         value="<%=User.Username%>" />
-                </div>
-            </div>
-
-			<div class="clearfix">
-                <label for="form-user-type" class="form-label">User Type <em>*</em></label>
-                <div class="form-input">
-					<select id="form-user-type" name="user-type" required="required">
-						<option value="">Please Select</option>
-						<option value="administrative"<%= ((ProviderUser.ProviderUserType == "administrative") ? "selected" : "") %>>Administrative</option>
-						<option value="technical"<%= ((ProviderUser.ProviderUserType == "technical") ? "selected" : "") %>>Technical</option>
-					</select>
-				</div>
-            </div>
-            
-            <div class="clearfix">
-                <label for="form-facility-id" class="form-label">Primary Facility <em>*</em></label>
-                <div class="form-input">
-                    <select id="form-facility-id" name="facility-id" required="required">
-                        <option value="">Please Select</option>
-                        <% foreach( var f in Organization.Facilities ) { %>
-                        <option value="<%=f.Id%>"<%=((ProviderUser.PrimaryFacilityID == f.Id) ? " selected=\"selected\"" : "") %>><%=f.Name %></option>
-                        <% } %>
-                    </select>
                 </div>
             </div>
 
@@ -121,6 +96,25 @@
                 <div class="form-input">
                     <input type="text" id="form-zip" name="zip" required="required" placeholder="Enter the Zip" 
                         value="<%=Address.Zip%>" />
+                </div>
+            </div>
+ 
+			<div class="clearfix">
+                <label for="form-expires-on" class="form-label">Expiration Date: <em>*</em></label>
+                <div class="form-input">
+                    <input type="text" id="form-expires-on" name="expires-on" required="required" placeholder="Enter Expriation Date" 
+                        value="<%=Account.ExpiresOn%>" />
+                </div>
+            </div>
+            
+			<div class="clearfix">
+                <label for="form-is-enabled" class="form-label">Is Enabled <em>*</em></label>
+                <div class="form-input">
+                    <select id="form-is-enabled" name="is-enabled" required="required">
+                        <option value="">Please Select</option>
+                        <option value="yes" <%=((Account.IsEnabled) ? " selected=\"selected\"" : "") %>>Yes</option>
+                        <option value="no" <%=((!Account.IsEnabled) ? " selected=\"selected\"" : "") %>>No</option>
+                    </select>
                 </div>
             </div>
 
