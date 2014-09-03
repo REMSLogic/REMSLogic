@@ -37,7 +37,11 @@ namespace Site.Views.admin.security.ecommerce
                 Contact = new Contact();
                 Address = new Lib.Data.Address();
                 User = new Framework.Security.User();
-                Account = new Account();
+
+                Account = new Account
+                {
+                    ExpiresOn = DateTime.Now
+                };
             }
             else
             {

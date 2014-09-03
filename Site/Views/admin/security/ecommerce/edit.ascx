@@ -102,8 +102,8 @@
 			<div class="clearfix">
                 <label for="form-expires-on" class="form-label">Expiration Date: <em>*</em></label>
                 <div class="form-input">
-                    <input type="text" id="form-expires-on" name="expires-on" required="required" placeholder="Enter Expriation Date" 
-                        value="<%=Account.ExpiresOn%>" />
+                    <input type="date" id="form-expires-on" name="expires-on" required="required" placeholder="Enter Expriation Date" 
+                        value="<%=Account.ExpiresOn.ToShortDateString()%>" />
                 </div>
             </div>
             
@@ -111,7 +111,6 @@
                 <label for="form-is-enabled" class="form-label">Is Enabled <em>*</em></label>
                 <div class="form-input">
                     <select id="form-is-enabled" name="is-enabled" required="required">
-                        <option value="">Please Select</option>
                         <option value="yes" <%=((Account.IsEnabled) ? " selected=\"selected\"" : "") %>>Yes</option>
                         <option value="no" <%=((!Account.IsEnabled) ? " selected=\"selected\"" : "") %>>No</option>
                     </select>
