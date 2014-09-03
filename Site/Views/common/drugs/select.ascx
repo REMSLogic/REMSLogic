@@ -24,56 +24,17 @@
                                  <a class="eoc-menu-clear-avail clear-btn" onclick="ClearAvailDrugListFilter();" >Clear Filter</a>
                             </div>
                             <div style="clear:both;"></div>
-                            <div class="eoc-filter-item">
-                                <img src="/images/icons/ETASU.png" alt="ETASU" data-eoc="etasu" />
-                                <p class="label">ETASU</p>
-                                <p class="label">&nbsp;</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/images/icons/FP EN.png" alt="Facility/Pharmacy Enrollment" data-eoc="facility-pharmacy-enrollment" />
-                                <p class="label">FACILITY</p>
-                                <p class="label">ENROLLMENT</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/images/icons/PAEN.png" alt="Patient Enrollment" data-eoc="patient-enrollment" />
-                                <p class="label">PATIENT</p>
-                                <p class="label">ENROLLMENT</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/images/icons/PREN.png" alt="Prescriber Enrollment" data-eoc="prescriber-enrollment" />
-                                <p class="label">PRESCRIBER</p>
-                                <p class="label">ENROLLMENT</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/images/icons/EDUCRT.png" alt="Education/Certification" data-eoc="education-training" />
-                                <p class="label">PRESCRIBER</p>
-                                <p class="label">EDUCATION</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/images/icons/MON.png" alt="Monitoring" data-eoc="monitoring-management" />
-                                <p class="label">MONITORING</p>
-                                <p class="label">&nbsp;</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/images/icons/MG.png" alt="Medication Guide" data-eoc="medication-guide" />
-                                <p class="label">MEDICATION</p>
-                                <p class="label">GUIDE</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/images/icons/IC.png" alt="Informed Consent" data-eoc="informed-consent" />
-                                <p class="label">INFORMED</p>
-                                <p class="label">CONSENT</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/images/icons/FD.png" alt="Forms and Documents" data-eoc="forms-documents" />
-                                <p class="label">FORMS &amp;</p>
-                                <p class="label">DOCUMENTS</p>
-                            </div>
-					        <div class="eoc-filter-item">
-                                <img src="/images/icons/PR.png" alt="Pharmacy Requirements" data-eoc="pharmacy-requirements" />
-                                <p class="label">PHARMACY</p>
-                                <p class="label">REQUIREMENTS</p>
-                            </div>
+                             <%foreach(var eoc in Eocs){
+                                if(DisplayEoc(eoc)){%>
+                                <div class="eoc-filter-item">
+                                    <img src="<%=eoc.LargeIcon%>" alt="<%=eoc.DisplayName %>" data-eoc="<%=eoc.Name %>" />
+                                    <%
+                                        var words = eoc.ShortDisplayName.ToUpperInvariant().Split(' ');
+                                        var result = String.Join("", words.Select(x => String.Format("<p class=\"label\">{0}</p>", x)));
+                                    %>
+                                    <%=result%>
+                                </div>
+                            <%}} %>
 				        </div>
 					</div>
                     <br />
