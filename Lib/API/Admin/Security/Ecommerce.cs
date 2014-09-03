@@ -54,7 +54,6 @@ namespace Lib.API.Admin.Security
 
                 account = new Account
                 {
-                    ProviderUserId = provider_user_id,
                     CreatedAt = DateTime.Now
                 };
 
@@ -124,6 +123,7 @@ namespace Lib.API.Admin.Security
             providerUser.Class = Data.ProviderUser.ProviderClass.Ecommerce;
             providerUser.Save();
 
+            account.ProviderUserId = providerUser.ID ?? 0;
             account.ExpiresOn = expiresOn;
             account.IsEnabled = is_enabled == "yes";
             
