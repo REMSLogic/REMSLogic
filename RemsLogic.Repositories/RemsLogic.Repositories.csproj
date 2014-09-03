@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountRepository.cs" />
     <Compile Include="ComplianceRepository.cs" />
     <Compile Include="DrugRepository.cs" />
     <Compile Include="DsqRepository.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="DrugListRepository.cs" />
     <Compile Include="IDrugListRepository.cs" />
     <Compile Include="IDsqRepository.cs" />
+    <Compile Include="IAccountRepository.cs" />
     <Compile Include="IOrganizationRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IRestrictedLinkRepository.cs" />

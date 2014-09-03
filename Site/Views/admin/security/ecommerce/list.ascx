@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="list.ascx.cs" Inherits="Site.Views.admin.security.ecommerce.list" %>
+<%@ Import Namespace="RemsLogic.Model.Ecommerce" %>
 <!-- DATATABLES CSS -->
 <link rel="stylesheet" media="screen" href="/js/lib/datatables/css/vpad.css" />
 <script type="text/javascript" src="/js/lib/datatables/js/jquery.dataTables.js"></script> 
@@ -27,15 +28,24 @@
                         <th>Name</th> 
 						<th>Email</th>
 						<th>Phone</th>
+                        <th>Created</th>
+                        <th>Expires</th>
+                        <th>Account Status</th>
+                        <th>Enabled</th>
                     </tr> 
                 </thead> 
                 <tbody>
-				<%foreach( var providerUser in ProviderUsers ){%>
+				<%foreach( var providerUser in ProviderUsers ){
+                    Account account = GetProviderUserAccount(providerUser);%>
                     <tr>
 						<td><a href="#admin/security/ecommerce/edit?provider-user-id=<%=providerUser.ID.Value%>&organization-id=<%=providerUser.OrganizationID%>" class="button">Edit</a></td>
 						<td><%=providerUser.Provider.PrimaryContact.Name%></td>
 						<td><%=providerUser.Provider.PrimaryContact.Email%></td>
 						<td><%=providerUser.Provider.PrimaryContact.Phone%></td>
+                        <td><%=account.CreatedAt.ToShortDateString() %></td>
+                        <td><%=account.ExpiresOn.ToShortDateString() %></td>
+                        <td><%=(account.ExpiresOn >= DateTime.Now? "Active" : "Expired")%></td>
+                        <td><%=(account.IsEnabled? "Yes" : "No") %></td>
                     </tr>
 				<% } %>
                 </tbody>

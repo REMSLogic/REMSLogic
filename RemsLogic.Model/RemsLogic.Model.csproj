@@ -49,6 +49,7 @@
     <Compile Include="Dsq\DsqEoc.cs" />
     <Compile Include="Dsq\DsqLink.cs" />
     <Compile Include="Dsq\DsqQuestion.cs" />
+    <Compile Include="Ecommerce\Account.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Compliance\Eoc.cs" />
     <Compile Include="Facility.cs" />

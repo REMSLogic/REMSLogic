@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Web;
 using Framework.API;
 using Lib.Data;
+using RemsLogic.Model.Ecommerce;
+using RemsLogic.Services;
+using StructureMap;
 
 namespace Lib.API.Admin.Security
 {
@@ -10,14 +13,17 @@ namespace Lib.API.Admin.Security
     {
         [SecurityRole("view_admin")]
         [Method("Admin/Security/Ecommerce/Edit")]
-        public static ReturnObject Edit(HttpContext context, long provider_user_id, long organization_id, long facility_id, string user_type, string username, string password, string email, string first_name, string last_name, string street, string city, string state, string zip, string street_2 = null, string phone = null)
+        public static ReturnObject Edit(HttpContext context, long provider_user_id, string username, string password, string email, string first_name, string last_name, string street, string city, string state, string zip, string expires_on, string is_enabled, string street_2 = null, string phone = null)
         {
+            IAccountService accountSvc = ObjectFactory.GetInstance<IAccountService>();
+
             Lib.Data.Provider provider;
             Lib.Data.ProviderUser providerUser;
 
             UserProfile userProfile;
             Contact contact;
             Address address;
+            Account account;
 
             Framework.Security.User user;
 
@@ -29,6 +35,8 @@ namespace Lib.API.Admin.Security
                 user = userProfile.User;
                 contact = userProfile.PrimaryContact;
                 address = userProfile.PrimaryAddress;
+
+                account = accountSvc.GetByProviderUserId(provider_user_id);
 
                 user.Username = username;
                 user.Save();
@@ -43,6 +51,12 @@ namespace Lib.API.Admin.Security
                 userProfile.Created = DateTime.Now;
                 contact = new Data.Contact();
                 address = new Data.Address();
+
+                account = new Account
+                {
+                    ProviderUserId = provider_user_id,
+                    CreatedAt = DateTime.Now
+                };
 
                 string error = "";
                 user = Framework.Security.Manager.CreateUser(username, password, email, out error);
@@ -61,14 +75,16 @@ namespace Lib.API.Admin.Security
                 }
             }
 
-            if (user_type != "technical" && user_type != "administrative")
+            DateTime expiresOn;
+
+            if(!DateTime.TryParse(expires_on, out expiresOn))
             {
-                return new ReturnObject()
-                {
-                    Error = true,
-                    StatusCode = 200,
-                    Message = "Invalid user type."
-                };
+                    return new ReturnObject()
+                    {
+                        Error = true,
+                        StatusCode = 200,
+                        Message = "Invalide expiration date."
+                    };
             }
 
             address.Street1 = street;
@@ -102,11 +118,16 @@ namespace Lib.API.Admin.Security
 
             providerUser.ProfileID = userProfile.ID.Value;
             providerUser.ProviderID = provider.ID.Value;
-            providerUser.OrganizationID = organization_id;
-            providerUser.ProviderUserType = user_type;
-            providerUser.PrimaryFacilityID = facility_id;
+            providerUser.OrganizationID = 0;
+            providerUser.ProviderUserType = "";
+            providerUser.PrimaryFacilityID = 0;
             providerUser.Class = Data.ProviderUser.ProviderClass.Ecommerce;
             providerUser.Save();
+
+            account.ExpiresOn = expiresOn;
+            account.IsEnabled = is_enabled == "yes";
+            
+            accountSvc.Save(account);
 
             return new ReturnObject()
             {
