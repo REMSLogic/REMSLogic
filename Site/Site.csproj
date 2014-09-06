@@ -351,6 +351,13 @@
     <Compile Include="Views\admin\security\ecommerce\edit-provider.ascx.designer.cs">
       <DependentUpon>edit-provider.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Views\admin\security\ecommerce\list-prescribers.ascx.cs">
+      <DependentUpon>list-prescribers.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\admin\security\ecommerce\list-prescribers.ascx.designer.cs">
+      <DependentUpon>list-prescribers.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Views\admin\security\ecommerce\list-providers.ascx.cs">
       <DependentUpon>list-providers.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1843,6 +1850,7 @@
     <Content Include="Views\admin\dsq\edit.ascx" />
     <Content Include="Views\admin\dsq\view.ascx" />
     <Content Include="Views\admin\security\ecommerce\edit-provider.ascx" />
+    <Content Include="Views\admin\security\ecommerce\list-prescribers.ascx" />
     <Content Include="Views\admin\security\ecommerce\list-providers.ascx" />
     <Content Include="Views\admin\security\prescribers\edit.ascx" />
     <Content Include="Views\admin\security\providers\edit-user.ascx" />
