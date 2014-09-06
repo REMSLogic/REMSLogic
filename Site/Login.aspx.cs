@@ -65,37 +65,28 @@ namespace Site.App
 			if( Request["remember"] == "1" )
 				Framework.Security.Manager.GenerateLoginCookie();
 
-			var u = Framework.Security.Manager.GetUser();
+			User user = Manager.GetUser();
+            UserProfile userProfile = Security.GetCurrentProfile();
 
             // if it's an ecommerce user we need to ensure the account is enabled and not expired
-            ProviderUser providerUser = Security.GetCurrentProviderUser();
+            Account account = _accountSvc.GetByUserProfileId(userProfile.ID ?? 0);
 
-            // ecommerce is abased off of the provider use type
-            if(providerUser != null)
+            if(account != null)
             {
-                Account account = _accountSvc.GetByProviderUserId(providerUser.ID ?? 0);
-
-                if(account != null)
+                if(!account.IsEnabled)
                 {
-                    if(!account.IsEnabled)
-                    {
-				        Framework.Security.Manager.Logout();
-				        msg = "Your account has been disabled.";
-				        return;
-                    }
+				    Framework.Security.Manager.Logout();
+				    msg = "Your account has been disabled.";
+				    return;
+                }
 
-                    if(account.ExpiresOn < DateTime.Now)
-                    {
-				        Framework.Security.Manager.Logout();
-				        msg = "Your account has exired.";
-				        return;
-                    }
+                if(account.ExpiresOn < DateTime.Now)
+                {
+				    Framework.Security.Manager.Logout();
+				    msg = "Your account has exired.";
+				    return;
                 }
             }
-
-            Prescriber prescriber = Security.GetCurrentPrescriber();
-
-
 
 			string hash = "";
 
@@ -112,7 +103,7 @@ namespace Site.App
                 return;
             }*/
 
-            ActivityService.Record(u.ID, Session.SessionID, ActivityService.StandardLogin, null);
+            ActivityService.Record(user.ID, Session.SessionID, ActivityService.StandardLogin, null);
 
             // MJL 2014-01-13 - Monk, I'm using this for testing.  Please don't remove
             // this.  I will remove it once we are confident the notification emails are

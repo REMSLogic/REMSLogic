@@ -36,7 +36,7 @@
                 </thead> 
                 <tbody>
 				<%foreach( var providerUser in ProviderUsers ){
-                    Account account = GetProviderUserAccount(providerUser);%>
+                    Account account = GetAccountByUserProfile(providerUser.Profile);%>
                     <tr>
 						<td><a href="#admin/security/ecommerce/edit?provider-user-id=<%=providerUser.ID.Value%>&organization-id=<%=providerUser.OrganizationID%>" class="button">Edit</a></td>
 						<td><%=providerUser.Provider.PrimaryContact.Name%></td>

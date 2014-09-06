@@ -23,9 +23,9 @@ namespace RemsLogic.Services
             _accountRepo.Save(account);
         }
 
-        public Account GetByProviderUserId(long providerUserId)
+        public Account GetByUserProfileId(long userProfileId)
         {
-            return _accountRepo.GetByProviderUserId(providerUserId);
+            return _accountRepo.GetByUserProfileId(userProfileId);
         }
         #endregion
     }

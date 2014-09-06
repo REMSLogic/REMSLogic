@@ -21,12 +21,12 @@ namespace Site.Views.admin.security.ecommerce
         {
             _accountSvc = ObjectFactory.GetInstance<IAccountService>();
 
-            //ProviderUsers = ProviderUser.FindByClass(ProviderUser.ProviderClass.Ecommerce);
+            ProviderUsers = ProviderUser.FindEcommerce();
         }
 
-        protected Account GetProviderUserAccount(ProviderUser providerUser)
+        protected Account GetAccountByUserProfile(UserProfile userProfile)
         {
-            return _accountSvc.GetByProviderUserId(providerUser.ID ?? 0);
+            return _accountSvc.GetByUserProfileId(userProfile.ID ?? 0);
         }
     }
 }

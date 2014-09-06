@@ -18,14 +18,14 @@ namespace RemsLogic.Repositories
         {
             const string insertSql = @"
                 INSERT INTO Accounts
-                    (ProviderUserId, CreatedAt, ExpiresOn, Enabled)
+                    (UserProfileId, CreatedAt, ExpiresOn, Enabled)
                 OUTPUT INSERTED.Id
                 VALUES
-                    (@ProviderUserId, @CreatedAt, @ExpiresOn, @Enabled)";
+                    (@UserProfileId, @CreatedAt, @ExpiresOn, @Enabled)";
 
             const string updateSql = @"
                 UPDATE Accounts SET
-                    ProviderUserId = @ProviderUserId,
+                    UserProfileId = @UserProfileId,
                     ExpiresOn = @ExpiresOn,
                     CreatedAt = @CreatedAt,
                     Enabled = @Enabled
@@ -40,7 +40,7 @@ namespace RemsLogic.Repositories
                 {
                     command.Parameters.AddRange(new []
                         {
-                            new SqlParameter("ProviderUserId", model.ProviderUserId),
+                            new SqlParameter("UserProfileId", model.UserProifleId),
                             new SqlParameter("ExpiresOn", model.ExpiresOn),
                             new SqlParameter("CreatedAt", model.CreatedAt),
                             new SqlParameter("Enabled", model.IsEnabled)
@@ -59,14 +59,14 @@ namespace RemsLogic.Repositories
         #endregion
 
         #region IAccountRepository Implementation
-        public Account GetByProviderUserId(long providerUserId)
+        public Account GetByUserProfileId(long userProfileId)
         {
             Account ret = null;
 
             const string sql = @"
                 SELECT *
                 FROM Accounts
-                WHERE ProviderUserId = @ProviderUserId;";
+                WHERE UserProfileId = @UserProfileId;";
 
             using(SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -76,7 +76,7 @@ namespace RemsLogic.Repositories
                 {
                     command.Parameters.AddRange(new []
                     {
-                        new SqlParameter("ProviderUserId", providerUserId)
+                        new SqlParameter("UserProfileId", userProfileId)
                     });
 
                     using(SqlDataReader reader = command.ExecuteReader())
@@ -86,7 +86,7 @@ namespace RemsLogic.Repositories
                             ret = new Account
                             {
                                 Id = (long)reader["Id"],
-                                ProviderUserId = providerUserId,
+                                UserProifleId = userProfileId,
                                 CreatedAt = (DateTime)reader["CreatedAt"],
                                 ExpiresOn = (DateTime)reader["ExpiresOn"],
                                 IsEnabled = (bool)reader["Enabled"]

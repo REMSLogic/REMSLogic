@@ -76,6 +76,20 @@ namespace Lib.Data
 			});
 		}
 
+		public static IList<ProviderUser> FindEcommerce()
+		{
+			var db = Database.Get("FDARems");
+			string sql = 
+                "SELECT " + db.DelimTable("ProviderUsers") + ".* " +
+				" FROM " + db.DelimTable("ProviderUsers") +
+				" INNER JOIN " + db.DelimTable("UserProfiles") +
+				    " ON " + db.DelimTable("ProviderUsers") + "." + db.DelimColumn("ProfileID") + " = " + db.DelimTable("UserProfiles") + "." + db.DelimColumn("ID") +
+				" WHERE " + db.DelimTable("UserProfiles") + "." + db.DelimColumn("IsEcommerce") + " = 1;";
+
+			var ps = new List<Parameter>();
+			return db.ExecuteQuery<ProviderUser>(sql, ps.ToArray());
+		}
+
 		[Column]
 		public long ProfileID;
 		[Column]

@@ -50,13 +50,13 @@ namespace Site.Views.admin.security.ecommerce
                 User = UserProfile.User;
                 Contact = UserProfile.PrimaryContact;
                 Address = UserProfile.PrimaryAddress;
-                Account = GetProviderUserAccount(ProviderUser);
+                Account = GetAccountByUserProfile(UserProfile);
             }
         }
 
-        protected Account GetProviderUserAccount(ProviderUser providerUser)
+        protected Account GetAccountByUserProfile(UserProfile userProfile)
         {
-            return _accountSvc.GetByProviderUserId(providerUser.ID ?? 0);
+            return _accountSvc.GetByUserProfileId(userProfile.ID ?? 0);
         }
     }
 }

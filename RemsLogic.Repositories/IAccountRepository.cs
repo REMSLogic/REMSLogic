@@ -4,6 +4,6 @@ namespace RemsLogic.Repositories
 {
     public interface IAccountRepository : IRepository<Account>
     {
-        Account GetByProviderUserId(long providerUserId);
+        Account GetByUserProfileId(long userProfileId);
     }
 }

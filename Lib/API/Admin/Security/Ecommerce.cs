@@ -36,7 +36,7 @@ namespace Lib.API.Admin.Security
                 contact = userProfile.PrimaryContact;
                 address = userProfile.PrimaryAddress;
 
-                account = accountSvc.GetByProviderUserId(provider_user_id);
+                account = accountSvc.GetByUserProfileId(userProfile.ID ?? 0);
 
                 user.Username = username;
                 user.Save();
@@ -113,6 +113,7 @@ namespace Lib.API.Admin.Security
             userProfile.UserID = user.ID.Value;
             userProfile.PrimaryAddressID = address.ID.Value;
             userProfile.PrimaryContactID = contact.ID.Value;
+            userProfile.IsEcommerce = true;
             userProfile.Save();
 
             providerUser.ProfileID = userProfile.ID.Value;
@@ -122,7 +123,7 @@ namespace Lib.API.Admin.Security
             providerUser.PrimaryFacilityID = 0;
             providerUser.Save();
 
-            account.ProviderUserId = providerUser.ID ?? 0;
+            account.UserProifleId = userProfile.ID ?? 0;
             account.ExpiresOn = expiresOn;
             account.IsEnabled = is_enabled == "yes";
             
