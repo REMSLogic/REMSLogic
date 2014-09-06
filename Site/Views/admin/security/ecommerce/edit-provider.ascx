@@ -5,7 +5,7 @@
 <div class="container_12 clearfix leading">
     <div class="grid_12">
 		<a class="button back-button" href="#" style="margin-bottom: 10px;">Back</a>
-		<form class="form has-validation ajax-form" action="/api/Admin/Security/Ecommerce/Edit?provider-user-id=<%=((ProviderUser.ID == null) ? 0 : ProviderUser.ID)%>">
+		<form class="form has-validation ajax-form" action="/api/Admin/Security/Ecommerce/EditProvider?provider-user-id=<%=((ProviderUser.ID == null) ? 0 : ProviderUser.ID)%>">
 			<div class="clearfix">
                 <label for="form-first-name" class="form-label">First Name <em>*</em></label>
                 <div class="form-input">
