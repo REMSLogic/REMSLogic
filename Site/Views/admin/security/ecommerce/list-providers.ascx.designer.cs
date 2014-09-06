@@ -11,7 +11,7 @@ namespace Site.Views.admin.security.ecommerce
 {
 
 
-    public partial class edit
+    public partial class list_providers
     {
     }
 }

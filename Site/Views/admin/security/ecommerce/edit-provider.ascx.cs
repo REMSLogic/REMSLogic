@@ -7,7 +7,7 @@ using StructureMap;
 
 namespace Site.Views.admin.security.ecommerce
 {
-    public partial class edit : Lib.Web.AdminControlPage
+    public partial class edit_provider : Lib.Web.AdminControlPage
     {
         private readonly IAccountService _accountSvc;
         private readonly IOrganizationService _orgSvc;
@@ -20,7 +20,7 @@ namespace Site.Views.admin.security.ecommerce
         public Framework.Security.User User {get; set;}
         public Account Account {get; set;}
 
-        public edit()
+        public edit_provider()
         {
             _accountSvc = ObjectFactory.GetInstance<IAccountService>();
             _orgSvc = ObjectFactory.GetInstance<IOrganizationService>();

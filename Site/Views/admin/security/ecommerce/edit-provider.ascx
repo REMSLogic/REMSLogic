@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="edit.ascx.cs" Inherits="Site.Views.admin.security.ecommerce.edit" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="edit-provider.ascx.cs" Inherits="Site.Views.admin.security.ecommerce.edit_provider" %>
 <%@ Import Namespace="Lib.Data" %>
 
 <h1 class="page-title">Edit Provider User</h1>

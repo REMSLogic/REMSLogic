@@ -204,7 +204,7 @@
 								<li><a href="#admin/security/providers/list" title="Providers"><img src="/images/navicons/77.png" alt=""/><span>Health Care Org.</span></a></li>
 								<li><a href="#admin/drugs/companies/list" title="Drug Companies"><img src="/images/navicons/159.png" alt=""/><span>Drug Companies</span></a></li>
 								<li><a href="#admin/security/us-fda/list" title="US FDA Officials"><img src="/images/navicons/167.png" alt=""/><span>US FDA Officials</span></a></li>
-                                <li><a href="#admin/security/ecommerce/list" title="E-Commerce Users"><img src="/images/navicons/111.png" alt=""/><span>E-Commerce Users</span></a></li> 
+                                <li><a href="#admin/security/ecommerce/list-providers" title="E-Commerce Providers"><img src="/images/navicons/111.png" alt=""/><span>E-Commerce Users</span></a></li> 
 							</ul>
 						</li>
 						<li class="hasul"><a href="#"><img src="/images/navicons/15.png" alt=""/><span>Drug Management</span></a>

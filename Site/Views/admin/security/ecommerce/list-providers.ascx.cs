@@ -7,7 +7,7 @@ using StructureMap;
 
 namespace Site.Views.admin.security.ecommerce
 {
-    public partial class list : Lib.Web.AppControlPage
+    public partial class list_providers : Lib.Web.AppControlPage
     {
         #region Member Variables
         private IAccountService _accountSvc;
