@@ -75,6 +75,7 @@ namespace Site.App.Views
             List<Widget> widgetList = widgets.ToList();
             ProviderUser providerUser = Security.GetCurrentProviderUser();
 
+            /*
             // if it's an ecommerce user, filter out the widgets that class of user should
             // not see.
             if(providerUser != null && providerUser.Class == ProviderUser.ProviderClass.Ecommerce)
@@ -85,6 +86,7 @@ namespace Site.App.Views
                         widgetList.RemoveAt(i--);
                 }
             }
+            */
 
             for(int i = 0; i < widgetList.Count(); i++)
             {

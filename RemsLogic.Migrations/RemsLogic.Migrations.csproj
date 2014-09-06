@@ -69,9 +69,8 @@
     <Compile Include="Sprint15\Migration0002AddDisplayForToEocs.cs" />
     <Compile Include="Sprint16\Migration0001AddRestrictedLinkTable.cs" />
     <Compile Include="Sprint16\Migration0002AddCreateForColumnToRestrictedLinks.cs" />
-    <Compile Include="Sprint26\Migration0001AddClassToProviderUser.cs" />
+    <Compile Include="Sprint26\Migration0001AddIsEcommToUserProfile.cs" />
     <Compile Include="Sprint26\Migration0002AddAccountTable.cs" />
-    <Compile Include="Sprint27\Migration0001AddClassToPrescriberProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -81,6 +80,9 @@
       <Project>{40e89cf0-7a46-4049-bfa2-61cac8e3d7a2}</Project>
       <Name>RemsLogic.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Sprint27\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">

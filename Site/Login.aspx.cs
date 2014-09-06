@@ -93,6 +93,10 @@ namespace Site.App
                 }
             }
 
+            Prescriber prescriber = Security.GetCurrentPrescriber();
+
+
+
 			string hash = "";
 
 			if( !string.IsNullOrEmpty(Request["frag"]) )

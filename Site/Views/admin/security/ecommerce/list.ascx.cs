@@ -21,7 +21,7 @@ namespace Site.Views.admin.security.ecommerce
         {
             _accountSvc = ObjectFactory.GetInstance<IAccountService>();
 
-            ProviderUsers = ProviderUser.FindByClass(ProviderUser.ProviderClass.Ecommerce);
+            //ProviderUsers = ProviderUser.FindByClass(ProviderUser.ProviderClass.Ecommerce);
         }
 
         protected Account GetProviderUserAccount(ProviderUser providerUser)

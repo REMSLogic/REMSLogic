@@ -120,7 +120,6 @@ namespace Lib.API.Admin.Security
             providerUser.OrganizationID = 0;
             providerUser.ProviderUserType = "";
             providerUser.PrimaryFacilityID = 0;
-            providerUser.Class = Data.ProviderUser.ProviderClass.Ecommerce;
             providerUser.Save();
 
             account.ProviderUserId = providerUser.ID ?? 0;

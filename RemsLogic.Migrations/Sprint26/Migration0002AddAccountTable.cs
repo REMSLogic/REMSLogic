@@ -10,7 +10,7 @@ namespace RemsLogic.Migrations.Sprint26
         {
             Create.Table("Accounts")
                 .WithColumn("Id").AsInt64().PrimaryKey().Identity()
-                .WithColumn("ProviderUserid").AsInt64().NotNullable()
+                .WithColumn("UserProfileId").AsInt64().NotNullable()
                 .WithColumn("CreatedAt").AsDateTime().NotNullable()
                 .WithColumn("ExpiresOn").AsDateTime().NotNullable()
                 .WithColumn("Enabled").AsBoolean().NotNullable().WithDefaultValue(true);

@@ -11,12 +11,6 @@ namespace Lib.Data
 	[Table( DatabaseName = "FDARems", TableName = "ProviderUsers", PrimaryKeyColumn = "ID" )]
 	public class ProviderUser : ActiveRecord
 	{
-        public static class ProviderClass
-        {
-            public const string Standard = "standard";
-            public const string Ecommerce = "e-commerce";
-        }
-
 		public static IList<ProviderUser> FindAll()
 		{
 			return FindAll<ProviderUser>();
@@ -82,16 +76,6 @@ namespace Lib.Data
 			});
 		}
 
-        public static IList<ProviderUser> FindByClass(string providerClass)
-        {
-            if(String.IsNullOrEmpty(providerClass))
-                providerClass = ProviderClass.Standard;
-
-			return FindAllBy<ProviderUser>( new Dictionary<string, object> {
-				{ "Class", providerClass }
-			}, new[] { "+ProfileID" } );
-        }
-
 		[Column]
 		public long ProfileID;
 		[Column]
@@ -100,8 +84,6 @@ namespace Lib.Data
         public long OrganizationID;
 		[Column]
 		public string ProviderUserType;
-        [Column]
-        public string Class;
 		[Column]
 		public long? PrimaryFacilityID;
 

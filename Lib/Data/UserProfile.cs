@@ -111,6 +111,8 @@ namespace Lib.Data
 		public long? PrimaryAddressID;
 		[Column]
 		public DateTime Created;
+        [Column]
+        public bool IsEcommerce;
 
 		private Framework.Security.User _cacheUser = null;
 		public Framework.Security.User User

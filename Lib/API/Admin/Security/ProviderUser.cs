@@ -105,7 +105,6 @@ namespace Lib.API.Admin.Security
             providerUser.OrganizationID = organization_id;
             providerUser.ProviderUserType = user_type;
             providerUser.PrimaryFacilityID = facility_id;
-            providerUser.Class = Data.ProviderUser.ProviderClass.Standard;
             providerUser.Save();
 
             return new ReturnObject()
