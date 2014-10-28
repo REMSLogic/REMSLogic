@@ -117,6 +117,7 @@
     <Compile Include="API\Dev\Reports.cs" />
     <Compile Include="API\Dev\DSQ\SectionSettings.cs" />
     <Compile Include="API\Dev\Test\Monk.cs" />
+    <Compile Include="API\Ecommerce\Wizards.cs" />
     <Compile Include="API\HCOs\Facility.cs" />
     <Compile Include="API\Notifications.cs" />
     <Compile Include="API\Prescriber\Drug.cs" />

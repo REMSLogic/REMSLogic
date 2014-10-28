@@ -86,6 +86,11 @@ namespace Site.App
 				    msg = "Your account has exired.";
 				    return;
                 }
+
+                if(!userProfile.IsWizardComplete)
+                {
+                    Response.Redirect("Ecommerce.aspx#ecommerce/wizards/registration-wizard?token=925bcbf9-4ca5-4b24-b9d5-f14eb4cd75c4");
+                }
             }
 
 			string hash = "";

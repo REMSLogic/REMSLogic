@@ -170,6 +170,13 @@
     <Compile Include="Controls\Widgets\UserActivityGraph.ascx.designer.cs">
       <DependentUpon>UserActivityGraph.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Ecommerce.aspx.cs">
+      <DependentUpon>Ecommerce.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ecommerce.aspx.designer.cs">
+      <DependentUpon>Ecommerce.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -680,6 +687,27 @@
     <Compile Include="Views\dev\user-types\list.ascx.designer.cs">
       <DependentUpon>list.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Views\ecommerce\wizards\etasu-selections.ascx.cs">
+      <DependentUpon>etasu-selections.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\ecommerce\wizards\etasu-selections.ascx.designer.cs">
+      <DependentUpon>etasu-selections.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ecommerce\wizards\non-etasu-selections.ascx.cs">
+      <DependentUpon>non-etasu-selections.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\ecommerce\wizards\non-etasu-selections.ascx.designer.cs">
+      <DependentUpon>non-etasu-selections.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ecommerce\wizards\registration-wizard.ascx.cs">
+      <DependentUpon>registration-wizard.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\ecommerce\wizards\registration-wizard.ascx.designer.cs">
+      <DependentUpon>registration-wizard.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Views\examples\calendar.ascx.cs">
       <DependentUpon>calendar.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -993,6 +1021,7 @@
     <Content Include="css\Fonts\font-awesome.min.css" />
     <Content Include="css\Fonts\fontawesome-webfont.svg" />
     <Content Include="css\jquery.radialProgressBar.css" />
+    <Content Include="Ecommerce.aspx" />
     <Content Include="Global.asax" />
     <Content Include="images\dashboard-icon.png" />
     <Content Include="images\icons\EOC-Nursing_Education.png" />
@@ -1904,6 +1933,9 @@
     <Content Include="Views\dev\test\monk.ascx" />
     <Content Include="Views\dev\user-types\edit.ascx" />
     <Content Include="Views\dev\user-types\list.ascx" />
+    <Content Include="Views\ecommerce\wizards\etasu-selections.ascx" />
+    <Content Include="Views\ecommerce\wizards\non-etasu-selections.ascx" />
+    <Content Include="Views\ecommerce\wizards\registration-wizard.ascx" />
     <Content Include="Views\examples\calendar.ascx" />
     <Content Include="Views\examples\form1.ascx" />
     <Content Include="Views\examples\form2.ascx" />

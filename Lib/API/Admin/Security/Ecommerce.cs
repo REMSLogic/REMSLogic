@@ -306,6 +306,7 @@ namespace Lib.API.Admin.Security
             prescriberProfile.PrimaryFacilityID = 0;
             prescriberProfile.Expires = DateTime.Now.AddYears(1);
             prescriberProfile.OrganizationId = provider_id;
+            prescriberProfile.Guid = Guid.NewGuid();
             prescriberProfile.Save();
 
             account.UserProifleId = userProfile.ID ?? 0;

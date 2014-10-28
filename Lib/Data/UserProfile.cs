@@ -112,6 +112,8 @@ namespace Lib.Data
 		public DateTime Created;
         [Column]
         public bool IsEcommerce;
+        [Column]
+        public bool IsWizardComplete;
 
 		private Framework.Security.User _cacheUser = null;
 		public Framework.Security.User User

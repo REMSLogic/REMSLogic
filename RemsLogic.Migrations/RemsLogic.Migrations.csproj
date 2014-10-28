@@ -71,6 +71,7 @@
     <Compile Include="Sprint16\Migration0002AddCreateForColumnToRestrictedLinks.cs" />
     <Compile Include="Sprint26\Migration0001AddIsEcommToUserProfile.cs" />
     <Compile Include="Sprint26\Migration0002AddAccountTable.cs" />
+    <Compile Include="Sprint27\Migration0001AddIsWizardCompletedtoUserProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -81,9 +82,7 @@
       <Name>RemsLogic.Model</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Sprint27\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <Copy SourceFiles="$(TargetDir)RemsLogic.Migrations.dll" DestinationFolder="$(SolutionDir)packages\FluentMigrator.1.1.2.1\tools\" />
