@@ -116,6 +116,23 @@ namespace Lib.Data
 			}, new[] { "-Expires" } );
         }
 
+        public static IList<PrescriberProfile> FindEcommerce()
+        {
+			var db = Database.Get("FDARems");
+			string sql = 
+                "SELECT " + db.DelimTable("PrescriberProfiles") + ".* " +
+				" FROM " + db.DelimTable("PrescriberProfiles") +
+				" INNER JOIN " + db.DelimTable("Prescribers") +
+				    " ON " + db.DelimTable("PrescriberProfiles") + "." + db.DelimColumn("PrescriberID") + " = " + db.DelimTable("Prescribers") + "." + db.DelimColumn("ID") +
+                " INNER JOIN " + db.DelimTable("UserProfiles") +
+                    " ON " + db.DelimTable("Prescribers") + "." + db.DelimColumn("ProfileID") + " = " + db.DelimTable("UserProfiles") + "." + db.DelimColumn("ID") +
+				" WHERE " + db.DelimTable("UserProfiles") + "." + db.DelimColumn("IsEcommerce") + " = 1 " +
+                    " AND " + db.DelimTable("PrescriberProfiles") + "." + db.DelimColumn("OrganizationId") + " = 0;";
+
+			var ps = new List<Parameter>();
+			return db.ExecuteQuery<PrescriberProfile>(sql, ps.ToArray());
+        }
+
         // MJL 2013-10-25 - Added GUID to AR Object.
         [Column]
         public Guid Guid;

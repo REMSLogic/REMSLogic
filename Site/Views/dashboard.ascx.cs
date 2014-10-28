@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using Framework.Security;
+using Lib.Data;
+using Lib.Systems;
 using RemsLogic.Model.UI;
 using RemsLogic.Repositories;
 
@@ -61,7 +63,30 @@ namespace Site.App.Views
                 Column2 = String.Empty
             };
 
+            List<string> widgetsToRemoveForEcomm = new List<string>
+            {
+                "Compliance Graph", 
+                "Organization Summary", 
+                "Prescriber Updates", 
+                "User Activity Graph", 
+                "Reports"
+            };
+
             List<Widget> widgetList = widgets.ToList();
+            ProviderUser providerUser = Security.GetCurrentProviderUser();
+
+            /*
+            // if it's an ecommerce user, filter out the widgets that class of user should
+            // not see.
+            if(providerUser != null && providerUser.Class == ProviderUser.ProviderClass.Ecommerce)
+            {
+                for(int i = 0; i < widgetList.Count; i++)
+                {
+                    if(widgetsToRemoveForEcomm.Contains(widgetList[i].Name))
+                        widgetList.RemoveAt(i--);
+                }
+            }
+            */
 
             for(int i = 0; i < widgetList.Count(); i++)
             {

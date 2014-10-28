@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using Framework.Data;
 
 namespace Lib.Data
@@ -111,6 +110,10 @@ namespace Lib.Data
 		public long? PrimaryAddressID;
 		[Column]
 		public DateTime Created;
+        [Column]
+        public bool IsEcommerce;
+        [Column]
+        public bool IsWizardComplete;
 
 		private Framework.Security.User _cacheUser = null;
 		public Framework.Security.User User

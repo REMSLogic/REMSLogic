@@ -40,9 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountService.cs" />
     <Compile Include="ComplianceService.cs" />
     <Compile Include="DrugListService.cs" />
     <Compile Include="DsqService.cs" />
+    <Compile Include="IAccountService.cs" />
     <Compile Include="IComplianceService.cs" />
     <Compile Include="IDrugListService.cs" />
     <Compile Include="IDsqService.cs" />

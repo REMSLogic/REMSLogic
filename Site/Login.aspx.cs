@@ -10,12 +10,22 @@ using Lib.Data;
 using Lib.Systems;
 using Lib.Systems.Activity;
 using Lib.Systems.Notifications;
+using RemsLogic.Model.Ecommerce;
+using RemsLogic.Services;
+using StructureMap;
 
 namespace Site.App
 {
 	public partial class Login : System.Web.UI.Page
 	{
+        private readonly IAccountService _accountSvc;
+
 		public string msg;
+
+        public Login()
+        {
+            _accountSvc = ObjectFactory.GetInstance<IAccountService>();
+        }
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -55,7 +65,33 @@ namespace Site.App
 			if( Request["remember"] == "1" )
 				Framework.Security.Manager.GenerateLoginCookie();
 
-			var u = Framework.Security.Manager.GetUser();
+			User user = Manager.GetUser();
+            UserProfile userProfile = Security.GetCurrentProfile();
+
+            // if it's an ecommerce user we need to ensure the account is enabled and not expired
+            Account account = _accountSvc.GetByUserProfileId(userProfile.ID ?? 0);
+
+            if(account != null)
+            {
+                if(!account.IsEnabled)
+                {
+				    Framework.Security.Manager.Logout();
+				    msg = "Your account has been disabled.";
+				    return;
+                }
+
+                if(account.ExpiresOn < DateTime.Now)
+                {
+				    Framework.Security.Manager.Logout();
+				    msg = "Your account has exired.";
+				    return;
+                }
+
+                if(!userProfile.IsWizardComplete)
+                {
+                    Response.Redirect("Ecommerce.aspx#ecommerce/wizards/registration-wizard?token=925bcbf9-4ca5-4b24-b9d5-f14eb4cd75c4");
+                }
+            }
 
 			string hash = "";
 
@@ -72,7 +108,7 @@ namespace Site.App
                 return;
             }*/
 
-            ActivityService.Record(u.ID, Session.SessionID, ActivityService.StandardLogin, null);
+            ActivityService.Record(user.ID, Session.SessionID, ActivityService.StandardLogin, null);
 
             // MJL 2014-01-13 - Monk, I'm using this for testing.  Please don't remove
             // this.  I will remove it once we are confident the notification emails are
