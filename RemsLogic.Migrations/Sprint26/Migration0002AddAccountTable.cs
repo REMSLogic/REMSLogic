@@ -3,7 +3,7 @@ using FluentMigrator;
 
 namespace RemsLogic.Migrations.Sprint26
 {
-    [Migration(201409020103)]
+    [Migration(201409020104)]
     public class Migration0002AddAccountTable : Migration
     {
         public override void Up()
