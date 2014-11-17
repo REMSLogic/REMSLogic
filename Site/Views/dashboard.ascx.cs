@@ -24,8 +24,45 @@ namespace Site.App.Views
         protected void Page_Init(object sender, EventArgs e)
         {
             Framework.Security.User user = Manager.GetUser();
+            ProviderUser providerUser = Security.GetCurrentProviderUser();
+            UserProfile userProfile = providerUser != null 
+                ? providerUser.Profile
+                : null;
 
-            IEnumerable<Widget> widgets = LoadWidgetsByRole().ToList();
+            List<Widget> widgetsToAddToEcommProvider = new List<Widget>
+            {
+                new Widget
+                {
+                    Id = 3,
+                    Name = "Compliance Status",
+                    Location = "~/Controls/Widgets/ComplianceStatus.ascx"
+                }
+            };
+
+            List<string> widgetsToRemoveFromEcommProvider = new List<string>
+            {
+                "Compliance Graph", 
+                "Organization Summary", 
+                "Prescriber Updates", 
+                "User Activity Graph", 
+                "Reports"
+            };
+
+            List<Widget> widgets = LoadWidgetsByRole().ToList();
+
+            // if it's an ecommerce user, filter out the widgets that class of user should
+            // not see.
+            if(providerUser != null && userProfile.IsEcommerce)
+            {
+                for(int i = 0; i < widgets.Count; i++)
+                {
+                    if(widgetsToRemoveFromEcommProvider.Contains(widgets[i].Name))
+                        widgets.RemoveAt(i--);
+                }
+
+                //widgets = widgets.Union(widgetsToAddToEcommProvider).ToList();
+            }
+
             WidgetSettings settings = _widgetRepo.FindSettingsByUserId(user.ID ?? 0);
             
             if(settings == null)
@@ -54,7 +91,7 @@ namespace Site.App.Views
             return new List<Widget>();
         }
 
-        private void InitializeWidgetSettings(IEnumerable<Widget> widgets, ref WidgetSettings settings)
+        private void InitializeWidgetSettings(List<Widget> widgets, ref WidgetSettings settings)
         {
             settings = new WidgetSettings()
             {
@@ -63,34 +100,9 @@ namespace Site.App.Views
                 Column2 = String.Empty
             };
 
-            List<string> widgetsToRemoveForEcomm = new List<string>
+            for(int i = 0; i < widgets.Count(); i++)
             {
-                "Compliance Graph", 
-                "Organization Summary", 
-                "Prescriber Updates", 
-                "User Activity Graph", 
-                "Reports"
-            };
-
-            List<Widget> widgetList = widgets.ToList();
-            ProviderUser providerUser = Security.GetCurrentProviderUser();
-
-            /*
-            // if it's an ecommerce user, filter out the widgets that class of user should
-            // not see.
-            if(providerUser != null && providerUser.Class == ProviderUser.ProviderClass.Ecommerce)
-            {
-                for(int i = 0; i < widgetList.Count; i++)
-                {
-                    if(widgetsToRemoveForEcomm.Contains(widgetList[i].Name))
-                        widgetList.RemoveAt(i--);
-                }
-            }
-            */
-
-            for(int i = 0; i < widgetList.Count(); i++)
-            {
-                Widget widget = widgetList[i];
+                Widget widget = widgets[i];
 
                 if((i+1)%2 != 0)
                     settings.Column1 += widget.Id+"|";
