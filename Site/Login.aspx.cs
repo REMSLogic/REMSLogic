@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -89,7 +90,18 @@ namespace Site.App
 
                 if(!userProfile.IsWizardComplete)
                 {
-                    Response.Redirect("Ecommerce.aspx#ecommerce/wizards/registration-wizard?token=925bcbf9-4ca5-4b24-b9d5-f14eb4cd75c4");
+                    if(userProfile.UserType.Name == "provider")
+                    {
+                        Lib.API.Common.DrugList.AddDrugToFavorites(Context, 137);
+                        Lib.API.Common.DrugList.AddDrugToFavorites(Context, 27);
+                        Lib.API.Common.DrugList.AddDrugToFavorites(Context, 88);
+                        Lib.API.Common.DrugList.AddDrugToFavorites(Context, 85);
+
+                        userProfile.IsWizardComplete = true;
+                        userProfile.Save();
+                    }
+                    else
+                        Response.Redirect("Ecommerce.aspx#ecommerce/wizards/registration-wizard?token=925bcbf9-4ca5-4b24-b9d5-f14eb4cd75c4");
                 }
             }
 
