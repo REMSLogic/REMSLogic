@@ -238,16 +238,18 @@
 						<li><a href="#admin/drugs/drugs/list" title="All Drugs"><img src="/images/navicons/15.png" alt="" /><span>All Drugs</span></a></li>
 						<% } %>
 						<% if (Framework.Security.Manager.HasRole("view_provider", true))
-                        { %>
+                        { 
+                            if(!IsEcommerceUser){%>
 						<li><a href="#provider/prescribers/list" title="Prescribers"><%--<img src="/images/navicons/63.png" alt="" />--%><i class="fa fa-users fa-fw app-icon-nav"></i><span>Prescribers</span></a></li>
 						<li><a href="#hcos/facilities/list" title="Provider Facilities"><%--<img src="/images/navicons/159.png" alt="" />--%><i class="fa fa-building-o fa-fw app-icon-nav"></i><span>Facilities</span></a></li>
+                            <%} %>
 						<li><a href="#common/drugs/list" title="Drug List"><%--<img src="/images/navicons/15.png" alt="" />--%><i class="fa fa-medkit fa-fw app-icon-nav"></i><span>Manage Drugs</span></a></li>
 						<% } %>
 						<% if (Framework.Security.Manager.HasRole("view_prescriber", true))
                         { %>
 						<li><a href="#prescriber/drugs/list" title="Drug List"><i class="fa fa-medkit fa-fw  app-icon-nav"></i><span>Manage Drugs</span></a></li>
 						<% } %>
-						<% if (Lib.Systems.Reports.GetMyReports().Count > 0)
+						<% if (Lib.Systems.Reports.GetMyReports().Count > 0 && !IsEcommerceUser)
                         { %>
 						<li><a href="#reports/list" title="Reports"><%--<img src="/images/navicons/122.png" alt="" />--%><i class="fa fa-list-alt fa-fw app-icon-nav"></i><span>Reports</span></a></li>
 						<% } %>
