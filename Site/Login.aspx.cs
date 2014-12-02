@@ -92,9 +92,16 @@ namespace Site.App
                 {
                     if(userProfile.UserType.Name == "provider")
                     {
+                        Lib.API.Common.DrugList.AddDrugToList(Context, 137);
                         Lib.API.Common.DrugList.AddDrugToFavorites(Context, 137);
+                        
+                        Lib.API.Common.DrugList.AddDrugToList(Context, 27);
                         Lib.API.Common.DrugList.AddDrugToFavorites(Context, 27);
+
+                        Lib.API.Common.DrugList.AddDrugToList(Context, 88);
                         Lib.API.Common.DrugList.AddDrugToFavorites(Context, 88);
+
+                        Lib.API.Common.DrugList.AddDrugToList(Context, 85);
                         Lib.API.Common.DrugList.AddDrugToFavorites(Context, 85);
 
                         userProfile.IsWizardComplete = true;
