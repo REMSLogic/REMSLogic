@@ -47,7 +47,7 @@ namespace Lib.Data
 			var db = Database.Get( "FDARems" );
 			string sql = "SELECT "+db.DelimTable(tbl)+".* " +
 							" FROM " + db.DelimTable( "UserListItems" ) +
-								" LEFT JOIN " + db.DelimTable( tbl ) +
+								" INNER JOIN " + db.DelimTable( tbl ) +
 									" ON " + db.DelimColumn( "UserListItems", "ItemID" ) + " = " + db.DelimColumn(tbl, "ID") +
 							" WHERE " + db.DelimColumn("UserListItems", "ListID") + " = " + db.DelimParameter("id") +
 							" ORDER BY " + db.DelimColumn("UserListItems", "Order");
